@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -21,3 +22,12 @@ dependencyResolutionManagement {
 
 rootProject.name = "RickAndMortyApp"
 include(":app")
+include(":core:common")
+include(":core:data")
+include(":core:database")
+include(":core:design-system")
+include(":core:domain")
+include(":core:model")
+include(":core:network")
+include(":feature:home")
+include(":feature:details")
