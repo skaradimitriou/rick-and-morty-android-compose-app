@@ -41,5 +41,17 @@ gradlePlugin {
             id = "custom.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
+        register("androidCompose") {
+            id = "custom.android.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
+        register("androidFeature") {
+            id = "custom.android.feature"
+            implementationClass = "AndroidFeatureConventionPlugin"
+        }
+        register("jvmLibrary") {
+            id = "custom.android.jvm"
+            implementationClass = "JvmLibraryConventionPlugin"
+        }
     }
 }
