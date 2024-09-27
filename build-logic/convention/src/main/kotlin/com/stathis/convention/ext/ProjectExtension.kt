@@ -1,4 +1,4 @@
-package com.stathis.convention
+package com.stathis.convention.ext
 
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog

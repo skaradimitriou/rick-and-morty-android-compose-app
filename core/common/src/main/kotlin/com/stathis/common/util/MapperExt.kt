@@ -1,4 +1,4 @@
-package com.stathis.common.ext
+package com.stathis.common.util
 
 fun String?.toNotNull() = this ?: ""
 fun Int?.toNotNull() = this ?: 0

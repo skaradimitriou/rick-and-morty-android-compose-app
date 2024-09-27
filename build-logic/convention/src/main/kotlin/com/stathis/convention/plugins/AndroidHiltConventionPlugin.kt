@@ -1,4 +1,6 @@
-import com.stathis.convention.libs
+package com.stathis.convention.plugins
+
+import com.stathis.convention.ext.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies

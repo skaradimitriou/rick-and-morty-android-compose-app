@@ -1,17 +1,24 @@
 plugins {
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.custom.android.library)
     alias(libs.plugins.custom.android.hilt)
-    alias(libs.plugins.kotlin.android)
 }
 
 android {
     namespace = "com.stathis.data"
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
 }
 
 dependencies {
-    implementation(project(":core:network"))
-    implementation(project(":core:model"))
-    implementation(project(":core:common"))
+    implementation(projects.core.common)
+    implementation(projects.core.network)
+    implementation(projects.core.model)
 
     implementation(libs.retrofit)
+
+    testImplementation(libs.kotlinx.coroutines.test)
+
 }

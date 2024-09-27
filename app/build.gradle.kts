@@ -62,10 +62,11 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    implementation(project(":core:design-system"))
+    implementation(projects.core.designSystem)
+    implementation(projects.feature.home)
+    implementation(projects.feature.details)
 
-    implementation(project(":feature:home"))
-    implementation(project(":feature:details"))
+    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

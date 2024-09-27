@@ -35,23 +35,23 @@ gradlePlugin {
     plugins {
         register("androidLibrary") {
             id = "custom.android.library"
-            implementationClass = "AndroidLibraryConventionPlugin"
+            implementationClass = "com.stathis.convention.plugins.AndroidLibraryConventionPlugin"
         }
         register("androidHilt") {
             id = "custom.android.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
+            implementationClass = "com.stathis.convention.plugins.AndroidHiltConventionPlugin"
         }
         register("androidCompose") {
             id = "custom.android.compose"
-            implementationClass = "AndroidLibraryComposeConventionPlugin"
+            implementationClass = "com.stathis.convention.plugins.AndroidLibraryComposeConventionPlugin"
         }
         register("androidFeature") {
             id = "custom.android.feature"
-            implementationClass = "AndroidFeatureConventionPlugin"
+            implementationClass = "com.stathis.convention.plugins.AndroidFeatureConventionPlugin"
         }
         register("jvmLibrary") {
             id = "custom.android.jvm"
-            implementationClass = "JvmLibraryConventionPlugin"
+            implementationClass = "com.stathis.convention.plugins.JvmLibraryConventionPlugin"
         }
     }
 }

@@ -8,5 +8,5 @@ class FetchAllCharactersUseCase @Inject constructor(
     private val repository: CharactersRepository
 ) : BaseUseCase<List<CharacterResponse>> {
 
-    override suspend fun invoke(vararg: Any) = repository.getAllCharacters()
+    override suspend fun invoke(vararg: Any?) = repository.getAllCharacters()
 }

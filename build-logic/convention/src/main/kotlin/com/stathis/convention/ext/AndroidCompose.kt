@@ -1,5 +1,6 @@
+package com.stathis.convention.ext
+
 import com.android.build.api.dsl.CommonExtension
-import com.stathis.convention.libs
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.withType

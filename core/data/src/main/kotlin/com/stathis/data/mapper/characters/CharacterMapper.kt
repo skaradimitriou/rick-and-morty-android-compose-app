@@ -1,6 +1,6 @@
 package com.stathis.data.mapper.characters
 
-import com.stathis.common.ext.toNotNull
+import com.stathis.common.util.toNotNull
 import com.stathis.data.mapper.BaseMapper
 import com.stathis.data.mapper.common.PaginationMapper
 import com.stathis.model.characters.CharacterResponse

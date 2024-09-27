@@ -1,4 +1,6 @@
-import com.stathis.convention.configureKotlinJvm
+package com.stathis.convention.plugins
+
+import com.stathis.convention.ext.configureKotlinJvm
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

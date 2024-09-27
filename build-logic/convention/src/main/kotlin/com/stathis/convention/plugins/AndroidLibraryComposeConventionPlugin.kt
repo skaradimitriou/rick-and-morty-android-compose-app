@@ -1,4 +1,7 @@
+package com.stathis.convention.plugins
+
 import com.android.build.gradle.LibraryExtension
+import com.stathis.convention.ext.configureAndroidCompose
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
