@@ -40,7 +40,7 @@ internal fun HomeScreen(
 
 
 @Composable
-fun HomeContent(
+internal fun HomeContent(
     uiState: HomeViewModel.UiState,
     onCharacterClick: (Int) -> Unit
 ) {
@@ -60,7 +60,7 @@ fun HomeContent(
 }
 
 @Composable
-fun CharacterList(
+internal fun CharacterList(
     paddingValues: PaddingValues,
     characters: List<CharacterResponse>,
     onCharacterClick: (Int) -> Unit
