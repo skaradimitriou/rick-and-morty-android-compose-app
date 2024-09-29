@@ -1,6 +1,7 @@
 package com.stathis.data.repository
 
 import com.stathis.data.mapper.characters.CharacterMapper
+import com.stathis.data.mapper.characters.CharacterResponseMapper
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.network.service.RickAndMortyApi
 import kotlinx.coroutines.flow.Flow
@@ -17,5 +18,13 @@ class CharactersRepositoryImpl @Inject constructor(
         )
         //FIXME: improve that so that it fetches and maps the data into a network result
         emit(data.results)
+    }
+
+    override suspend fun getCharacterById(id: Int): Flow<CharacterResponse> = flow {
+        val data = CharacterResponseMapper.toDomainModel(
+            dto = remoteDataSource.getCharacterById(id)?.body()
+        )
+        //FIXME: improve that so that it fetches and maps the data into a network result
+        emit(data)
     }
 }

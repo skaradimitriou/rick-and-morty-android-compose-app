@@ -1,4 +1,4 @@
-package com.stathis.details
+package com.stathis.details.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -34,6 +34,7 @@ import com.stathis.common.util.StringRes
 import com.stathis.designsystem.components.images.CoilImage
 import com.stathis.designsystem.components.shapes.CustomShape
 import com.stathis.designsystem.components.topbar.CustomTopAppBar
+import com.stathis.model.characters.CharacterResponse
 
 @Composable
 internal fun DetailsScreen(
@@ -46,15 +47,17 @@ internal fun DetailsScreen(
         viewModel.fetchCharacterInformation()
     }
 
-    DetailsContent(
-        uiState = uiState.data,
-        onBackNavIconClick = onBackNavIconClick
-    )
+    uiState.character?.let { character ->
+        DetailsContent(
+            character = character,
+            onBackNavIconClick = onBackNavIconClick
+        )
+    }
 }
 
 @Composable
 internal fun DetailsContent(
-    uiState: String,
+    character: CharacterResponse,
     onBackNavIconClick: Callback
 ) {
     Scaffold(
@@ -75,19 +78,19 @@ internal fun DetailsContent(
             ) {
                 CoilImage(
                     modifier = Modifier.height(300.dp),
-                    imageUrlToLoad = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png"
+                    imageUrlToLoad = character.image
                 )
                 Spacer(modifier = Modifier.height(30.dp))
 
                 BasicCharacterInfo(
-                    characterName = "Morty Smith",
+                    characterName = character.name,
                     isAlive = true,
-                    status = "Alive"
+                    status = character.status
                 )
 
                 CharacterDetails(
-                    species = "Human",
-                    gender = "Male",
+                    species = character.species,
+                    gender = character.gender,
                     origin = "Earth"
                 )
             }
@@ -134,7 +137,7 @@ fun BasicCharacterInfo(
 fun BasicCharacterInfoPreview(modifier: Modifier = Modifier) {
     BasicCharacterInfo(
         characterName = "Morty Smith",
-        isAlive = true,
+        isAlive = false,
         status = "Alive"
     )
 }

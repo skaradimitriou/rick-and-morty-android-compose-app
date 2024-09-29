@@ -1,25 +1,17 @@
-package com.stathis.home
+package com.stathis.home.ui
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.stathis.common.util.DimenRes
 import com.stathis.common.util.StringRes
-import com.stathis.designsystem.components.cards.BasicCardWithImageAndText
 import com.stathis.designsystem.components.topbar.CustomTopAppBar
-import com.stathis.model.characters.CharacterResponse
+import com.stathis.home.ui.components.CharacterList
 
 @Composable
 internal fun HomeScreen(
@@ -57,30 +49,4 @@ internal fun HomeContent(
             )
         }
     )
-}
-
-@Composable
-internal fun CharacterList(
-    paddingValues: PaddingValues,
-    characters: List<CharacterResponse>,
-    onCharacterClick: (Int) -> Unit
-) {
-    LazyColumn(
-        modifier = Modifier
-            .navigationBarsPadding()
-            .padding(horizontal = dimensionResource(DimenRes.dimen_8))
-            .padding(top = paddingValues.calculateTopPadding())
-    ) {
-        items(items = characters) { character ->
-            BasicCardWithImageAndText(
-                title = character.name,
-                description = character.species,
-                imageUrl = character.image,
-                contentDescription = character.name,
-                onClick = {
-                    onCharacterClick(character.id)
-                }
-            )
-        }
-    }
 }

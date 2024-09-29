@@ -1,8 +1,8 @@
-package com.stathis.home
+package com.stathis.home.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.stathis.domain.usecases.FetchAllCharactersUseCase
+import com.stathis.domain.usecases.characters.FetchAllCharactersUseCase
 import com.stathis.model.characters.CharacterResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
