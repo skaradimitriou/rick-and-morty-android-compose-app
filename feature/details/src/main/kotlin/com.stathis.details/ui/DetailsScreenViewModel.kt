@@ -3,7 +3,9 @@ package com.stathis.details.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.stathis.domain.usecases.characters.FetchCharacterByIdUseCase
+import com.stathis.domain.usecases.episodes.FetchEpisodesByIdUseCase
 import com.stathis.model.characters.CharacterResponse
+import com.stathis.model.episodes.Episode
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailsScreenViewModel @Inject constructor(
-    private val useCase: FetchCharacterByIdUseCase
+    private val useCase: FetchCharacterByIdUseCase,
+    private val episodesUseCase: FetchEpisodesByIdUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiState())
@@ -35,7 +38,22 @@ class DetailsScreenViewModel @Inject constructor(
         }
     }
 
+    fun fetchEpisodesForCharacter() {
+        viewModelScope.launch(Dispatchers.IO) {
+            //FIXME: Temp CharacterArg. Remove this late ron
+            val tempIds = listOf(28, 32) //johny depp
+            episodesUseCase.invoke(tempIds).collect { episodes ->
+                _uiState.update {
+                    it.copy(
+                        episodes = episodes
+                    )
+                }
+            }
+        }
+    }
+
     data class UiState(
-        var character: CharacterResponse? = null
+        var character: CharacterResponse? = null,
+        var episodes: List<Episode>? = null
     )
 }

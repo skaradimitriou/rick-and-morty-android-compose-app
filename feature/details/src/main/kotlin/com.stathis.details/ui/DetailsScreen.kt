@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -22,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -30,11 +33,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stathis.common.util.Callback
+import com.stathis.common.util.DimenRes
 import com.stathis.common.util.StringRes
+import com.stathis.common.util.toNotNull
+import com.stathis.designsystem.components.cards.BasicCardWithText
 import com.stathis.designsystem.components.images.CoilImage
 import com.stathis.designsystem.components.shapes.CustomShape
 import com.stathis.designsystem.components.topbar.CustomTopAppBar
 import com.stathis.model.characters.CharacterResponse
+import com.stathis.model.episodes.Episode
 
 @Composable
 internal fun DetailsScreen(
@@ -45,19 +52,20 @@ internal fun DetailsScreen(
 
     LaunchedEffect(key1 = true) {
         viewModel.fetchCharacterInformation()
+        viewModel.fetchEpisodesForCharacter()
     }
 
-    uiState.character?.let { character ->
-        DetailsContent(
-            character = character,
-            onBackNavIconClick = onBackNavIconClick
-        )
-    }
+    DetailsContent(
+        character = uiState.character,
+        episodes = uiState.episodes,
+        onBackNavIconClick = onBackNavIconClick
+    )
 }
 
 @Composable
 internal fun DetailsContent(
-    character: CharacterResponse,
+    character: CharacterResponse?,
+    episodes: List<Episode>?,
     onBackNavIconClick: Callback
 ) {
     Scaffold(
@@ -78,28 +86,57 @@ internal fun DetailsContent(
             ) {
                 CoilImage(
                     modifier = Modifier.height(300.dp),
-                    imageUrlToLoad = character.image
+                    imageUrlToLoad = character?.image.toNotNull()
                 )
+
                 Spacer(modifier = Modifier.height(30.dp))
 
                 BasicCharacterInfo(
-                    characterName = character.name,
+                    characterName = character?.name.toNotNull(),
                     isAlive = true,
-                    status = character.status
+                    status = character?.status.toNotNull()
                 )
 
                 CharacterDetails(
-                    species = character.species,
-                    gender = character.gender,
+                    species = character?.species.toNotNull(),
+                    gender = character?.gender.toNotNull(),
                     origin = "Earth"
                 )
+
+                Text(
+                    modifier = Modifier.padding(
+                        top = 16.dp,
+                        start = 16.dp
+                    ),
+                    text = "Episodes",
+                    style = TextStyle(
+                        fontSize = MaterialTheme.typography.titleLarge.fontSize
+                    )
+                )
+
+                episodes?.let { episodes ->
+                    LazyColumn(
+                        modifier = Modifier.padding(
+                            top = dimensionResource(DimenRes.dimen_8),
+                            start = dimensionResource(DimenRes.dimen_8),
+                            end = dimensionResource(DimenRes.dimen_8)
+                        )
+                    ) {
+                        items(items = episodes) {
+                            BasicCardWithText(
+                                title = it.name + " | " + it.episode,
+                                description = it.airDate
+                            )
+                        }
+                    }
+                }
             }
         }
     )
 }
 
 @Composable
-fun BasicCharacterInfo(
+internal fun BasicCharacterInfo(
     characterName: String,
     isAlive: Boolean,
     status: String
@@ -134,7 +171,7 @@ fun BasicCharacterInfo(
 
 @Preview
 @Composable
-fun BasicCharacterInfoPreview(modifier: Modifier = Modifier) {
+internal fun BasicCharacterInfoPreview(modifier: Modifier = Modifier) {
     BasicCharacterInfo(
         characterName = "Morty Smith",
         isAlive = false,
@@ -143,7 +180,7 @@ fun BasicCharacterInfoPreview(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CharacterDetails(
+internal fun CharacterDetails(
     modifier: Modifier = Modifier,
     species: String,
     gender: String,
@@ -182,7 +219,7 @@ fun CharacterDetails(
 
 @Preview
 @Composable
-fun CharacterDetailsPreview() {
+internal fun CharacterDetailsPreview() {
     CharacterDetails(
         modifier = Modifier.background(Color.White),
         species = "Human",
@@ -192,7 +229,7 @@ fun CharacterDetailsPreview() {
 }
 
 @Composable
-fun BasicDetail(
+internal fun BasicDetail(
     modifier: Modifier = Modifier,
     title: String,
     description: String
@@ -220,10 +257,15 @@ fun BasicDetail(
 
 @Preview
 @Composable
-fun BasicDetailPreview() {
+internal fun BasicDetailPreview() {
     BasicDetail(
         modifier = Modifier.background(Color.White),
         title = "Title",
         description = "Description"
     )
+}
+
+@Composable
+fun EpisodeItem() {
+
 }
