@@ -75,10 +75,12 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+room = { id = "androidx.room", version.ref = "room" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 custom-android-library = { id = "custom.android.library", version = "unspecified" }
 custom-android-compose = { id = "custom.android.compose", version = "unspecified" }
 custom-android-hilt = { id = "custom.android.hilt", version = "unspecified" }
+custom-android-room = { id = "custom.android.room", version = "unspecified" }
 custom-android-feature-library = { id = "custom.android.feature", version = "unspecified" }
 custom-jvm-library = { id = "custom.android.jvm", version = "unspecified" }

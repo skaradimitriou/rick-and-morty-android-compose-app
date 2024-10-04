@@ -29,6 +29,7 @@ dependencies {
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.android.tools.common)
     compileOnly(libs.ksp.gradlePlugin)
+    compileOnly(libs.room.gradlePlugin)
 }
 
 gradlePlugin {
@@ -52,6 +53,10 @@ gradlePlugin {
         register("jvmLibrary") {
             id = "custom.android.jvm"
             implementationClass = "com.stathis.convention.plugins.JvmLibraryConventionPlugin"
+        }
+        register("androidRoom") {
+            id = "custom.android.room"
+            implementationClass = "com.stathis.convention.plugins.AndroidRoomConventionPlugin"
         }
     }
 }
