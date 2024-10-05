@@ -3,7 +3,7 @@ package com.stathis.model.characters
 data class CharacterResponse(
     val id: Int,
     val name: String,
-    val status: String,
+    val status: CharacterStatus,
     val species: String,
     val type: String,
     val gender: String,
@@ -14,3 +14,7 @@ data class CharacterResponse(
     val url: String,
     val created: String
 )
+
+enum class CharacterStatus {
+    UNKNOWN, ALIVE, DEAD
+}

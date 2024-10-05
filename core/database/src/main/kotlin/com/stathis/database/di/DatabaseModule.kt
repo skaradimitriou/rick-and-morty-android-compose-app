@@ -3,7 +3,7 @@ package com.stathis.database.di
 import android.content.Context
 import androidx.room.Room
 import com.stathis.database.dao.CharactersDao
-import com.stathis.database.db.CharacterDatabase
+import com.stathis.database.db.CharactersLocalDatabase
 import com.stathis.database.util.DB_NAME
 import dagger.Module
 import dagger.Provides
@@ -20,13 +20,13 @@ class DatabaseModule {
     @Singleton
     fun provideDatabase(
         @ApplicationContext context: Context
-    ): CharacterDatabase = Room.databaseBuilder(
+    ): CharactersLocalDatabase = Room.databaseBuilder(
         context = context,
-        klass = CharacterDatabase::class.java,
+        klass = CharactersLocalDatabase::class.java,
         name = DB_NAME
     ).build()
 
     @Provides
     @Singleton
-    fun provideDao(db: CharacterDatabase): CharactersDao = db.dao()
+    fun provideDao(db: CharactersLocalDatabase): CharactersDao = db.dao()
 }

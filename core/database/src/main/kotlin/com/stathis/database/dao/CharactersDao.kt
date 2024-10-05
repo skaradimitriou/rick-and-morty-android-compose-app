@@ -10,10 +10,13 @@ import kotlinx.coroutines.flow.Flow
 interface CharactersDao {
 
     @Query("SELECT * FROM CHARACTERS")
-    suspend fun getAllCharacters(): Flow<CharacterEntity>
+    fun getAllCharacters(): Flow<List<CharacterEntity>>
+
+    @Query("SELECT * FROM CHARACTERS where id=:id")
+    fun getCharacterById(id: Int): Flow<CharacterEntity?>
 
     @Insert
-    suspend fun insertAll(list: CharacterEntity)
+    suspend fun insertAll(list: List<CharacterEntity>)
 
     @Query("DELETE from CHARACTERS")
     suspend fun deleteAll()

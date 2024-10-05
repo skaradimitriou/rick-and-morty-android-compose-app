@@ -14,6 +14,7 @@ import com.stathis.common.util.DimenRes
 import com.stathis.designsystem.components.cards.BasicCardWithImageAndText
 import com.stathis.designsystem.theme.RickAndMortyAppTheme
 import com.stathis.model.characters.CharacterResponse
+import com.stathis.model.characters.CharacterStatus
 
 @Composable
 internal fun CharacterList(
@@ -46,23 +47,23 @@ internal fun CharacterList(
 fun CharacterListPreview() {
     val dummyList = listOf(
         CharacterResponse(
-            123, "Character Name", "Alive", "Human", "Type",
+            123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
             "Male", "", "Earth", "", listOf("8"), "", ""
         ),
         CharacterResponse(
-            123, "Character Name", "Alive", "Human", "Type",
+            123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
             "Male", "", "Earth", "", listOf("8"), "", ""
         ),
         CharacterResponse(
-            123, "Character Name", "Alive", "Human", "Type",
+            123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
             "Male", "", "Earth", "", listOf("8"), "", ""
         ),
         CharacterResponse(
-            123, "Character Name", "Alive", "Human", "Type",
+            123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
             "Male", "", "Earth", "", listOf("8"), "", ""
         ),
         CharacterResponse(
-            123, "Character Name", "Alive", "Human", "Type",
+            123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
             "Male", "", "Earth", "", listOf("8"), "", ""
         )
     )

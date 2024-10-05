@@ -4,6 +4,8 @@ import com.stathis.data.repository.CharactersRepository
 import com.stathis.data.repository.CharactersRepositoryImpl
 import com.stathis.data.repository.EpisodesRepository
 import com.stathis.data.repository.EpisodesRepositoryImpl
+import com.stathis.database.db.CharactersLocalDatabase
+import com.stathis.network.service.RickAndMortyApi
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
