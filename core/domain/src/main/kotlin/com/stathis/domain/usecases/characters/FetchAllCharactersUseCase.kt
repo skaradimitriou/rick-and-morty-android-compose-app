@@ -1,6 +1,6 @@
 package com.stathis.domain.usecases.characters
 
-import com.stathis.data.repository.CharactersRepository
+import com.stathis.domain.repository.CharactersRepository
 import com.stathis.domain.usecases.BaseUseCase
 import com.stathis.model.characters.CharacterResponse
 import javax.inject.Inject

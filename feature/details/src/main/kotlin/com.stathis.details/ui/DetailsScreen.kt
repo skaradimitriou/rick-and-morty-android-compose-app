@@ -89,6 +89,11 @@ internal fun DetailsContent(
 
                 items(items = episodes) {
                     BasicCardWithText(
+                        modifier = Modifier.padding(
+                            top = dimensionResource(DimenRes.dimen_8),
+                            start = dimensionResource(DimenRes.dimen_16),
+                            end = dimensionResource(DimenRes.dimen_16),
+                        ),
                         title = it.name + " | " + it.episode,
                         description = it.airDate
                     )

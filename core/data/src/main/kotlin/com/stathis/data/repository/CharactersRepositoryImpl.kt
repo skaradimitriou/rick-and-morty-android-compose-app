@@ -4,10 +4,10 @@ import com.stathis.data.mapper.characters.CharacterMapper
 import com.stathis.database.db.CharactersLocalDatabase
 import com.stathis.database.util.toCharacter
 import com.stathis.database.util.toEntity
+import com.stathis.domain.repository.CharactersRepository
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.network.service.RickAndMortyApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map

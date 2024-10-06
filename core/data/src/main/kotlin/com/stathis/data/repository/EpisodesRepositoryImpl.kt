@@ -1,6 +1,7 @@
 package com.stathis.data.repository
 
 import com.stathis.data.mapper.episodes.EpisodesMapper
+import com.stathis.domain.repository.EpisodesRepository
 import com.stathis.model.episodes.Episode
 import com.stathis.network.service.RickAndMortyApi
 import kotlinx.coroutines.flow.Flow

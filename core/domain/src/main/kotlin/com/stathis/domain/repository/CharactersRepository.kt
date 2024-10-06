@@ -1,8 +1,7 @@
-package com.stathis.data.repository
+package com.stathis.domain.repository
 
 import com.stathis.model.characters.CharacterResponse
 import kotlinx.coroutines.flow.Flow
-
 
 interface CharactersRepository {
 

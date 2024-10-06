@@ -20,9 +20,7 @@ fun BasicCardWithText(
     description: String,
 ) {
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = dimensionResource(DimenRes.dimen_8))
+        modifier = modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier
