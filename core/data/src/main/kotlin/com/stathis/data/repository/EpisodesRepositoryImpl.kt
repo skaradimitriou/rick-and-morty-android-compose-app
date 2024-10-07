@@ -1,7 +1,9 @@
 package com.stathis.data.repository
 
 import com.stathis.data.mapper.episodes.EpisodesMapper
+import com.stathis.data.util.mapToDomainResult
 import com.stathis.domain.repository.EpisodesRepository
+import com.stathis.model.Result
 import com.stathis.model.episodes.Episode
 import com.stathis.network.service.RickAndMortyApi
 import kotlinx.coroutines.flow.Flow
@@ -12,10 +14,13 @@ data class EpisodesRepositoryImpl @Inject constructor(
     private val remoteDataSource: RickAndMortyApi
 ) : EpisodesRepository {
 
-    override suspend fun fetchEpisodeInfo(id: Int): Flow<Episode> = flow {
-        val result = remoteDataSource.getEpisodeById(id)?.body()
-        val mappedResult = EpisodesMapper.toDomainModel(result)
-        emit(mappedResult)
+    override suspend fun fetchEpisodeInfo(id: Int): Flow<Result<Episode>> = flow {
+        val result = mapToDomainResult(
+            networkCall = { remoteDataSource.getEpisodeById(id) },
+            mapping = { EpisodesMapper.toDomainModel(it) }
+        )
+
+        emit(result)
     }
 
     override suspend fun fetchMultipleEpisodeInfo(ids: List<String>): Flow<List<Episode>> = flow {

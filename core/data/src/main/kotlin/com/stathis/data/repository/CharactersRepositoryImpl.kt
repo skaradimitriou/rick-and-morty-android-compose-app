@@ -1,10 +1,12 @@
 package com.stathis.data.repository
 
 import com.stathis.data.mapper.characters.CharacterMapper
+import com.stathis.data.util.mapToDomainResult
 import com.stathis.database.db.CharactersLocalDatabase
 import com.stathis.database.util.toCharacter
 import com.stathis.database.util.toEntity
 import com.stathis.domain.repository.CharactersRepository
+import com.stathis.model.Result
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.network.service.RickAndMortyApi
 import kotlinx.coroutines.flow.Flow
@@ -18,23 +20,24 @@ class CharactersRepositoryImpl @Inject constructor(
     private val localDataSource: CharactersLocalDatabase
 ) : CharactersRepository {
 
-    override suspend fun getAllCharacters(): Flow<List<CharacterResponse>> = flow {
-        //FIXME: Temp solution. To be moved later on.
-
-        val data = CharacterMapper.toDomainModel(
-            dto = remoteDataSource.getAllCharacters()?.body()
+    override suspend fun getAllCharacters(): Flow<Result<List<CharacterResponse>>> = flow {
+        val result = mapToDomainResult(
+            networkCall = { remoteDataSource.getAllCharacters() },
+            mapping = { CharacterMapper.toDomainModel(it) }
         )
 
-        with(localDataSource.dao()) {
-            deleteAll()
-            insertAll(
-                data.results.map { it.toEntity() }
-            )
+        if (result is Result.Success) {
+            with(localDataSource.dao()) {
+                deleteAll()
+                insertAll(
+                    result.data.results.map { it.toEntity() }
+                )
 
-            getAllCharacters().map { dbResults ->
-                dbResults.map { it.toCharacter() }
-            }.collect {
-                emit(it)
+                getAllCharacters().map { dbResults ->
+                    dbResults.map { it.toCharacter() }
+                }.collect {
+                    emit(Result.Success(it))
+                }
             }
         }
     }

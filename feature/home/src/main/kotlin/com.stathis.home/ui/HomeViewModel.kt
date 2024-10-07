@@ -2,10 +2,12 @@ package com.stathis.home.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.stathis.common.di.IoDispatcher
 import com.stathis.domain.usecases.characters.FetchAllCharactersUseCase
+import com.stathis.model.Result
 import com.stathis.model.characters.CharacterResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -14,6 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
+    @IoDispatcher private val dispatcher: CoroutineDispatcher,
     private val useCase: FetchAllCharactersUseCase
 ) : ViewModel() {
 
@@ -22,18 +25,22 @@ internal class HomeViewModel @Inject constructor(
     val characters = _characters.asStateFlow()
 
     fun fetchAllCharacters() {
-        viewModelScope.launch(Dispatchers.IO) {
-            useCase.invoke().collect { data ->
+        viewModelScope.launch(dispatcher) {
+            useCase.invoke().collect { result ->
                 _characters.update {
-                    it.copy(
-                        results = data
-                    )
+                    when (result) {
+                        is Result.Loading -> it.copy(isLoading = true)
+                        is Result.Success -> it.copy(isLoading = false, results = result.data)
+                        is Result.Error -> it.copy(isLoading = false, errorMessage = result.message)
+                    }
                 }
             }
         }
     }
 
     data class UiState(
-        val results: List<CharacterResponse> = listOf()
+        var isLoading: Boolean = true,
+        var results: List<CharacterResponse> = listOf(),
+        val errorMessage: String = ""
     )
 }

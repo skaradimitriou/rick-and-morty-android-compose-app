@@ -16,12 +16,12 @@ interface RickAndMortyApi {
      */
 
     @GET(CHARACTER_ENDPOINT)
-    suspend fun getAllCharacters(): Response<CharacterWrapperDto>?
+    suspend fun getAllCharacters(): Response<CharacterWrapperDto?>
 
     @GET(CHARACTER_BY_ID_ENDPOINT)
     suspend fun getCharacterById(
         @Path(value = "id") id: Int
-    ): Response<CharacterResponseDto>?
+    ): Response<CharacterResponseDto?>
 
     /**
      * Endpoints for Episodes
@@ -30,10 +30,10 @@ interface RickAndMortyApi {
     @GET("episode/{id}")
     suspend fun getEpisodeById(
         @Path(value = "id") id: Int
-    ): Response<EpisodeDto>?
+    ): Response<EpisodeDto?>
 
     @GET("episode/{id}")
     suspend fun getMultipleEpisodesById(
         @Path(value = "id") ids: List<String>
-    ): Response<List<EpisodeDto>>?
+    ): Response<List<EpisodeDto?>>
 }

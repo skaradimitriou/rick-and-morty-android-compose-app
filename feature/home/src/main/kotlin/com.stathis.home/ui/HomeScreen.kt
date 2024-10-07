@@ -7,11 +7,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stathis.common.util.StringRes
 import com.stathis.designsystem.components.topbar.CustomTopAppBar
+import com.stathis.designsystem.theme.RickAndMortyAppTheme
 import com.stathis.home.ui.components.CharacterList
+import com.stathis.model.characters.CharacterResponse
+import com.stathis.model.characters.CharacterStatus
 
 @Composable
 internal fun HomeScreen(
@@ -29,7 +33,6 @@ internal fun HomeScreen(
         onCharacterClick = onCharacterClick
     )
 }
-
 
 @Composable
 internal fun HomeContent(
@@ -49,4 +52,27 @@ internal fun HomeContent(
             )
         }
     )
+}
+
+@Preview
+@Composable
+internal fun HomeContentPreview() {
+    RickAndMortyAppTheme {
+        val data = listOf(
+            CharacterResponse(
+                123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
+                "Male", "Somewhere", "Earth", "", listOf("8"), "", ""
+            ), CharacterResponse(
+                123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
+                "Male", "Somewhere", "Earth", "", listOf("8"), "", ""
+            ), CharacterResponse(
+                123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
+                "Male", "Somewhere", "Earth", "", listOf("8"), "", ""
+            )
+        )
+        HomeContent(
+            uiState = HomeViewModel.UiState(results = data),
+            onCharacterClick = {}
+        )
+    }
 }
