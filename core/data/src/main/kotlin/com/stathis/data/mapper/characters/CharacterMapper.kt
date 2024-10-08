@@ -1,5 +1,6 @@
 package com.stathis.data.mapper.characters
 
+import com.stathis.common.util.toListOf
 import com.stathis.data.mapper.BaseMapper
 import com.stathis.data.mapper.common.PaginationMapper
 import com.stathis.model.characters.CharacterWrapper
@@ -13,9 +14,7 @@ object CharacterMapper : BaseMapper<CharacterWrapperDto?, CharacterWrapper> {
         results = dto?.results.toDomainCharacters()
     )
 
-    private fun List<CharacterResponseDto>?.toDomainCharacters() = this?.map {
-        it.toDomainModel()
-    } ?: listOf()
+    private fun List<CharacterResponseDto>?.toDomainCharacters() = toListOf { it.toDomainModel() }
 
     private fun CharacterResponseDto?.toDomainModel() = CharacterResponseMapper.toDomainModel(this)
 }

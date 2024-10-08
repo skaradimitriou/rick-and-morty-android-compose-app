@@ -1,5 +1,6 @@
 package com.stathis.data.mapper.characters
 
+import com.stathis.common.util.toListOf
 import com.stathis.common.util.toNotNull
 import com.stathis.data.mapper.BaseMapper
 import com.stathis.model.characters.CharacterResponse
@@ -23,7 +24,5 @@ object CharacterResponseMapper : BaseMapper<CharacterResponseDto?, CharacterResp
         created = dto?.created.toNotNull()
     )
 
-    private fun List<String>?.toDomainEpisodeIds() = this?.map {
-        it.substringAfterLast("/")
-    } ?: listOf()
+    private fun List<String>?.toDomainEpisodeIds() = toListOf { it.substringAfterLast("/") }
 }

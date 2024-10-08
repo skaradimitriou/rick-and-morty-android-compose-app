@@ -1,5 +1,6 @@
 package com.stathis.data.mapper.episodes
 
+import com.stathis.common.util.toListOf
 import com.stathis.common.util.toNotNull
 import com.stathis.data.mapper.BaseMapper
 import com.stathis.model.episodes.Episode
@@ -12,7 +13,7 @@ object EpisodesMapper : BaseMapper<EpisodeDto?, Episode> {
         name = dto?.name.toNotNull(),
         airDate = dto?.air_date.toNotNull(),
         episode = dto?.episode.toNotNull(),
-        characters = dto?.characters?.map { it } ?: listOf(),
+        characters = dto?.characters.toListOf { it },
         url = dto?.url.toNotNull(),
         created = dto?.created.toNotNull()
     )
