@@ -63,8 +63,7 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(projects.core.designSystem)
-    implementation(projects.feature.home)
-    implementation(projects.feature.details)
+    implementation(projects.feature.characters)
 
     implementation(libs.androidx.navigation.compose)
 
