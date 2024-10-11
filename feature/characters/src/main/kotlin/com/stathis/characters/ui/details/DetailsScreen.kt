@@ -34,7 +34,8 @@ import com.stathis.model.episodes.Episode
 internal fun DetailsScreen(
     characterId: Int,
     viewModel: DetailsScreenViewModel = hiltViewModel(),
-    onBackNavIconClick: Callback
+    onBackNavIconClick: Callback,
+    onEpisodeClick: (Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -45,7 +46,8 @@ internal fun DetailsScreen(
     DetailsContent(
         character = uiState.character,
         episodes = uiState.episodes,
-        onBackNavIconClick = onBackNavIconClick
+        onBackNavIconClick = onBackNavIconClick,
+        onEpisodeClick = onEpisodeClick
     )
 }
 
@@ -53,7 +55,8 @@ internal fun DetailsScreen(
 internal fun DetailsContent(
     character: CharacterResponse?,
     episodes: List<Episode>,
-    onBackNavIconClick: Callback
+    onBackNavIconClick: Callback,
+    onEpisodeClick: (Int) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -62,7 +65,7 @@ internal fun DetailsContent(
                 startIcon = Icons.Default.ArrowBack,
                 startIconContentDesc = "Back Navigation Arrow",
                 startIconCallback = onBackNavIconClick,
-                title = stringResource(StringRes.details)
+                title = stringResource(StringRes.character_details)
             )
         },
         content = { paddingValues ->
@@ -95,7 +98,8 @@ internal fun DetailsContent(
                             end = dimensionResource(DimenRes.dimen_16),
                         ),
                         title = it.name + " | " + it.episode,
-                        description = it.airDate
+                        description = it.airDate,
+                        onItemClick = { onEpisodeClick(it.id) }
                     )
                 }
             }
@@ -114,6 +118,7 @@ internal fun DetailsContentPreview() {
     DetailsContent(
         character = model,
         episodes = listOf(),
-        onBackNavIconClick = {}
+        onBackNavIconClick = {},
+        onEpisodeClick = {}
     )
 }

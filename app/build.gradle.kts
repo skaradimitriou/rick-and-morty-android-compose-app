@@ -64,6 +64,7 @@ dependencies {
 
     implementation(projects.core.designSystem)
     implementation(projects.feature.characters)
+    implementation(projects.feature.episodes)
 
     implementation(libs.androidx.navigation.compose)
 

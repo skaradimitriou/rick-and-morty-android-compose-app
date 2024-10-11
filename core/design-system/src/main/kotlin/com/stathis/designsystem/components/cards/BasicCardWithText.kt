@@ -1,5 +1,6 @@
 package com.stathis.designsystem.components.cards
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import com.stathis.common.util.Callback
 import com.stathis.common.util.DimenRes
 
 @Composable
@@ -18,9 +20,12 @@ fun BasicCardWithText(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
+    onItemClick: Callback? = null,
 ) {
     Card(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { onItemClick?.invoke() }
     ) {
         Column(
             modifier = Modifier

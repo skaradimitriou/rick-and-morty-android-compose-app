@@ -4,19 +4,25 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.stathis.characters.navigation.model.DetailsScreen
+import com.stathis.characters.navigation.model.CharacterDetailsArgs
 import com.stathis.characters.ui.details.DetailsScreen
 import com.stathis.characters.ui.home.HomeScreen
 import com.stathis.common.util.Callback
 
-fun NavGraphBuilder.characterRoute(navController: NavController) {
+fun NavGraphBuilder.characterRoute(
+    navController: NavController,
+    onEpisodeClick: (Int) -> Unit
+) {
     homeRoute { characterId ->
-        navController.navigate(DetailsScreen(characterId))
+        navController.navigate(CharacterDetailsArgs(characterId))
     }
 
-    detailsScreenRoute {
-        navController.navigateUp()
-    }
+    detailsScreenRoute(
+        onBackNavIconClick = {
+            navController.navigateUp()
+        },
+        onEpisodeClick = onEpisodeClick
+    )
 }
 
 const val HomeRoute = "homeRoute"
@@ -28,12 +34,16 @@ internal fun NavGraphBuilder.homeRoute(onCharacterClick: (Int) -> Unit) {
     }
 }
 
-internal fun NavGraphBuilder.detailsScreenRoute(onBackNavIconClick: Callback) {
-    composable<DetailsScreen> {
-        val args = it.toRoute<DetailsScreen>()
+internal fun NavGraphBuilder.detailsScreenRoute(
+    onBackNavIconClick: Callback,
+    onEpisodeClick: (Int) -> Unit
+) {
+    composable<CharacterDetailsArgs> {
+        val args = it.toRoute<CharacterDetailsArgs>()
         DetailsScreen(
             characterId = args.characterId,
-            onBackNavIconClick = onBackNavIconClick
+            onBackNavIconClick = onBackNavIconClick,
+            onEpisodeClick = onEpisodeClick
         )
     }
 }
