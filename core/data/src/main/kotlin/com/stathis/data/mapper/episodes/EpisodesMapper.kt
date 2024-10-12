@@ -13,7 +13,7 @@ object EpisodesMapper : BaseMapper<EpisodeDto?, Episode> {
         name = dto?.name.toNotNull(),
         airDate = dto?.air_date.toNotNull(),
         episode = dto?.episode.toNotNull(),
-        characters = dto?.characters.toListOf { it },
+        characters = dto?.characters.toListOf { it.substringAfterLast("/") },
         url = dto?.url.toNotNull(),
         created = dto?.created.toNotNull()
     )

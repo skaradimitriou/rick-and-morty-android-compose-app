@@ -1,5 +1,6 @@
 package com.stathis.data.repository
 
+import com.stathis.data.mapper.characters.CharacterListMapper
 import com.stathis.data.mapper.characters.CharacterMapper
 import com.stathis.data.util.mapToDomainResult
 import com.stathis.database.db.CharactersLocalDatabase
@@ -46,5 +47,14 @@ class CharactersRepositoryImpl @Inject constructor(
         return localDataSource.dao().getCharacterById(id).map {
             it?.toCharacter()
         }.filterNotNull()
+    }
+
+    override suspend fun getMultipleCharacterById(ids: List<String>): Flow<Result<List<CharacterResponse>>> = flow {
+        val result = mapToDomainResult(
+            networkCall = { remoteDataSource.getMultipleCharactersById(ids) },
+            mapping = { CharacterListMapper.toDomainModel(it) }
+        )
+
+        emit(result)
     }
 }

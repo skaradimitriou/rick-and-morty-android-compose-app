@@ -9,4 +9,6 @@ interface CharactersRepository {
     suspend fun getAllCharacters(): Flow<Result<List<CharacterResponse>>>
 
     suspend fun getCharacterById(id: Int): Flow<CharacterResponse>
+
+    suspend fun getMultipleCharacterById(ids: List<String>): Flow<Result<List<CharacterResponse>>>
 }

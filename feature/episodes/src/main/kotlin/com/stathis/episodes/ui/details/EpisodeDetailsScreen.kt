@@ -10,6 +10,8 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -17,7 +19,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.stathis.common.util.Callback
 import com.stathis.common.util.StringRes
 import com.stathis.designsystem.components.topbar.CustomTopAppBar
-import kotlin.random.Random
 
 @Composable
 internal fun EpisodeDetailsScreen(
@@ -27,8 +28,14 @@ internal fun EpisodeDetailsScreen(
     onCharacterClick: (Int) -> Unit
 ) {
 
+    val state = viewModel.episodes.collectAsState()
+
+    LaunchedEffect(key1 = true) {
+        viewModel.fetchEpisodeDetails(episodeId)
+    }
+
     EpisodeDetailsContent(
-        episodeId = episodeId,
+        state = state.value,
         onBackNavIconClick = onBackNavIconClick,
         onCharacterClick = onCharacterClick
     )
@@ -36,7 +43,7 @@ internal fun EpisodeDetailsScreen(
 
 @Composable
 internal fun EpisodeDetailsContent(
-    episodeId: Int,
+    state: EpisodeDetailsViewModel.UiState,
     onBackNavIconClick: Callback,
     onCharacterClick: (Int) -> Unit
 ) {
@@ -62,10 +69,10 @@ internal fun EpisodeDetailsContent(
                             .fillMaxWidth()
                             .padding(all = 16.dp)
                             .clickable {
-                                val random = Random.nextInt(5) + 1
-                                onCharacterClick(random)
+                                //FIXME: Add logic
                             },
-                        text = "You're looking for $episodeId"
+                        text = "Episode Details ${state.episodeDetails?.episode} \n\n " +
+                                "Characters => ${state.episodeDetails?.characters}"
                     )
                 }
             }
