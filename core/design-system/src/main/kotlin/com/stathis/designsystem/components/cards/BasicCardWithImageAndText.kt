@@ -31,7 +31,6 @@ fun BasicCardWithImageAndText(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = dimensionResource(DimenRes.dimen_8))
             .clickable {
                 onClick()
             }

@@ -14,7 +14,6 @@ typealias Callback = () -> Unit
 
 typealias DimenRes = R.dimen
 
-
 /**
  * String typealias
  */

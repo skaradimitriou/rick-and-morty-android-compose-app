@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -25,10 +23,10 @@ import com.stathis.common.util.Callback
 import com.stathis.common.util.DimenRes
 import com.stathis.common.util.StringRes
 import com.stathis.designsystem.components.cards.BasicCardWithText
-import com.stathis.designsystem.components.topbar.CustomTopAppBar
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.characters.CharacterStatus
 import com.stathis.model.episodes.Episode
+import com.stathis.ui.topbars.TopBarWithBackNavIcon
 
 @Composable
 internal fun DetailsScreen(
@@ -61,11 +59,9 @@ internal fun DetailsContent(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            CustomTopAppBar(
-                startIcon = Icons.Default.ArrowBack,
-                startIconContentDesc = "Back Navigation Arrow",
-                startIconCallback = onBackNavIconClick,
-                title = stringResource(StringRes.character_details)
+            TopBarWithBackNavIcon(
+                title = stringResource(StringRes.character_details),
+                onBackNavigationIconClick = onBackNavIconClick
             )
         },
         content = { paddingValues ->

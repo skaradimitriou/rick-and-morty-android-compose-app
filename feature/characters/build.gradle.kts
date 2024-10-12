@@ -16,6 +16,7 @@ dependencies {
     implementation(projects.core.domain)
     implementation(projects.core.data)
     implementation(projects.core.model)
+    implementation(projects.core.ui)
 
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlin.serialization.json)

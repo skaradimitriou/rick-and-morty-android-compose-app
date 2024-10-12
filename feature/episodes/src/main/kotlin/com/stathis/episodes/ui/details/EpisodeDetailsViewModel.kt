@@ -20,7 +20,6 @@ internal class EpisodeDetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _episodes: MutableStateFlow<UiState> = MutableStateFlow<UiState>(UiState())
-
     val episodes = _episodes.asStateFlow()
 
     fun fetchEpisodeDetails(episodeId: Int) {

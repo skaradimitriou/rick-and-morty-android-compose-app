@@ -11,10 +11,10 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.stathis.common.util.DimenRes
-import com.stathis.designsystem.components.cards.BasicCardWithImageAndText
 import com.stathis.designsystem.theme.RickAndMortyAppTheme
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.characters.CharacterStatus
+import com.stathis.ui.CharacterDisplayCard
 
 @Composable
 internal fun CharacterList(
@@ -25,18 +25,17 @@ internal fun CharacterList(
     LazyColumn(
         modifier = Modifier
             .navigationBarsPadding()
-            .padding(horizontal = dimensionResource(DimenRes.dimen_8))
             .padding(top = paddingValues.calculateTopPadding())
     ) {
         items(items = characters) { character ->
-            BasicCardWithImageAndText(
-                title = character.name,
-                description = character.species,
-                imageUrl = character.image,
-                contentDescription = character.name,
-                onClick = {
-                    onCharacterClick(character.id)
-                }
+            CharacterDisplayCard(
+                modifier = Modifier.padding(
+                    top = dimensionResource(DimenRes.dimen_8),
+                    start = dimensionResource(DimenRes.dimen_16),
+                    end = dimensionResource(DimenRes.dimen_16),
+                ),
+                character = character,
+                onCharacterClick = onCharacterClick
             )
         }
     }
