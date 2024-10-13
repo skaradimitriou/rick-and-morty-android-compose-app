@@ -1,7 +1,17 @@
 <resources>
     <string name="app_name">RickAndMortyApp</string>
 
+    <!-- Home Screen -->
     <string name="home">Home</string>
+
+    <!-- Character Details -->
     <string name="character_details">Character Details</string>
+
+    <!-- Episode Details -->
     <string name="episode_details">Episode Details</string>
+    <string name="characters">Characters</string>
+    <string name="episode_name">Episode : %s</string>
+    <string name="episode_air_date">Air Date : %s</string>
+
+
 </resources>
