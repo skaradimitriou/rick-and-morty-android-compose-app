@@ -1,13 +1,12 @@
 package com.stathis.data.mapper.characters
 
-import com.stathis.model.characters.CharacterResponse
-import com.stathis.model.characters.CharacterStatus
 import com.stathis.model.characters.CharacterWrapper
 import com.stathis.model.common.PaginationInfo
 import com.stathis.network.model.characters.CharacterInformationDto
 import com.stathis.network.model.characters.CharacterResponseDto
 import com.stathis.network.model.characters.CharacterWrapperDto
 import com.stathis.network.model.common.PaginationInfoDto
+import com.stathis.testing.CharactersFakes
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -57,22 +56,7 @@ class CharacterMapperTest {
 
         val expected = CharacterWrapper(
             info = PaginationInfo(0, 0, "", 0),
-            results = listOf(
-                CharacterResponse(
-                    id = 123,
-                    name = "Character Name",
-                    status = CharacterStatus.ALIVE,
-                    species = "Human",
-                    type = "Type",
-                    gender = "Male",
-                    origin = "Somewhere",
-                    location = "Earth",
-                    image = "",
-                    episode = listOf("8"),
-                    url = "",
-                    created = ""
-                )
-            )
+            results = listOf(CharactersFakes.provideDummyCharacter())
         )
 
         assertEquals(domainModel, expected)

@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.stathis.common.util.DimenRes
 import com.stathis.common.util.toNotNull
 import com.stathis.model.characters.CharacterResponse
-import com.stathis.model.characters.CharacterStatus
+import com.stathis.testing.CharactersFakes
 
 @Composable
 internal fun CharacterDetails(
@@ -60,11 +60,7 @@ internal fun CharacterDetails(
 
 @Preview(showBackground = true)
 @Composable
-internal fun CharacterDetailsPreview(modifier: Modifier = Modifier) {
-    val model = CharacterResponse(
-        123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
-        "Male", "Somewhere", "Earth", "", listOf("8"), "", ""
-    )
-
+internal fun CharacterDetailsPreview() {
+    val model = CharactersFakes.provideDummyCharacter()
     CharacterDetails(character = model)
 }

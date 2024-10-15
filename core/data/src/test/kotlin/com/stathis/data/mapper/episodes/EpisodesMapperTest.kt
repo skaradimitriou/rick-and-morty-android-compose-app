@@ -1,7 +1,7 @@
 package com.stathis.data.mapper.episodes
 
-import com.stathis.model.episodes.Episode
 import com.stathis.network.model.episodes.EpisodeDto
+import com.stathis.testing.EpisodeFakes
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -11,15 +11,7 @@ class EpisodesMapperTest {
     fun `mapping of EpisodeDto to empty Episode model on null input`() {
         val dtoModel: EpisodeDto? = null
         val domainModel = EpisodesMapper.toDomainModel(dtoModel)
-        val expected = Episode(
-            id = 0,
-            name = "",
-            airDate = "",
-            episode = "",
-            characters = listOf(),
-            url = "",
-            created = ""
-        )
+        val expected = EpisodeFakes.provideEmptyEpisode()
         assertEquals(domainModel, expected)
     }
 
@@ -35,15 +27,7 @@ class EpisodesMapperTest {
             created = "XX-XX-2024"
         )
         val domainModel = EpisodesMapper.toDomainModel(dtoModel)
-        val expected = Episode(
-            id = 123,
-            name = "Some episode name",
-            airDate = "XX-XX-2024",
-            episode = "#123",
-            characters = listOf(),
-            url = "https://www.myepisode.com/123",
-            created = "XX-XX-2024"
-        )
+        val expected = EpisodeFakes.provideDummyEpisode()
         assertEquals(domainModel, expected)
     }
 }

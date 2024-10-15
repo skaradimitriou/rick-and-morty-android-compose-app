@@ -14,8 +14,7 @@ import com.stathis.characters.ui.home.components.CharacterList
 import com.stathis.common.util.StringRes
 import com.stathis.designsystem.components.topbar.CustomTopAppBar
 import com.stathis.designsystem.theme.RickAndMortyAppTheme
-import com.stathis.model.characters.CharacterResponse
-import com.stathis.model.characters.CharacterStatus
+import com.stathis.testing.CharactersFakes
 
 @Composable
 internal fun HomeScreen(
@@ -58,18 +57,7 @@ internal fun HomeContent(
 @Composable
 internal fun HomeContentPreview() {
     RickAndMortyAppTheme {
-        val data = listOf(
-            CharacterResponse(
-                123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
-                "Male", "Somewhere", "Earth", "", listOf("8"), "", ""
-            ), CharacterResponse(
-                123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
-                "Male", "Somewhere", "Earth", "", listOf("8"), "", ""
-            ), CharacterResponse(
-                123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
-                "Male", "Somewhere", "Earth", "", listOf("8"), "", ""
-            )
-        )
+        val data = CharactersFakes.provideDummyCharacterList()
         HomeContent(
             uiState = HomeViewModel.UiState(results = data),
             onCharacterClick = {}

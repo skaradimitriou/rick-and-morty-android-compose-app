@@ -22,6 +22,7 @@ import com.stathis.designsystem.components.images.CoilImage
 import com.stathis.designsystem.components.shapes.CustomShape
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.characters.CharacterStatus
+import com.stathis.testing.CharactersFakes
 
 @Composable
 internal fun BasicCharacterInfo(character: CharacterResponse?) {
@@ -61,11 +62,7 @@ internal fun BasicCharacterInfo(character: CharacterResponse?) {
 
 @Preview(showBackground = true)
 @Composable
-internal fun BasicCharacterInfoPreview(modifier: Modifier = Modifier) {
-    val model = CharacterResponse(
-        123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
-        "Male", "Somewhere", "Earth", "", listOf("8"), "", ""
-    )
-
+internal fun BasicCharacterInfoPreview() {
+    val model = CharactersFakes.provideDummyCharacter()
     BasicCharacterInfo(character = model)
 }

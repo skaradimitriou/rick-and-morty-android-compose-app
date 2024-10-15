@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.stathis.common.util.DimenRes
 import com.stathis.designsystem.theme.RickAndMortyAppTheme
 import com.stathis.model.characters.CharacterResponse
-import com.stathis.model.characters.CharacterStatus
+import com.stathis.testing.CharactersFakes
 import com.stathis.ui.CharacterDisplayCard
 
 @Composable
@@ -44,29 +44,7 @@ internal fun CharacterList(
 @Preview
 @Composable
 fun CharacterListPreview() {
-    val dummyList = listOf(
-        CharacterResponse(
-            123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
-            "Male", "", "Earth", "", listOf("8"), "", ""
-        ),
-        CharacterResponse(
-            123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
-            "Male", "", "Earth", "", listOf("8"), "", ""
-        ),
-        CharacterResponse(
-            123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
-            "Male", "", "Earth", "", listOf("8"), "", ""
-        ),
-        CharacterResponse(
-            123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
-            "Male", "", "Earth", "", listOf("8"), "", ""
-        ),
-        CharacterResponse(
-            123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
-            "Male", "", "Earth", "", listOf("8"), "", ""
-        )
-    )
-
+    val dummyList = CharactersFakes.provideDummyCharacterList()
     RickAndMortyAppTheme {
         CharacterList(
             paddingValues = PaddingValues(all = 10.dp),

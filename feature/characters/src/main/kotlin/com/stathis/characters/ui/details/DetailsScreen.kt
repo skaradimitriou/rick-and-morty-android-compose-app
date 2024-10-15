@@ -24,8 +24,8 @@ import com.stathis.common.util.DimenRes
 import com.stathis.common.util.StringRes
 import com.stathis.designsystem.components.cards.BasicCardWithText
 import com.stathis.model.characters.CharacterResponse
-import com.stathis.model.characters.CharacterStatus
 import com.stathis.model.episodes.Episode
+import com.stathis.testing.CharactersFakes
 import com.stathis.ui.topbars.TopBarWithBackNavIcon
 
 @Composable
@@ -106,11 +106,7 @@ internal fun DetailsContent(
 @Preview(showBackground = true)
 @Composable
 internal fun DetailsContentPreview() {
-    val model = CharacterResponse(
-        123, "Character Name", CharacterStatus.ALIVE, "Human", "Type",
-        "Male", "Somewhere", "Earth", "", listOf("8"), "", ""
-    )
-
+    val model = CharactersFakes.provideDummyCharacter()
     DetailsContent(
         character = model,
         episodes = listOf(),

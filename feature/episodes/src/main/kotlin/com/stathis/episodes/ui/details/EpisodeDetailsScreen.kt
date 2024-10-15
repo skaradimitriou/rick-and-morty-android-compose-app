@@ -21,9 +21,8 @@ import com.stathis.domain.usecases.episodes.FetchEpisodeDetailsUseCase
 import com.stathis.episodes.ui.details.components.displayCharacters
 import com.stathis.episodes.ui.details.components.displayEpisodeInfo
 import com.stathis.episodes.ui.details.model.EpisodeDetailsUiState
-import com.stathis.model.characters.CharacterResponse
-import com.stathis.model.characters.CharacterStatus
-import com.stathis.model.episodes.Episode
+import com.stathis.testing.CharactersFakes
+import com.stathis.testing.EpisodeFakes
 import com.stathis.ui.error.ErrorScreen
 import com.stathis.ui.loading.LoadingScreen
 import com.stathis.ui.topbars.TopBarWithBackNavIcon
@@ -129,31 +128,8 @@ internal fun EpisodeDetailsContentPreview() {
         Content(
             paddingValues = PaddingValues(all = dimensionResource(DimenRes.dimen_8)),
             data = FetchEpisodeDetailsUseCase.EpisodeDetails(
-                episode = Episode(
-                    id = 123,
-                    name = "Some episode name",
-                    airDate = "XX-XX-2024",
-                    episode = "#123",
-                    characters = listOf(),
-                    url = "https://www.myepisode.com/123",
-                    created = "XX-XX-2024"
-                ),
-                characters = listOf(
-                    CharacterResponse(
-                        id = 123,
-                        name = "Character Name",
-                        status = CharacterStatus.ALIVE,
-                        species = "Human",
-                        type = "Type",
-                        gender = "Male",
-                        origin = "Somewhere",
-                        location = "Earth",
-                        image = "",
-                        episode = listOf("8"),
-                        url = "",
-                        created = ""
-                    )
-                )
+                episode = EpisodeFakes.provideDummyEpisode(),
+                characters = CharactersFakes.provideDummyCharacterList()
             ),
             onCharacterClick = {},
         )
