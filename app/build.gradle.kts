@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(projects.core.designSystem)
+    implementation(projects.core.common)
     implementation(projects.feature.characters)
     implementation(projects.feature.episodes)
 

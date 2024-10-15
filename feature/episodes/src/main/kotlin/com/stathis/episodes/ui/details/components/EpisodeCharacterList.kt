@@ -14,7 +14,7 @@ import com.stathis.common.util.StringRes
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.ui.CharacterDisplayCard
 
-fun LazyListScope.displayCharacters(
+internal fun LazyListScope.displayCharacters(
     characters: List<CharacterResponse>,
     onCharacterClick: (Int) -> Unit
 ) {

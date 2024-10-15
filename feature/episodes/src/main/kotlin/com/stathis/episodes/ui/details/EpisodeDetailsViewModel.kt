@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.stathis.common.di.IoDispatcher
 import com.stathis.domain.usecases.episodes.FetchEpisodeDetailsUseCase
+import com.stathis.episodes.ui.details.model.EpisodeDetailsUiState
 import com.stathis.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,36 +20,29 @@ internal class EpisodeDetailsViewModel @Inject constructor(
     private val useCase: FetchEpisodeDetailsUseCase
 ) : ViewModel() {
 
-    private val _episodes: MutableStateFlow<UiState> = MutableStateFlow<UiState>(UiState())
+    private val _episodes = MutableStateFlow<EpisodeDetailsUiState>(EpisodeDetailsUiState.Loading)
     val episodes = _episodes.asStateFlow()
 
     fun fetchEpisodeDetails(episodeId: Int) {
         viewModelScope.launch(dispatcher) {
             useCase.invoke(episodeId).collect { result ->
                 when (result) {
-                    is Result.Loading -> {
-                        _episodes.update { it.copy(isLoading = true) }
+                    is Result.Loading -> _episodes.update {
+                        EpisodeDetailsUiState.Loading
                     }
 
-                    is Result.Success -> {
-                        _episodes.update {
-                            it.copy(isLoading = false, episodeDetails = result.data)
-                        }
+                    is Result.Success -> _episodes.update {
+                        EpisodeDetailsUiState.Content(result.data)
                     }
 
-                    is Result.Error -> {
-                        _episodes.update {
-                            it.copy(isLoading = false, error = result.message)
-                        }
+                    is Result.Error -> _episodes.update {
+                        EpisodeDetailsUiState.Error(
+                            errorTitle = "Something went wrong",
+                            errorDescription = result.message
+                        )
                     }
                 }
             }
         }
     }
-
-    data class UiState(
-        var isLoading: Boolean = true,
-        var episodeDetails: FetchEpisodeDetailsUseCase.EpisodeDetails? = null,
-        var error: String = ""
-    )
 }

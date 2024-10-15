@@ -16,7 +16,7 @@ import com.stathis.common.util.StringRes
 import com.stathis.common.util.toNotNull
 import com.stathis.model.episodes.Episode
 
-fun LazyListScope.displayEpisodeInfo(episode: Episode) {
+internal fun LazyListScope.displayEpisodeInfo(episode: Episode) {
     item {
         Column(
             modifier = Modifier.padding(

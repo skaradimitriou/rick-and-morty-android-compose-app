@@ -1,5 +1,6 @@
 package com.stathis.episodes.ui.details
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,12 +9,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.stathis.common.util.Callback
+import com.stathis.common.util.DimenRes
 import com.stathis.common.util.StringRes
+import com.stathis.designsystem.theme.RickAndMortyAppTheme
+import com.stathis.domain.usecases.episodes.FetchEpisodeDetailsUseCase
 import com.stathis.episodes.ui.details.components.displayCharacters
 import com.stathis.episodes.ui.details.components.displayEpisodeInfo
+import com.stathis.episodes.ui.details.model.EpisodeDetailsUiState
+import com.stathis.model.characters.CharacterResponse
+import com.stathis.model.characters.CharacterStatus
+import com.stathis.model.episodes.Episode
+import com.stathis.ui.error.ErrorScreen
+import com.stathis.ui.loading.LoadingScreen
 import com.stathis.ui.topbars.TopBarWithBackNavIcon
 
 @Composable
@@ -30,7 +42,7 @@ internal fun EpisodeDetailsScreen(
     }
 
     EpisodeDetailsContent(
-        state = state.value,
+        uiState = state.value,
         onBackNavIconClick = onBackNavIconClick,
         onCharacterClick = onCharacterClick
     )
@@ -38,7 +50,7 @@ internal fun EpisodeDetailsScreen(
 
 @Composable
 internal fun EpisodeDetailsContent(
-    state: EpisodeDetailsViewModel.UiState,
+    uiState: EpisodeDetailsUiState,
     onBackNavIconClick: Callback,
     onCharacterClick: (Int) -> Unit
 ) {
@@ -51,22 +63,111 @@ internal fun EpisodeDetailsContent(
             )
         },
         content = { paddingValues ->
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-            ) {
-                state.episodeDetails?.episode?.let { episode ->
-                    displayEpisodeInfo(episode = episode)
+            when (uiState) {
+                is EpisodeDetailsUiState.Loading -> {
+                    LoadingScreen(paddingValues = paddingValues)
                 }
 
-                state.episodeDetails?.characters?.let { characters ->
-                    displayCharacters(
-                        characters = characters,
+                is EpisodeDetailsUiState.Content -> {
+                    Content(
+                        paddingValues = paddingValues,
+                        data = uiState.data,
                         onCharacterClick = onCharacterClick
+                    )
+                }
+
+                is EpisodeDetailsUiState.Error -> {
+                    ErrorScreen(
+                        paddingValues = paddingValues,
+                        title = uiState.errorTitle,
+                        description = uiState.errorDescription
                     )
                 }
             }
         }
     )
+}
+
+@Composable
+internal fun Content(
+    paddingValues: PaddingValues,
+    data: FetchEpisodeDetailsUseCase.EpisodeDetails,
+    onCharacterClick: (Int) -> Unit
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+    ) {
+        data.episode?.let { episode ->
+            displayEpisodeInfo(episode = episode)
+        }
+
+        data.characters?.let { characters ->
+            displayCharacters(
+                characters = characters,
+                onCharacterClick = onCharacterClick
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+internal fun EpisodeDetailsLoadingPreview() {
+    RickAndMortyAppTheme {
+        LoadingScreen(
+            paddingValues = PaddingValues(all = dimensionResource(DimenRes.dimen_8))
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+internal fun EpisodeDetailsContentPreview() {
+    RickAndMortyAppTheme {
+        Content(
+            paddingValues = PaddingValues(all = dimensionResource(DimenRes.dimen_8)),
+            data = FetchEpisodeDetailsUseCase.EpisodeDetails(
+                episode = Episode(
+                    id = 123,
+                    name = "Some episode name",
+                    airDate = "XX-XX-2024",
+                    episode = "#123",
+                    characters = listOf(),
+                    url = "https://www.myepisode.com/123",
+                    created = "XX-XX-2024"
+                ),
+                characters = listOf(
+                    CharacterResponse(
+                        id = 123,
+                        name = "Character Name",
+                        status = CharacterStatus.ALIVE,
+                        species = "Human",
+                        type = "Type",
+                        gender = "Male",
+                        origin = "Somewhere",
+                        location = "Earth",
+                        image = "",
+                        episode = listOf("8"),
+                        url = "",
+                        created = ""
+                    )
+                )
+            ),
+            onCharacterClick = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+internal fun EpisodeDetailsErrorPreview() {
+    RickAndMortyAppTheme {
+        ErrorScreen(
+            paddingValues = PaddingValues(all = dimensionResource(DimenRes.dimen_8)),
+            title = "Something went wrong",
+            description = "Server timeout"
+        )
+    }
 }
