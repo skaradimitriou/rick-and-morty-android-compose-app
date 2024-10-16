@@ -26,23 +26,17 @@ internal class EpisodeDetailsViewModel @Inject constructor(
     fun fetchEpisodeDetails(episodeId: Int) {
         viewModelScope.launch(dispatcher) {
             useCase.invoke(episodeId).collect { result ->
-                when (result) {
-                    is Result.Loading -> _episodes.update {
-                        EpisodeDetailsUiState.Loading
-                    }
-
-                    is Result.Success -> _episodes.update {
-                        EpisodeDetailsUiState.Content(result.data)
-                    }
-
-                    is Result.Error -> _episodes.update {
-                        EpisodeDetailsUiState.Error(
-                            errorTitle = "Something went wrong",
-                            errorDescription = result.message
-                        )
-                    }
-                }
+                _episodes.update { result.toUiState() }
             }
         }
+    }
+
+    private fun Result<FetchEpisodeDetailsUseCase.EpisodeDetails>.toUiState() = when (this) {
+        is Result.Loading -> EpisodeDetailsUiState.Loading
+        is Result.Success -> EpisodeDetailsUiState.Content(data)
+        is Result.Error -> EpisodeDetailsUiState.Error(
+            errorTitle = "Something went wrong",
+            errorDescription = message
+        )
     }
 }

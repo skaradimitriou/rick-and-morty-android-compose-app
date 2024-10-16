@@ -2,6 +2,7 @@ package com.stathis.characters.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.stathis.characters.ui.home.model.HomeScreenUiState
 import com.stathis.common.di.IoDispatcher
 import com.stathis.domain.usecases.characters.FetchAllCharactersUseCase
 import com.stathis.model.Result
@@ -20,27 +21,23 @@ internal class HomeViewModel @Inject constructor(
     private val useCase: FetchAllCharactersUseCase
 ) : ViewModel() {
 
-    private val _characters = MutableStateFlow(UiState())
-
-    val characters = _characters.asStateFlow()
+    private val _uiState: MutableStateFlow<HomeScreenUiState> = MutableStateFlow(HomeScreenUiState.Loading)
+    val uiState = _uiState.asStateFlow()
 
     fun fetchAllCharacters() {
         viewModelScope.launch(dispatcher) {
             useCase.invoke().collect { result ->
-                _characters.update {
-                    when (result) {
-                        is Result.Loading -> it.copy(isLoading = true)
-                        is Result.Success -> it.copy(isLoading = false, results = result.data)
-                        is Result.Error -> it.copy(isLoading = false, errorMessage = result.message)
-                    }
-                }
+                _uiState.update { result.toUiState() }
             }
         }
     }
 
-    data class UiState(
-        var isLoading: Boolean = true,
-        var results: List<CharacterResponse> = listOf(),
-        val errorMessage: String = ""
-    )
+    private fun Result<List<CharacterResponse>>.toUiState() = when (this) {
+        is Result.Loading -> HomeScreenUiState.Loading
+        is Result.Success -> HomeScreenUiState.Content(data)
+        is Result.Error -> HomeScreenUiState.Error(
+            title = "Something went wrong",
+            description = message
+        )
+    }
 }

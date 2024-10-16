@@ -25,6 +25,9 @@ object EpisodeFakes {
     )
 
     fun provideDummyEpisodeList(): List<Episode> = listOf(
-
+        provideDummyEpisode(),
+        provideDummyEpisode(),
+        provideDummyEpisode(),
+        provideDummyEpisode()
     )
 }

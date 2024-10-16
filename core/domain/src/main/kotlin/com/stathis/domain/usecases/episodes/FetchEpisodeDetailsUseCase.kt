@@ -8,8 +8,6 @@ import com.stathis.domain.usecases.episodes.FetchEpisodeDetailsUseCase.EpisodeDe
 import com.stathis.model.Result
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.episodes.Episode
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -23,34 +21,31 @@ class FetchEpisodeDetailsUseCase @Inject constructor(
         val id = (args.getOrNull(0) as? Int?).toNotNull()
         val model = EpisodeDetails()
 
-        coroutineScope {
-            async { episodesRepository.fetchEpisodeInfo(id) }.await().collect { episodeResult ->
-                when (episodeResult) {
-                    is Result.Loading -> Unit
+        episodesRepository.fetchEpisodeInfo(id).collect { episodeResult ->
+            when (episodeResult) {
+                is Result.Loading -> Unit
 
-                    is Result.Success -> {
-                        model.episode = episodeResult.data
+                is Result.Success -> {
+                    model.episode = episodeResult.data
 
-                        async { charactersRepository.getMultipleCharacterById(episodeResult.data.characters) }
-                            .await()
-                            .collect { charactersResult ->
-                                when (charactersResult) {
-                                    is Result.Loading -> Unit
+                    charactersRepository.getMultipleCharacterById(episodeResult.data.characters)
+                        .collect { charactersResult ->
+                            when (charactersResult) {
+                                is Result.Loading -> Unit
 
-                                    is Result.Success -> {
-                                        model.characters = charactersResult.data
-                                        emit(Result.Success(data = model))
-                                    }
+                                is Result.Success -> {
+                                    model.characters = charactersResult.data
+                                    emit(Result.Success(data = model))
+                                }
 
-                                    is Result.Error -> {
-                                        emit(Result.Error(charactersResult.errorCode, charactersResult.message))
-                                    }
+                                is Result.Error -> {
+                                    emit(Result.Error(charactersResult.errorCode, charactersResult.message))
                                 }
                             }
-                    }
-
-                    is Result.Error -> emit(Result.Error(episodeResult.errorCode, episodeResult.message))
+                        }
                 }
+
+                is Result.Error -> emit(Result.Error(episodeResult.errorCode, episodeResult.message))
             }
         }
     }

@@ -11,17 +11,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stathis.characters.ui.home.components.CharacterList
+import com.stathis.characters.ui.home.model.HomeScreenUiState
 import com.stathis.common.util.StringRes
 import com.stathis.designsystem.components.topbar.CustomTopAppBar
 import com.stathis.designsystem.theme.RickAndMortyAppTheme
 import com.stathis.testing.CharactersFakes
+import com.stathis.ui.error.ErrorScreen
+import com.stathis.ui.loading.LoadingScreen
 
 @Composable
 internal fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onCharacterClick: (Int) -> Unit
 ) {
-    val uiState by viewModel.characters.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(key1 = true) {
         viewModel.fetchAllCharacters()
@@ -35,7 +38,7 @@ internal fun HomeScreen(
 
 @Composable
 internal fun HomeContent(
-    uiState: HomeViewModel.UiState,
+    uiState: HomeScreenUiState,
     onCharacterClick: (Int) -> Unit
 ) {
     Scaffold(
@@ -44,22 +47,63 @@ internal fun HomeContent(
             CustomTopAppBar(title = stringResource(StringRes.home))
         },
         content = { paddingValues ->
-            CharacterList(
-                paddingValues = paddingValues,
-                characters = uiState.results,
-                onCharacterClick = onCharacterClick
-            )
+            when (uiState) {
+                is HomeScreenUiState.Loading -> {
+                    LoadingScreen(paddingValues = paddingValues)
+                }
+
+                is HomeScreenUiState.Content -> {
+                    CharacterList(
+                        paddingValues = paddingValues,
+                        characters = uiState.data,
+                        onCharacterClick = onCharacterClick
+                    )
+                }
+
+                is HomeScreenUiState.Error -> {
+                    ErrorScreen(
+                        paddingValues = paddingValues,
+                        title = uiState.title,
+                        description = uiState.description
+                    )
+                }
+            }
         }
     )
 }
 
 @Preview
 @Composable
-internal fun HomeContentPreview() {
+internal fun HomeScreenLoadingPreview() {
+    RickAndMortyAppTheme {
+        HomeContent(
+            uiState = HomeScreenUiState.Loading,
+            onCharacterClick = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+internal fun HomeScreenContentPreview() {
     RickAndMortyAppTheme {
         val data = CharactersFakes.provideDummyCharacterList()
         HomeContent(
-            uiState = HomeViewModel.UiState(results = data),
+            uiState = HomeScreenUiState.Content(data = data),
+            onCharacterClick = {}
+        )
+    }
+}
+
+@Preview
+@Composable
+internal fun HomeScreenErrorPreview() {
+    RickAndMortyAppTheme {
+        HomeContent(
+            uiState = HomeScreenUiState.Error(
+                title = "Something went wrong",
+                description = "Server timeout."
+            ),
             onCharacterClick = {}
         )
     }

@@ -2,11 +2,10 @@ package com.stathis.characters.ui.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.stathis.characters.ui.details.model.DetailsScreenUiState
 import com.stathis.common.di.IoDispatcher
-import com.stathis.common.util.toNotNull
 import com.stathis.domain.usecases.characters.FetchCharacterDetailsUseCase
-import com.stathis.model.characters.CharacterResponse
-import com.stathis.model.episodes.Episode
+import com.stathis.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,26 +20,28 @@ internal class DetailsScreenViewModel @Inject constructor(
     private val useCase: FetchCharacterDetailsUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(UiState())
-
+    private val _uiState: MutableStateFlow<DetailsScreenUiState> = MutableStateFlow(DetailsScreenUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     fun fetchCharacterDetails(id: Int) {
         viewModelScope.launch(dispatcher) {
             useCase.invoke(id)
-                .collect { data ->
-                    _uiState.update {
-                        it.copy(
-                            character = data.character,
-                            episodes = data.episodes.toNotNull()
-                        )
-                    }
+                .collect { result ->
+                    _uiState.update { result.toUiState() }
                 }
         }
     }
 
-    data class UiState(
-        var character: CharacterResponse? = null,
-        var episodes: List<Episode> = listOf()
-    )
+    private fun Result<FetchCharacterDetailsUseCase.CharacterDetails>.toUiState() = when (this) {
+        is Result.Loading -> DetailsScreenUiState.Loading
+        is Result.Success -> DetailsScreenUiState.Content(
+            character = data.character,
+            episodes = data.episodes
+        )
+
+        is Result.Error -> DetailsScreenUiState.Error(
+            title = "Something went wrong",
+            description = message
+        )
+    }
 }

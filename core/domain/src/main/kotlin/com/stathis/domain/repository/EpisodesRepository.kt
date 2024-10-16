@@ -8,5 +8,5 @@ interface EpisodesRepository {
 
     suspend fun fetchEpisodeInfo(id: Int): Flow<Result<Episode>>
 
-    suspend fun fetchMultipleEpisodeInfo(ids: List<String>): Flow<List<Episode>>
+    suspend fun fetchMultipleEpisodeInfo(ids: List<String>): Flow<Result<List<Episode>>>
 }
