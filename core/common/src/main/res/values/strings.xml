@@ -6,6 +6,10 @@
 
     <!-- Character Details -->
     <string name="character_details">Character Details</string>
+    <string name="species">"Species"</string>
+    <string name="gender">"Gender"</string>
+    <string name="origin">"Origin"</string>
+    <string name="episodes">Episodes</string>
 
     <!-- Episode Details -->
     <string name="episode_details">Episode Details</string>

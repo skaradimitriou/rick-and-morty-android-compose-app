@@ -9,9 +9,10 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.stathis.common.util.DimenRes
+import com.stathis.common.util.StringRes
 import com.stathis.common.util.toNotNull
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.testing.CharactersFakes
@@ -24,11 +25,12 @@ internal fun CharacterDetails(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(80.dp),
+            .height(dimensionResource(DimenRes.dimen_80)),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Detail(
-            title = "Species",
+            modifier = Modifier.weight(1f),
+            title = stringResource(StringRes.species),
             description = character?.species.toNotNull()
         )
 
@@ -40,7 +42,8 @@ internal fun CharacterDetails(
         )
 
         Detail(
-            title = "Gender",
+            modifier = Modifier.weight(1f),
+            title = stringResource(StringRes.gender),
             description = character?.gender.toNotNull()
         )
 
@@ -52,7 +55,8 @@ internal fun CharacterDetails(
         )
 
         Detail(
-            title = "Origin",
+            modifier = Modifier.weight(1f),
+            title = stringResource(StringRes.origin),
             description = character?.origin.toNotNull()
         )
     }
