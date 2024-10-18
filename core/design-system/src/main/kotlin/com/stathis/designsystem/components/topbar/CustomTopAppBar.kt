@@ -15,7 +15,10 @@ fun CustomTopAppBar(
     startIcon: ImageVector? = null,
     startIconContentDesc: String? = null,
     startIconCallback: Callback? = null,
-    title: String
+    title: String,
+    endIcon: ImageVector? = null,
+    endIconContentDesc: String? = null,
+    endIconCallback: Callback? = null
 ) {
     TopAppBar(
         navigationIcon = {
@@ -30,6 +33,16 @@ fun CustomTopAppBar(
         },
         title = {
             Text(text = title)
+        },
+        actions = {
+            endIcon?.let {
+                IconButton(onClick = { endIconCallback?.invoke() }) {
+                    Icon(
+                        imageVector = endIcon,
+                        contentDescription = endIconContentDesc
+                    )
+                }
+            }
         }
     )
 }

@@ -59,6 +59,15 @@ class CharactersRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getCharacterByName(name: String): Flow<Result<List<CharacterResponse>>> = flow {
+        val result = mapToDomainResult(
+            networkCall = { remoteDataSource.getCharacterByName(name) },
+            mapping = { CharacterMapper.toDomainModel(it).results }
+        )
+
+        emit(result)
+    }
+
     private fun getCharacterByIdFromRemoteDataSource(id: Int): Flow<Result<CharacterResponse>> = flow {
         val result = mapToDomainResult(
             networkCall = { remoteDataSource.getCharacterById(id) },

@@ -1,11 +1,8 @@
-package com.stathis.database.db
+package com.stathis.database.characters
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.stathis.database.converters.CharacterEpisodesConvertor
-import com.stathis.database.dao.CharactersDao
-import com.stathis.database.entities.CharacterEntity
 
 @Database(
     entities = [CharacterEntity::class],

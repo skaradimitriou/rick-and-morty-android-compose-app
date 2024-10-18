@@ -1,4 +1,4 @@
-package com.stathis.characters.ui.details.components
+package com.stathis.characters.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope

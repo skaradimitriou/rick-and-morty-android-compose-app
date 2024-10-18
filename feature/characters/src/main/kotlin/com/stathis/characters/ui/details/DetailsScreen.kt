@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stathis.characters.ui.details.components.BasicCharacterInfo
 import com.stathis.characters.ui.details.components.CharacterDetails
-import com.stathis.characters.ui.details.components.displayEpisodeList
+import com.stathis.characters.components.displayEpisodeList
 import com.stathis.characters.ui.details.model.DetailsScreenUiState
 import com.stathis.common.util.Callback
 import com.stathis.common.util.StringRes

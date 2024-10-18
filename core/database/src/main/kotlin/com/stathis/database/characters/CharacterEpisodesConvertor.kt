@@ -1,4 +1,4 @@
-package com.stathis.database.converters
+package com.stathis.database.characters
 
 import androidx.room.TypeConverter
 

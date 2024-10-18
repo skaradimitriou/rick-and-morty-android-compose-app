@@ -1,8 +1,7 @@
 package com.stathis.database.util
 
-import com.stathis.database.entities.CharacterEntity
+import com.stathis.database.characters.CharacterEntity
 import com.stathis.model.characters.CharacterResponse
-import com.stathis.model.characters.CharacterStatus
 
 /**
  * Maps a [CharacterEntity] to a [CharacterResponse].

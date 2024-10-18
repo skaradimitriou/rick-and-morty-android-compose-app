@@ -1,9 +1,8 @@
-package com.stathis.database.dao
+package com.stathis.database.characters
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.stathis.database.entities.CharacterEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

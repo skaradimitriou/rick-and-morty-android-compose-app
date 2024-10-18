@@ -1,6 +1,8 @@
 package com.stathis.characters.ui.home
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,6 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stathis.characters.ui.home.components.CharacterList
 import com.stathis.characters.ui.home.model.HomeScreenUiState
+import com.stathis.common.util.Callback
 import com.stathis.common.util.StringRes
 import com.stathis.designsystem.components.topbar.CustomTopAppBar
 import com.stathis.designsystem.theme.RickAndMortyAppTheme
@@ -22,7 +25,8 @@ import com.stathis.ui.loading.LoadingScreen
 @Composable
 internal fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    onCharacterClick: (Int) -> Unit
+    onCharacterClick: (Int) -> Unit,
+    onSearchIconClick: Callback
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -32,19 +36,25 @@ internal fun HomeScreen(
 
     HomeContent(
         uiState = uiState,
-        onCharacterClick = onCharacterClick
+        onCharacterClick = onCharacterClick,
+        onSearchIconClick = onSearchIconClick
     )
 }
 
 @Composable
 internal fun HomeContent(
     uiState: HomeScreenUiState,
-    onCharacterClick: (Int) -> Unit
+    onCharacterClick: (Int) -> Unit,
+    onSearchIconClick: Callback
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            CustomTopAppBar(title = stringResource(StringRes.home))
+            CustomTopAppBar(
+                title = stringResource(StringRes.home),
+                endIcon = Icons.Default.Search,
+                endIconCallback = onSearchIconClick
+            )
         },
         content = { paddingValues ->
             when (uiState) {
@@ -78,7 +88,8 @@ internal fun HomeScreenLoadingPreview() {
     RickAndMortyAppTheme {
         HomeContent(
             uiState = HomeScreenUiState.Loading,
-            onCharacterClick = {}
+            onCharacterClick = {},
+            onSearchIconClick = {}
         )
     }
 }
@@ -90,7 +101,8 @@ internal fun HomeScreenContentPreview() {
         val data = CharactersFakes.provideDummyCharacterList()
         HomeContent(
             uiState = HomeScreenUiState.Content(data = data),
-            onCharacterClick = {}
+            onCharacterClick = {},
+            onSearchIconClick = {}
         )
     }
 }
@@ -104,7 +116,8 @@ internal fun HomeScreenErrorPreview() {
                 title = "Something went wrong",
                 description = "Server timeout."
             ),
-            onCharacterClick = {}
+            onCharacterClick = {},
+            onSearchIconClick = {}
         )
     }
 }

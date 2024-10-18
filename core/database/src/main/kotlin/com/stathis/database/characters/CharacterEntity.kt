@@ -1,4 +1,4 @@
-package com.stathis.database.entities
+package com.stathis.database.characters
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -2,6 +2,7 @@ package com.stathis.data.repository
 
 import com.stathis.data.mapper.episodes.EpisodeListMapper
 import com.stathis.data.mapper.episodes.EpisodesMapper
+import com.stathis.data.mapper.episodes.EpisodesWrapperMapper
 import com.stathis.data.util.mapToDomainResult
 import com.stathis.domain.repository.EpisodesRepository
 import com.stathis.model.Result
@@ -19,6 +20,15 @@ data class EpisodesRepositoryImpl @Inject constructor(
         val result = mapToDomainResult(
             networkCall = { remoteDataSource.getEpisodeById(id) },
             mapping = { EpisodesMapper.toDomainModel(it) }
+        )
+
+        emit(result)
+    }
+
+    override suspend fun fetchEpisodesByName(name: String): Flow<Result<List<Episode>>> = flow {
+        val result = mapToDomainResult(
+            networkCall = { remoteDataSource.getEpisodesByName(name) },
+            mapping = { EpisodesWrapperMapper.toDomainModel(it) }
         )
 
         emit(result)
