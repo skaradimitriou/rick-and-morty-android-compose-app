@@ -6,8 +6,8 @@ import com.stathis.characters.ui.search.model.SearchScreenUiState
 import com.stathis.common.di.IoDispatcher
 import com.stathis.domain.usecases.search.FetchAllUserQueriesUseCase
 import com.stathis.domain.usecases.search.FetchQueryResultsUseCase
+import com.stathis.domain.usecases.search.FetchQueryResultsUseCase.QueryResult
 import com.stathis.domain.usecases.search.SaveQueryToLocalDbUseCase
-import com.stathis.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
@@ -51,19 +51,20 @@ class SearchScreenViewModel @Inject constructor(
         }
     }
 
-    private fun Result<FetchQueryResultsUseCase.QueryResults>.toUiState() = when (this) {
-        is Result.Loading -> _results.update { SearchScreenUiState.Loading }
-        is Result.Success -> _results.update {
+    private fun QueryResult.toUiState() = when (this) {
+        is QueryResult.None -> _results.update { SearchScreenUiState.Loading }
+        is QueryResult.Success -> _results.update {
             SearchScreenUiState.Content(
-                characters = data.characters,
-                episodes = data.episodes,
+                characters = characters,
+                episodes = episodes,
             )
         }
 
-        is Result.Error -> _results.update {
+        is QueryResult.Error -> _results.update {
+            //FIXME: Fix UI Error
             SearchScreenUiState.Error(
                 title = "Something went wrong",
-                description = message
+                description = "Insert error description here"
             )
         }
     }
