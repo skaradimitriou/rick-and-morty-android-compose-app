@@ -5,7 +5,7 @@ import com.stathis.data.mapper.characters.CharacterListMapper
 import com.stathis.data.mapper.characters.CharacterMapper
 import com.stathis.data.mapper.characters.CharacterResponseMapper
 import com.stathis.data.util.mapToDomainResult
-import com.stathis.database.db.CharactersLocalDatabase
+import com.stathis.database.characters.CharactersLocalDatabase
 import com.stathis.database.util.toCharacter
 import com.stathis.database.util.toEntity
 import com.stathis.domain.repository.CharactersRepository

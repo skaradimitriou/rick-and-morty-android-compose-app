@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface QueriesRepository {
 
     suspend fun fetchAllUserQueries(): Flow<List<Query>>
+
+    suspend fun insertNewUserQuery(name: String)
 }

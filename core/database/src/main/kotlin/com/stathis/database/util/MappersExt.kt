@@ -1,7 +1,9 @@
 package com.stathis.database.util
 
 import com.stathis.database.characters.CharacterEntity
+import com.stathis.database.queries.QueryEntity
 import com.stathis.model.characters.CharacterResponse
+import com.stathis.model.search.Query
 
 /**
  * Maps a [CharacterEntity] to a [CharacterResponse].
@@ -40,3 +42,15 @@ fun CharacterResponse.toEntity(): CharacterEntity = CharacterEntity(
     url = this.url,
     created = this.created
 )
+
+/**
+ * Maps a [QueryEntity] to a [Query] model.
+ */
+
+fun QueryEntity.toQuery(): Query = Query(name)
+
+/**
+ * Maps a [Query] to a [QueryEntity] model.
+ */
+
+fun Query.toEntity(): QueryEntity = QueryEntity(name = name)

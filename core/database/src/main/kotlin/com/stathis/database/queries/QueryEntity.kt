@@ -9,6 +9,6 @@ const val QUERIES = "queries_table"
 data class QueryEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int = 0,
     val name: String
 )

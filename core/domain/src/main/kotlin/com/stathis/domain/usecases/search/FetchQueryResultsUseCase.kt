@@ -19,7 +19,6 @@ class FetchQueryResultsUseCase @Inject constructor(
 
     override suspend fun invoke(vararg args: Any?): Flow<Result<QueryResults>> = flow {
         val query = (args.getOrNull(0) as? String?).toNotNull()
-
         var model = QueryResults()
 
         charactersRepository.getCharacterByName(query).collect { charactersResult ->
@@ -47,7 +46,6 @@ class FetchQueryResultsUseCase @Inject constructor(
         }
 
         emit(Result.Success(model))
-
     }
 
     data class QueryResults(
