@@ -27,7 +27,7 @@ class DatabaseModule {
         context = context,
         klass = CharactersLocalDatabase::class.java,
         name = DB_NAME
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 
     @Provides
     @Singleton
@@ -41,7 +41,7 @@ class DatabaseModule {
         context = context,
         klass = QueriesLocalDatabase::class.java,
         name = DB_QUERIES_NAME
-    ).build()
+    ).fallbackToDestructiveMigration().build()
 
     @Provides
     @Singleton
