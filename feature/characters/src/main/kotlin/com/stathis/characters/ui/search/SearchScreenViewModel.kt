@@ -57,6 +57,7 @@ class SearchScreenViewModel @Inject constructor(
             SearchScreenUiState.Content(
                 characters = characters,
                 episodes = episodes,
+                locations = locations
             )
         }
 

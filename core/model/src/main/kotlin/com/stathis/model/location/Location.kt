@@ -2,10 +2,10 @@ package com.stathis.model.location
 
 data class Location(
     val id: Int,
-    val name: Int,
-    val type: Int,
-    val dimension: Int,
+    val name: String,
+    val type: String,
+    val dimension: String,
     val residents: List<String>,
     val url: String,
-    val created: List<String>,
+    val created: String,
 )

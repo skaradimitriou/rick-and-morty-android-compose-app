@@ -12,7 +12,7 @@ object LocationMapper : BaseMapper<LocationDto?, Location> {
         id = dto?.id.toNotNull(),
         name = dto?.name.toNotNull(),
         type = dto?.type.toNotNull(),
-        dimension = dto?.id.toNotNull(),
+        dimension = dto?.dimension.toNotNull(),
         residents = dto?.residents.toListOf { it.substringAfterLast("/") },
         url = dto?.url.toNotNull(),
         created = dto?.created.toNotNull()
