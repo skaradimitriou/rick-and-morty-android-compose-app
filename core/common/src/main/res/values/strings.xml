@@ -14,8 +14,11 @@
     <!-- Episode Details -->
     <string name="episode_details">Episode Details</string>
     <string name="characters">Characters</string>
+    <string name="empty_results">No results found.</string>
     <string name="episode_name">Episode : %s</string>
     <string name="episode_air_date">Air Date : %s</string>
 
+    <!-- Locations -->
+    <string name="locations">Locations</string>
 
 </resources>

@@ -30,16 +30,30 @@ internal fun LazyListScope.displayEpisodeList(
             )
         )
     }
-    items(items = episodes) {
-        BasicCardWithText(
-            modifier = Modifier.padding(
-                top = dimensionResource(DimenRes.dimen_8),
-                start = dimensionResource(DimenRes.dimen_16),
-                end = dimensionResource(DimenRes.dimen_16),
-            ),
-            title = it.name + " | " + it.episode,
-            description = it.airDate,
-            onItemClick = { onEpisodeClick(it.id) }
-        )
+    if (episodes.isEmpty()) {
+        item {
+            Text(
+                modifier = Modifier.padding(
+                    top = dimensionResource(DimenRes.dimen_8),
+                    start = dimensionResource(DimenRes.dimen_16),
+                    bottom = dimensionResource(DimenRes.dimen_16)
+                ),
+                text = stringResource(StringRes.empty_results),
+                style = TextStyle(fontSize = MaterialTheme.typography.bodyLarge.fontSize)
+            )
+        }
+    } else {
+        items(items = episodes) {
+            BasicCardWithText(
+                modifier = Modifier.padding(
+                    top = dimensionResource(DimenRes.dimen_8),
+                    start = dimensionResource(DimenRes.dimen_16),
+                    end = dimensionResource(DimenRes.dimen_16),
+                ),
+                title = it.name + " | " + it.episode,
+                description = it.airDate,
+                onItemClick = { onEpisodeClick(it.id) }
+            )
+        }
     }
 }

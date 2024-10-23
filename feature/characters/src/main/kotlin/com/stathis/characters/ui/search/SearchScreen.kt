@@ -16,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stathis.characters.components.displayCharacterList
 import com.stathis.characters.components.displayEpisodeList
+import com.stathis.characters.components.displayLocationsList
 import com.stathis.characters.ui.search.model.SearchScreenUiState
 import com.stathis.common.util.Callback
 import com.stathis.common.util.DimenRes
@@ -127,6 +128,10 @@ fun SearchScreenContent(
 
         results.episodes?.let { episodes ->
             displayEpisodeList(episodes, onEpisodeClick)
+        }
+
+        results.locations.let { locations ->
+            displayLocationsList(locations = locations)
         }
     }
 }

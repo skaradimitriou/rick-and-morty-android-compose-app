@@ -11,12 +11,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import com.stathis.common.util.DimenRes
 import com.stathis.common.util.StringRes
-import com.stathis.model.characters.CharacterResponse
-import com.stathis.ui.CharacterDisplayCard
+import com.stathis.designsystem.components.cards.BasicCardWithText
+import com.stathis.model.location.Location
 
-internal fun LazyListScope.displayCharacterList(
-    characters: List<CharacterResponse>,
-    onCharacterClick: (Int) -> Unit
+internal fun LazyListScope.displayLocationsList(
+    locations: List<Location>
 ) {
     item {
         Text(
@@ -24,13 +23,13 @@ internal fun LazyListScope.displayCharacterList(
                 top = dimensionResource(DimenRes.dimen_16),
                 start = dimensionResource(DimenRes.dimen_16)
             ),
-            text = stringResource(StringRes.characters),
+            text = stringResource(StringRes.locations),
             style = TextStyle(
                 fontSize = MaterialTheme.typography.titleLarge.fontSize
             )
         )
     }
-    if (characters.isEmpty()) {
+    if (locations.isEmpty()) {
         item {
             Text(
                 modifier = Modifier.padding(
@@ -43,15 +42,16 @@ internal fun LazyListScope.displayCharacterList(
             )
         }
     } else {
-        items(items = characters) { character ->
-            CharacterDisplayCard(
+        items(items = locations) {
+            BasicCardWithText(
                 modifier = Modifier.padding(
                     top = dimensionResource(DimenRes.dimen_8),
                     start = dimensionResource(DimenRes.dimen_16),
                     end = dimensionResource(DimenRes.dimen_16),
                 ),
-                character = character,
-                onCharacterClick = onCharacterClick
+                title = it.name + " | " + it.type,
+                description = it.dimension,
+                onItemClick = {}
             )
         }
     }
