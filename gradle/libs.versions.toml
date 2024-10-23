@@ -21,6 +21,7 @@ room = "2.6.1"
 kotlinxCoroutines = "1.9.0"
 coil = "2.7.0"
 serialization = "1.6.3"
+mockk = "1.13.13"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -70,7 +71,7 @@ ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devto
 # Testing
 androidx-lifecycle-runtimeTesting = { group = "androidx.lifecycle", name = "lifecycle-runtime-testing", version.ref = "androidxLifecycle" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
-mockito = { group = "org.mockito.kotlin", name = "mockito-kotlin", version = "5.3.1" }
+mockk = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
 androidx-core-testing = { group = "androidx.arch.core", name = "core-testing", version = "2.2.0" }
 
 [plugins]
@@ -87,4 +88,5 @@ custom-android-hilt = { id = "custom.android.hilt", version = "unspecified" }
 custom-android-room = { id = "custom.android.room", version = "unspecified" }
 custom-android-feature-library = { id = "custom.android.feature", version = "unspecified" }
 custom-jvm-library = { id = "custom.android.jvm", version = "unspecified" }
+custom-test-library = { id = "custom.android.test", version = "unspecified" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

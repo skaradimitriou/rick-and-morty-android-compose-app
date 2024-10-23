@@ -58,5 +58,9 @@ gradlePlugin {
             id = "custom.android.room"
             implementationClass = "com.stathis.convention.plugins.AndroidRoomConventionPlugin"
         }
+        register("androidTest") {
+            id = "custom.android.test"
+            implementationClass = "com.stathis.convention.plugins.AndroidTestConventionPlugin"
+        }
     }
 }

@@ -23,6 +23,4 @@ dependencies {
     implementation(projects.core.testing)
 
     implementation(libs.retrofit)
-
-    testImplementation(libs.kotlinx.coroutines.test)
 }
