@@ -11,7 +11,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class FetchEpisodesByIdUseCaseTest {
+internal class FetchEpisodesByIdUseCaseTest {
 
     private val episodesRepository = mockk<EpisodesRepository>()
     private val testedClass = FetchEpisodesByIdUseCase(episodesRepository)

@@ -11,7 +11,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class FetchAllCharactersUseCaseTest {
+internal class FetchAllCharactersUseCaseTest {
 
     private val charactersRepository = mockk<CharactersRepository>()
 
