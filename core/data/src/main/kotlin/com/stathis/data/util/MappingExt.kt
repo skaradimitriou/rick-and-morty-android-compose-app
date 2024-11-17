@@ -11,23 +11,21 @@ import retrofit2.Response
 suspend fun <DtoModel, DomainModel> mapToDomainResult(
     networkCall: suspend () -> Response<DtoModel>,
     mapping: suspend (DtoModel?) -> DomainModel
-): Result<DomainModel> {
+): Result<DomainModel> = try {
     val result = networkCall.invoke()
 
-    return try {
-        if (result.isSuccessful && result.body() != null) {
-            val mappedResult = mapping.invoke(result.body())
-            Result.Success(data = mappedResult)
-        } else {
-            Result.Error(
-                errorCode = result.code(),
-                message = result.message().toString()
-            )
-        }
-    } catch (e: Exception) {
+    if (result.isSuccessful && result.body() != null) {
+        val mappedResult = mapping.invoke(result.body())
+        Result.Success(data = mappedResult)
+    } else {
         Result.Error(
             errorCode = result.code(),
-            message = e.message.toString()
+            message = result.errorBody().toString()
         )
     }
+} catch (e: Exception) {
+    Result.Error(
+        errorCode = 404,
+        message = e.message.toString()
+    )
 }
