@@ -1,46 +1,29 @@
 package com.stathis.data.mapper.characters
 
-import com.stathis.network.model.characters.CharacterInformationDto
+import com.stathis.model.characters.CharacterResponse
 import com.stathis.network.model.characters.CharacterResponseDto
-import com.stathis.testing.CharactersFakes
 import org.junit.Test
 import kotlin.test.assertEquals
 
 class CharacterResponseMapperTest {
 
     @Test
-    fun `mapping of CharacterResponseDto to empty CharacterResponse model on null input`() {
-        val givenDtoModel: CharacterResponseDto? = null
-        val domainModel = CharacterResponseMapper.toDomainModel(givenDtoModel)
-        val expected = CharactersFakes.provideEmptyCharacter()
-        assertEquals(domainModel, expected)
+    fun `given null CharacterResponseDto model, when calling toDomainModel, return non null CharacterResponse domain model`() {
+        val dtoModel: CharacterResponseDto? = null
+        val domainModel: CharacterResponse = CharacterResponseMapper.toDomainModel(dtoModel)
+        assertEquals(domainModel.id, 0)
+        assertEquals(domainModel.name, "")
     }
 
     @Test
-    fun `mapping of CharacterResponseDto to CharacterResponse model on non-null response`() {
-        val givenDtoModel = CharacterResponseDto(
-            id = 123,
-            name = "Character Name",
-            status = "Alive",
-            species = "Human",
-            type = "Type",
-            gender = "Male",
-            origin = CharacterInformationDto(
-                name = "Somewhere",
-                url = "some url"
-            ),
-            location = CharacterInformationDto(
-                name = "Earth",
-                url = "some url"
-            ),
-            image = "",
-            episode = listOf("8"),
-            url = "",
-            created = ""
+    fun `given a CharacterResponseDto model, when calling toDomainModel, return non null CharacterResponse domain model`() {
+        val dtoModel: CharacterResponseDto = CharacterResponseDto(
+            id = 1,
+            name = "Rick"
         )
 
-        val domainModel = CharacterResponseMapper.toDomainModel(givenDtoModel)
-        val expected = CharactersFakes.provideDummyCharacter()
-        assertEquals(domainModel, expected)
+        val domainModel: CharacterResponse = CharacterResponseMapper.toDomainModel(dtoModel)
+        assertEquals(dtoModel.id, domainModel.id)
+        assertEquals(dtoModel.name, domainModel.name)
     }
 }

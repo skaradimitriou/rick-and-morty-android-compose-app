@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 class PaginationMapperTest {
 
     @Test
-    fun `mapping of PaginationInfoDto to empty PaginationInfo model on null input`() {
+    fun `given null PaginationInfoDto dto model, when calling toDomainModel, map to non null PaginationInfo domain model`() {
         val dtoModel: PaginationInfoDto? = null
         val domainModel = PaginationMapper.toDomainModel(dtoModel)
         val expected = PaginationInfo(0, 0, "", 0)
@@ -16,10 +16,19 @@ class PaginationMapperTest {
     }
 
     @Test
-    fun `mapping of PaginationInfoDto to PaginationInfo model on null input`() {
-        val dtoModel = PaginationInfoDto(123, 234, "abc", 345)
+    fun `given PaginationInfoDto dto model, when calling toDomainModel, map to non null PaginationInfo domain model`() {
+        val dtoModel = PaginationInfoDto(
+            count = 1,
+            pages = 10,
+            next = "abc",
+            prev = 0
+        )
+
         val domainModel = PaginationMapper.toDomainModel(dtoModel)
-        val expected = PaginationInfo(123, 234, "abc", 345)
-        assertEquals(domainModel, expected)
+
+        assertEquals(dtoModel.count, domainModel.count)
+        assertEquals(dtoModel.pages, domainModel.pages)
+        assertEquals(dtoModel.next, domainModel.next)
+        assertEquals(dtoModel.prev, domainModel.prev)
     }
 }

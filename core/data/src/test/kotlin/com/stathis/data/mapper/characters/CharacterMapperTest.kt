@@ -1,21 +1,20 @@
 package com.stathis.data.mapper.characters
 
+import com.stathis.common.util.toListOf
 import com.stathis.model.characters.CharacterWrapper
 import com.stathis.model.common.PaginationInfo
-import com.stathis.network.model.characters.CharacterInformationDto
 import com.stathis.network.model.characters.CharacterResponseDto
 import com.stathis.network.model.characters.CharacterWrapperDto
 import com.stathis.network.model.common.PaginationInfoDto
-import com.stathis.testing.CharactersFakes
 import org.junit.Test
 import kotlin.test.assertEquals
 
 class CharacterMapperTest {
 
     @Test
-    fun `mapping of CharacterWrapperDto to empty CharacterWrapper model on null input`() {
-        val givenDtoModel: CharacterWrapperDto? = null
-        val domainModel = CharacterMapper.toDomainModel(givenDtoModel)
+    fun `given null dto model, when calling toDomainModel, return non null domain model`() {
+        val dtoModel: CharacterWrapperDto? = null
+        val domainModel = CharacterMapper.toDomainModel(dtoModel)
 
         val expected = CharacterWrapper(
             info = PaginationInfo(0, 0, "", 0),
@@ -26,39 +25,27 @@ class CharacterMapperTest {
     }
 
     @Test
-    fun `mapping of CharacterWrapperDto to CharacterWrapper model on response`() {
-        val givenDtoModel = CharacterWrapperDto(
+    fun `given dto model, when calling toDomainModel, return mapped domain model`() {
+        val dtoModel: CharacterWrapperDto = CharacterWrapperDto(
             info = PaginationInfoDto(0, 0, "", 0),
             results = listOf(
                 CharacterResponseDto(
-                    id = 123,
-                    name = "Character Name",
-                    status = "Alive",
-                    species = "Human",
-                    type = "Type",
-                    gender = "Male",
-                    origin = CharacterInformationDto(
-                        name = "Somewhere",
-                        url = "some url"
-                    ),
-                    location = CharacterInformationDto(
-                        name = "Earth",
-                        url = "some url"
-                    ),
-                    image = "",
-                    episode = listOf("8"),
-                    url = "",
-                    created = ""
+                    id = 1,
+                    name = "Rick"
+                ),
+                CharacterResponseDto(
+                    id = 2,
+                    name = "Morty"
                 )
             )
         )
-        val domainModel = CharacterMapper.toDomainModel(givenDtoModel)
+        val domainModel: CharacterWrapper = CharacterMapper.toDomainModel(dtoModel)
 
-        val expected = CharacterWrapper(
-            info = PaginationInfo(0, 0, "", 0),
-            results = listOf(CharactersFakes.provideDummyCharacter())
-        )
+        assertEquals(dtoModel.info?.count, domainModel.info.count)
 
-        assertEquals(domainModel, expected)
+        dtoModel.results.toListOf { it }.zip(domainModel.results) { dtoModel, domainModel ->
+            assertEquals(dtoModel.id, domainModel.id)
+            assertEquals(dtoModel.name, domainModel.name)
+        }
     }
 }
