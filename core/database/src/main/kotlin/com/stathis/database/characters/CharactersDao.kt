@@ -15,6 +15,9 @@ interface CharactersDao {
     fun getCharacterById(id: Int): Flow<CharacterEntity?>
 
     @Insert
+    suspend fun insert(entity: CharacterEntity)
+
+    @Insert
     suspend fun insertAll(list: List<CharacterEntity>)
 
     @Query("DELETE from CHARACTERS")

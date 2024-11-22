@@ -15,7 +15,8 @@ class AndroidTestConventionPlugin : Plugin<Project> {
                 add("testImplementation", libs.findLibrary("kotlinx.coroutines.test").get())
                 add("testImplementation", libs.findLibrary("junit.jupiter.api").get())
                 add("testImplementation", libs.findLibrary("junit.jupiter.engine").get())
-                add("androidTestImplementation", libs.findLibrary("mockk").get())
+                add("androidTestImplementation", libs.findLibrary("kotlinx.coroutines.test").get())
+                add("androidTestImplementation", libs.findLibrary("androidx.junit").get())
             }
         }
     }
