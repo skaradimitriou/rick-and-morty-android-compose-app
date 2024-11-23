@@ -1,4 +1,4 @@
-package com.stathis.database.queries
+package com.stathis.database.db.queries
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

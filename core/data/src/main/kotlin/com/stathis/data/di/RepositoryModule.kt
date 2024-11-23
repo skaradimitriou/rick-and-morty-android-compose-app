@@ -4,8 +4,8 @@ import com.stathis.data.repository.CharactersRepositoryImpl
 import com.stathis.data.repository.EpisodesRepositoryImpl
 import com.stathis.data.repository.LocationRepositoryImpl
 import com.stathis.data.repository.QueriesRepositoryImpl
-import com.stathis.database.characters.CharactersLocalDatabase
-import com.stathis.database.queries.QueriesLocalDatabase
+import com.stathis.database.db.characters.CharactersLocalDatabase
+import com.stathis.database.db.queries.QueriesLocalDatabase
 import com.stathis.domain.repository.CharactersRepository
 import com.stathis.domain.repository.EpisodesRepository
 import com.stathis.domain.repository.LocationRepository

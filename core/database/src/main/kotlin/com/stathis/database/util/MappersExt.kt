@@ -1,7 +1,7 @@
 package com.stathis.database.util
 
-import com.stathis.database.characters.CharacterEntity
-import com.stathis.database.queries.QueryEntity
+import com.stathis.database.db.characters.CharacterEntity
+import com.stathis.database.db.queries.QueryEntity
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.search.Query
 

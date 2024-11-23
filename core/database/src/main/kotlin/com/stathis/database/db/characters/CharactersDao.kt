@@ -1,4 +1,4 @@
-package com.stathis.database.characters
+package com.stathis.database.db.characters
 
 import androidx.room.Dao
 import androidx.room.Insert

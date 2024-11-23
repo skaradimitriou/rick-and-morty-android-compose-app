@@ -1,4 +1,4 @@
-package com.stathis.database.queries
+package com.stathis.database.db.queries
 
 import androidx.room.Dao
 import androidx.room.Insert
