@@ -1,8 +1,8 @@
 package com.stathis.data.repository
 
 import com.stathis.common.util.toListOf
-import com.stathis.database.queries.QueriesLocalDatabase
-import com.stathis.database.queries.QueryEntity
+import com.stathis.database.db.queries.QueriesLocalDatabase
+import com.stathis.database.db.queries.QueryEntity
 import com.stathis.database.util.toQuery
 import com.stathis.domain.repository.QueriesRepository
 import com.stathis.model.search.Query

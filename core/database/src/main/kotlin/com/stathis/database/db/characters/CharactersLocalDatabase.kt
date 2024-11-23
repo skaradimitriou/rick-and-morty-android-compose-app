@@ -1,4 +1,4 @@
-package com.stathis.database.characters
+package com.stathis.database.db.characters
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

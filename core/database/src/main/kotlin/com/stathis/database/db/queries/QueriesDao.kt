@@ -1,6 +1,7 @@
-package com.stathis.database.queries
+package com.stathis.database.db.queries
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -16,5 +17,8 @@ interface QueriesDao {
     fun getQueryByName(name: String): Flow<List<QueryEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(query: QueryEntity)
+    fun insert(query: QueryEntity): Long
+
+    @Delete
+    fun delete(query: QueryEntity)
 }

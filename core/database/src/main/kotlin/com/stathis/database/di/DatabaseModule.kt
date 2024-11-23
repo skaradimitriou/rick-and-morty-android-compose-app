@@ -2,10 +2,10 @@ package com.stathis.database.di
 
 import android.content.Context
 import androidx.room.Room
-import com.stathis.database.characters.CharactersDao
-import com.stathis.database.characters.CharactersLocalDatabase
-import com.stathis.database.queries.QueriesDao
-import com.stathis.database.queries.QueriesLocalDatabase
+import com.stathis.database.db.characters.CharactersDao
+import com.stathis.database.db.characters.CharactersLocalDatabase
+import com.stathis.database.db.queries.QueriesDao
+import com.stathis.database.db.queries.QueriesLocalDatabase
 import com.stathis.database.util.DB_NAME
 import com.stathis.database.util.DB_QUERIES_NAME
 import dagger.Module
