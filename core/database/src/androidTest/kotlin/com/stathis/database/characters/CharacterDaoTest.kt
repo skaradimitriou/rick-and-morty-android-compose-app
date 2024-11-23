@@ -3,6 +3,9 @@ package com.stathis.database.characters
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
+import com.stathis.database.db.characters.CharacterEntity
+import com.stathis.database.db.characters.CharactersDao
+import com.stathis.database.db.characters.CharactersLocalDatabase
 import com.stathis.model.characters.CharacterStatus
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.CoroutineDispatcher

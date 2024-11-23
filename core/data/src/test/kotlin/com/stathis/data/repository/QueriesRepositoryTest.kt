@@ -1,7 +1,7 @@
 package com.stathis.data.repository
 
-import com.stathis.database.queries.QueriesLocalDatabase
-import com.stathis.database.queries.QueryEntity
+import com.stathis.database.db.queries.QueriesLocalDatabase
+import com.stathis.database.db.queries.QueryEntity
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
