@@ -7,6 +7,17 @@ plugins {
 
 android {
     namespace = "com.stathis.network"
+
+    buildTypes {
+        android.buildFeatures.buildConfig = true
+
+        debug {
+            buildConfigField("String", "API_URL", "\"https://rickandmortyapi.com/api/\"")
+        }
+        release {
+            buildConfigField("String", "API_URL", "\"https://rickandmortyapi.com/api/\"")
+        }
+    }
 }
 
 dependencies {
