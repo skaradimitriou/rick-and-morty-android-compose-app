@@ -1,7 +1,7 @@
 package com.stathis.network.di
 
+import com.stathis.network.BuildConfig
 import com.stathis.network.service.RickAndMortyApi
-import com.stathis.network.util.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,13 +20,18 @@ class NetworkModule {
     @Singleton
     fun provideRetrofit(): Retrofit {
         val logger = HttpLoggingInterceptor().also {
-            it.level = HttpLoggingInterceptor.Level.BODY
+            if (BuildConfig.DEBUG) {
+                /*
+                 * Log the content of the api calls ONLY in debug mode.
+                 */
+                it.level = HttpLoggingInterceptor.Level.BODY
+            }
         }
 
         val client = OkHttpClient.Builder().addInterceptor(logger).build()
 
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.API_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
