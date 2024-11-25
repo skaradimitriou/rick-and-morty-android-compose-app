@@ -4,8 +4,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.stathis.common.navigation.EpisodesRoute
 import com.stathis.common.util.Callback
-import com.stathis.episodes.navigation.model.EpisodeDetailsArgs
 import com.stathis.episodes.ui.details.EpisodeDetailsScreen
 
 fun NavGraphBuilder.episodesRoute(
@@ -20,13 +20,12 @@ fun NavGraphBuilder.episodesRoute(
     )
 }
 
-const val EpisodesRoute = "EpisodesRoute"
 internal fun NavGraphBuilder.episodeDetailsRoute(
     onBackNavIconClick: Callback,
     onCharacterClick: (Int) -> Unit
 ) {
-    composable<EpisodeDetailsArgs> {
-        val args = it.toRoute<EpisodeDetailsArgs>()
+    composable<EpisodesRoute.Details> {
+        val args = it.toRoute<EpisodesRoute.Details>()
         EpisodeDetailsScreen(
             episodeId = args.episodeInt,
             onBackNavIconClick = onBackNavIconClick,

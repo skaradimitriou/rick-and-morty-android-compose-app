@@ -3,11 +3,10 @@ package com.stathis.rickandmortyapp.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.stathis.characters.navigation.HomeRoute
 import com.stathis.characters.navigation.characterRoute
-import com.stathis.characters.navigation.model.CharacterDetailsArgs
+import com.stathis.common.navigation.CharactersRoute
+import com.stathis.common.navigation.EpisodesRoute
 import com.stathis.episodes.navigation.episodesRoute
-import com.stathis.episodes.navigation.model.EpisodeDetailsArgs
 
 @Composable
 fun AppNavGraph() {
@@ -15,19 +14,19 @@ fun AppNavGraph() {
 
     NavHost(
         navController = navController,
-        startDestination = HomeRoute
+        startDestination = CharactersRoute.Home
     ) {
         characterRoute(
             navController = navController,
             onEpisodeClick = { episodeId ->
-                navController.navigate(EpisodeDetailsArgs(episodeId))
+                navController.navigate(EpisodesRoute.Details(episodeId))
             }
         )
 
         episodesRoute(
             navController = navController,
             onCharacterClick = { charactedId ->
-                navController.navigate(CharacterDetailsArgs(charactedId))
+                navController.navigate(CharactersRoute.Details(charactedId))
             }
         )
     }

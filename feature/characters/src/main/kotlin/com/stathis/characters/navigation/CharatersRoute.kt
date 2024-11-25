@@ -4,10 +4,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.stathis.characters.navigation.model.CharacterDetailsArgs
 import com.stathis.characters.ui.details.DetailsScreen
 import com.stathis.characters.ui.home.HomeScreen
 import com.stathis.characters.ui.search.SearchScreen
+import com.stathis.common.navigation.CharactersRoute
 import com.stathis.common.util.Callback
 
 fun NavGraphBuilder.characterRoute(
@@ -15,13 +15,17 @@ fun NavGraphBuilder.characterRoute(
     onEpisodeClick: (Int) -> Unit
 ) {
     homeRoute(
-        onCharacterClick = { characterId -> navController.navigate(CharacterDetailsArgs(characterId)) },
-        onSearchIconClick = { navController.navigate(SearchRoute) }
+        onCharacterClick = { characterId ->
+            navController.navigate(CharactersRoute.Details(characterId))
+        },
+        onSearchIconClick = { navController.navigate(CharactersRoute.Search) }
     )
 
     searchRoute(
         onBackNavIconClick = { navController.navigateUp() },
-        onCharacterClick = { characterId -> navController.navigate(CharacterDetailsArgs(characterId)) },
+        onCharacterClick = { characterId ->
+            navController.navigate(CharactersRoute.Details(characterId))
+        },
         onEpisodeClick = onEpisodeClick
     )
 
@@ -31,12 +35,11 @@ fun NavGraphBuilder.characterRoute(
     )
 }
 
-const val HomeRoute = "homeRoute"
 internal fun NavGraphBuilder.homeRoute(
     onCharacterClick: (Int) -> Unit,
     onSearchIconClick: Callback
 ) {
-    composable(HomeRoute) {
+    composable<CharactersRoute.Home> {
         HomeScreen(
             onCharacterClick = onCharacterClick,
             onSearchIconClick = onSearchIconClick
@@ -48,8 +51,8 @@ internal fun NavGraphBuilder.detailsScreenRoute(
     onBackNavIconClick: Callback,
     onEpisodeClick: (Int) -> Unit
 ) {
-    composable<CharacterDetailsArgs> {
-        val args = it.toRoute<CharacterDetailsArgs>()
+    composable<CharactersRoute.Details> {
+        val args = it.toRoute<CharactersRoute.Details>()
         DetailsScreen(
             characterId = args.characterId,
             onBackNavIconClick = onBackNavIconClick,
@@ -58,13 +61,12 @@ internal fun NavGraphBuilder.detailsScreenRoute(
     }
 }
 
-const val SearchRoute = "searchRoute"
 internal fun NavGraphBuilder.searchRoute(
     onBackNavIconClick: Callback,
     onCharacterClick: (Int) -> Unit,
     onEpisodeClick: (Int) -> Unit,
 ) {
-    composable(SearchRoute) {
+    composable<CharactersRoute.Search> {
         SearchScreen(
             onBackNavIconClick = onBackNavIconClick,
             onCharacterClick = onCharacterClick,
