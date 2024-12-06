@@ -10,9 +10,8 @@ import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.episodes.Episode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-class FetchCharacterDetailsUseCase @Inject constructor(
+class FetchCharacterDetailsUseCase(
     private val charactersRepository: CharactersRepository,
     private val episodesRepository: EpisodesRepository
 ) : BaseUseCase<Result<CharacterDetails>> {

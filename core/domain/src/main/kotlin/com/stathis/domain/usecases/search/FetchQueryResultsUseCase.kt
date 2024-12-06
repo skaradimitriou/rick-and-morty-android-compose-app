@@ -13,9 +13,8 @@ import com.stathis.model.location.Location
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-class FetchQueryResultsUseCase @Inject constructor(
+class FetchQueryResultsUseCase(
     private val charactersRepository: CharactersRepository,
     private val episodesRepository: EpisodesRepository,
     private val locationRepository: LocationRepository

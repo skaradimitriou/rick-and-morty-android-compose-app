@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.custom.android.hilt)
+    alias(libs.plugins.custom.android.koin)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
 }
@@ -63,10 +63,12 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    implementation(projects.core.designSystem)
-    implementation(projects.core.common)
+    implementation(projects.core.network)
+    implementation(projects.core.database)
     implementation(projects.core.data)
     implementation(projects.core.domain)
+    implementation(projects.core.designSystem)
+    implementation(projects.core.common)
 
     implementation(projects.feature.characters)
     implementation(projects.feature.episodes)

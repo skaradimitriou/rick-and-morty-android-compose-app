@@ -10,7 +10,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stathis.characters.ui.home.components.CharacterList
 import com.stathis.characters.ui.home.model.HomeScreenUiState
@@ -21,10 +20,11 @@ import com.stathis.designsystem.theme.RickAndMortyAppTheme
 import com.stathis.testing.CharactersFakes
 import com.stathis.ui.error.ErrorScreen
 import com.stathis.ui.loading.LoadingScreen
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
+    viewModel: HomeViewModel = koinViewModel(),
     onCharacterClick: (Int) -> Unit,
     onSearchIconClick: Callback
 ) {

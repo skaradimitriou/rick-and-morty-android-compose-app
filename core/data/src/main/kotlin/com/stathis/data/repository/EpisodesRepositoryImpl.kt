@@ -10,9 +10,8 @@ import com.stathis.model.episodes.Episode
 import com.stathis.network.service.RickAndMortyApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-data class EpisodesRepositoryImpl @Inject constructor(
+data class EpisodesRepositoryImpl(
     private val remoteDataSource: RickAndMortyApi
 ) : EpisodesRepository {
 

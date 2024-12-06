@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.stathis.common.util.Callback
 import com.stathis.common.util.DimenRes
 import com.stathis.common.util.StringRes
@@ -26,11 +25,12 @@ import com.stathis.testing.EpisodeFakes
 import com.stathis.ui.error.ErrorScreen
 import com.stathis.ui.loading.LoadingScreen
 import com.stathis.ui.topbars.TopBarWithBackNavIcon
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun EpisodeDetailsScreen(
     episodeId: Int,
-    viewModel: EpisodeDetailsViewModel = hiltViewModel(),
+    viewModel: EpisodeDetailsViewModel = koinViewModel(),
     onBackNavIconClick: Callback,
     onCharacterClick: (Int) -> Unit
 ) {
