@@ -8,9 +8,8 @@ import com.stathis.domain.repository.QueriesRepository
 import com.stathis.model.search.Query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class QueriesRepositoryImpl @Inject constructor(
+class QueriesRepositoryImpl(
     private val localDataSource: QueriesLocalDatabase
 ) : QueriesRepository {
 

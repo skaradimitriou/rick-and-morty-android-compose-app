@@ -11,11 +11,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.stathis.characters.components.displayEpisodeList
 import com.stathis.characters.ui.details.components.BasicCharacterInfo
 import com.stathis.characters.ui.details.components.CharacterDetails
-import com.stathis.characters.components.displayEpisodeList
 import com.stathis.characters.ui.details.model.DetailsScreenUiState
 import com.stathis.common.util.Callback
 import com.stathis.common.util.StringRes
@@ -24,11 +23,12 @@ import com.stathis.testing.EpisodeFakes
 import com.stathis.ui.error.ErrorScreen
 import com.stathis.ui.loading.LoadingScreen
 import com.stathis.ui.topbars.TopBarWithBackNavIcon
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun DetailsScreen(
     characterId: Int,
-    viewModel: DetailsScreenViewModel = hiltViewModel(),
+    viewModel: DetailsScreenViewModel = koinViewModel(),
     onBackNavIconClick: Callback,
     onEpisodeClick: (Int) -> Unit
 ) {

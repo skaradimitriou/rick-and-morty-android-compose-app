@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.custom.android.feature.library)
+    alias(libs.plugins.custom.android.koin)
     alias(libs.plugins.custom.android.compose)
     alias(libs.plugins.kotlin.serialization)
 }
@@ -21,6 +22,5 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlin.serialization.json)
 
-    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 }

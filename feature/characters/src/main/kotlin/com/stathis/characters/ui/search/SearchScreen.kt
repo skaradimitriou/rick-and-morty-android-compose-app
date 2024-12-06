@@ -12,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stathis.characters.components.displayCharacterList
 import com.stathis.characters.components.displayEpisodeList
@@ -24,10 +23,11 @@ import com.stathis.designsystem.components.search.CustomSearchBar
 import com.stathis.ui.error.ErrorScreen
 import com.stathis.ui.loading.LoadingScreen
 import com.stathis.ui.topbars.TopBarWithBackNavIcon
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun SearchScreen(
-    viewModel: SearchScreenViewModel = hiltViewModel(),
+    viewModel: SearchScreenViewModel = koinViewModel(),
     onBackNavIconClick: Callback,
     onCharacterClick: (Int) -> Unit,
     onEpisodeClick: (Int) -> Unit,

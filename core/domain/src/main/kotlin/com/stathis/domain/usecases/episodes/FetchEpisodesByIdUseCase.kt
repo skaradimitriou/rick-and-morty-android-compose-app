@@ -5,9 +5,8 @@ import com.stathis.domain.usecases.BaseUseCase
 import com.stathis.model.Result
 import com.stathis.model.episodes.Episode
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class FetchEpisodesByIdUseCase @Inject constructor(
+class FetchEpisodesByIdUseCase(
     private val repository: EpisodesRepository
 ) : BaseUseCase<Result<List<Episode>>> {
 

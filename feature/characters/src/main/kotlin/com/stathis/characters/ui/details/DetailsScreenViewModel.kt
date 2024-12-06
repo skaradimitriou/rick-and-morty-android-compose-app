@@ -3,20 +3,16 @@ package com.stathis.characters.ui.details
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.stathis.characters.ui.details.model.DetailsScreenUiState
-import com.stathis.common.di.IoDispatcher
 import com.stathis.domain.usecases.characters.FetchCharacterDetailsUseCase
 import com.stathis.model.Result
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-internal class DetailsScreenViewModel @Inject constructor(
-    @IoDispatcher private val dispatcher: CoroutineDispatcher,
+internal class DetailsScreenViewModel(
+    private val dispatcher: CoroutineDispatcher,
     private val useCase: FetchCharacterDetailsUseCase
 ) : ViewModel() {
 

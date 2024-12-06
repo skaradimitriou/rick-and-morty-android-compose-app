@@ -2,21 +2,17 @@ package com.stathis.episodes.ui.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.stathis.common.di.IoDispatcher
 import com.stathis.domain.usecases.episodes.FetchEpisodeDetailsUseCase
 import com.stathis.episodes.ui.details.model.EpisodeDetailsUiState
 import com.stathis.model.Result
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-internal class EpisodeDetailsViewModel @Inject constructor(
-    @IoDispatcher private val dispatcher: CoroutineDispatcher,
+internal class EpisodeDetailsViewModel(
+    private val dispatcher: CoroutineDispatcher,
     private val useCase: FetchEpisodeDetailsUseCase
 ) : ViewModel() {
 

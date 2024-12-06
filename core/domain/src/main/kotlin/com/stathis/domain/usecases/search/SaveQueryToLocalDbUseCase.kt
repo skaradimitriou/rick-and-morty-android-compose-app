@@ -2,9 +2,8 @@ package com.stathis.domain.usecases.search
 
 import com.stathis.common.util.toNotNull
 import com.stathis.domain.repository.QueriesRepository
-import javax.inject.Inject
 
-class SaveQueryToLocalDbUseCase @Inject constructor(
+class SaveQueryToLocalDbUseCase(
     private val repo: QueriesRepository
 ) {
 

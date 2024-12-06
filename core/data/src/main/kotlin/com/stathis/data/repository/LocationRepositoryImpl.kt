@@ -10,9 +10,8 @@ import com.stathis.model.location.Location
 import com.stathis.network.service.RickAndMortyApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
 
-class LocationRepositoryImpl @Inject constructor(
+class LocationRepositoryImpl(
     private val remoteDataSource: RickAndMortyApi
 ) : LocationRepository {
 

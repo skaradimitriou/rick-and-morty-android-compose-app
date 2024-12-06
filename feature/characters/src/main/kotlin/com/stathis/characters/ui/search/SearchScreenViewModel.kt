@@ -3,23 +3,19 @@ package com.stathis.characters.ui.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.stathis.characters.ui.search.model.SearchScreenUiState
-import com.stathis.common.di.IoDispatcher
 import com.stathis.domain.usecases.search.FetchAllUserQueriesUseCase
 import com.stathis.domain.usecases.search.FetchQueryResultsUseCase
 import com.stathis.domain.usecases.search.FetchQueryResultsUseCase.QueryResult
 import com.stathis.domain.usecases.search.SaveQueryToLocalDbUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class SearchScreenViewModel @Inject constructor(
-    @IoDispatcher private val dispatcher: CoroutineDispatcher,
+class SearchScreenViewModel(
+    private val dispatcher: CoroutineDispatcher,
     private val fetchAllUserQueriesUseCase: FetchAllUserQueriesUseCase,
     private val saveUserQueryUseCase: SaveQueryToLocalDbUseCase,
     private val fetchQueryResultsUseCase: FetchQueryResultsUseCase

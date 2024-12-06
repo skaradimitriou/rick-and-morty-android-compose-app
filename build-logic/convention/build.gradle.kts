@@ -38,9 +38,9 @@ gradlePlugin {
             id = "custom.android.library"
             implementationClass = "com.stathis.convention.plugins.AndroidLibraryConventionPlugin"
         }
-        register("androidHilt") {
-            id = "custom.android.hilt"
-            implementationClass = "com.stathis.convention.plugins.AndroidHiltConventionPlugin"
+        register("androidKoin") {
+            id = "custom.android.koin"
+            implementationClass = "com.stathis.convention.plugins.AndroidKoinConventionPlugin"
         }
         register("androidCompose") {
             id = "custom.android.compose"
