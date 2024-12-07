@@ -48,7 +48,7 @@ internal fun EpisodeDetailsScreen(
 }
 
 @Composable
-internal fun EpisodeDetailsContent(
+private fun EpisodeDetailsContent(
     uiState: EpisodeDetailsUiState,
     onBackNavIconClick: Callback,
     onCharacterClick: (Int) -> Unit
@@ -88,7 +88,7 @@ internal fun EpisodeDetailsContent(
 }
 
 @Composable
-internal fun Content(
+private fun Content(
     paddingValues: PaddingValues,
     data: FetchEpisodeDetailsUseCase.EpisodeDetails,
     onCharacterClick: (Int) -> Unit
@@ -113,7 +113,7 @@ internal fun Content(
 
 @Preview(showBackground = true)
 @Composable
-internal fun EpisodeDetailsLoadingPreview() {
+private fun EpisodeDetailsLoadingPreview() {
     RickAndMortyAppTheme {
         LoadingScreen(
             paddingValues = PaddingValues(all = dimensionResource(DimenRes.dimen_8))
@@ -123,7 +123,7 @@ internal fun EpisodeDetailsLoadingPreview() {
 
 @Preview(showBackground = true)
 @Composable
-internal fun EpisodeDetailsContentPreview() {
+private fun EpisodeDetailsContentPreview() {
     RickAndMortyAppTheme {
         Content(
             paddingValues = PaddingValues(all = dimensionResource(DimenRes.dimen_8)),
@@ -138,7 +138,7 @@ internal fun EpisodeDetailsContentPreview() {
 
 @Preview(showBackground = true)
 @Composable
-internal fun EpisodeDetailsErrorPreview() {
+private fun EpisodeDetailsErrorPreview() {
     RickAndMortyAppTheme {
         ErrorScreen(
             paddingValues = PaddingValues(all = dimensionResource(DimenRes.dimen_8)),

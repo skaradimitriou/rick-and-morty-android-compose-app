@@ -64,7 +64,7 @@ internal fun CharacterDetails(
 
 @Preview(showBackground = true)
 @Composable
-internal fun CharacterDetailsPreview() {
+private fun CharacterDetailsPreview() {
     val model = CharactersFakes.provideDummyCharacter()
     CharacterDetails(character = model)
 }

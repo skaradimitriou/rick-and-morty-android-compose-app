@@ -42,7 +42,7 @@ internal fun HomeScreen(
 }
 
 @Composable
-internal fun HomeContent(
+private fun HomeContent(
     uiState: HomeScreenUiState,
     onCharacterClick: (Int) -> Unit,
     onSearchIconClick: Callback
@@ -84,7 +84,7 @@ internal fun HomeContent(
 
 @Preview
 @Composable
-internal fun HomeScreenLoadingPreview() {
+private fun HomeScreenLoadingPreview() {
     RickAndMortyAppTheme {
         HomeContent(
             uiState = HomeScreenUiState.Loading,
@@ -96,7 +96,7 @@ internal fun HomeScreenLoadingPreview() {
 
 @Preview
 @Composable
-internal fun HomeScreenContentPreview() {
+private fun HomeScreenContentPreview() {
     RickAndMortyAppTheme {
         val data = CharactersFakes.provideDummyCharacterList()
         HomeContent(
@@ -109,7 +109,7 @@ internal fun HomeScreenContentPreview() {
 
 @Preview
 @Composable
-internal fun HomeScreenErrorPreview() {
+private fun HomeScreenErrorPreview() {
     RickAndMortyAppTheme {
         HomeContent(
             uiState = HomeScreenUiState.Error(

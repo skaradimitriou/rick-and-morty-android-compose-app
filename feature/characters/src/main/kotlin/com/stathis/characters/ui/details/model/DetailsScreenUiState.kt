@@ -3,7 +3,7 @@ package com.stathis.characters.ui.details.model
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.episodes.Episode
 
-sealed class DetailsScreenUiState {
+internal sealed class DetailsScreenUiState {
 
     data object Loading : DetailsScreenUiState()
 

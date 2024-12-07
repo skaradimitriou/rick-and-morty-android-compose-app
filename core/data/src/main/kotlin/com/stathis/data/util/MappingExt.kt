@@ -8,7 +8,7 @@ import retrofit2.Response
  * & perform basic mapping from a DtoModel to a Domain Model
  */
 
-suspend fun <DtoModel, DomainModel> mapToDomainResult(
+internal suspend fun <DtoModel, DomainModel> mapToDomainResult(
     networkCall: suspend () -> Response<DtoModel>,
     mapping: suspend (DtoModel?) -> DomainModel
 ): Result<DomainModel> = try {

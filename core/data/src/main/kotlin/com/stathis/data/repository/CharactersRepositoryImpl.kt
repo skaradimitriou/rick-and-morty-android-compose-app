@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
-class CharactersRepositoryImpl(
+internal class CharactersRepositoryImpl(
     private val remoteDataSource: RickAndMortyApi,
     private val localDataSource: CharactersLocalDatabase
 ) : CharactersRepository {

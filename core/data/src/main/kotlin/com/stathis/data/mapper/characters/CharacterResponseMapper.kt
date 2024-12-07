@@ -7,7 +7,7 @@ import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.characters.CharacterStatus
 import com.stathis.network.model.characters.CharacterResponseDto
 
-object CharacterResponseMapper : BaseMapper<CharacterResponseDto?, CharacterResponse> {
+internal object CharacterResponseMapper : BaseMapper<CharacterResponseDto?, CharacterResponse> {
 
     override fun toDomainModel(dto: CharacterResponseDto?) = CharacterResponse(
         id = dto?.id.toNotNull(),

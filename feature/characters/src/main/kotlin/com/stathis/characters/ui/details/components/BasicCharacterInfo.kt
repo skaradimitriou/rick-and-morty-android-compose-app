@@ -62,7 +62,7 @@ internal fun BasicCharacterInfo(character: CharacterResponse?) {
 
 @Preview(showBackground = true)
 @Composable
-internal fun BasicCharacterInfoPreview() {
+private fun BasicCharacterInfoPreview() {
     val model = CharactersFakes.provideDummyCharacter()
     BasicCharacterInfo(character = model)
 }

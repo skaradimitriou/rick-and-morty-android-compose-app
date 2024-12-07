@@ -6,7 +6,7 @@ import com.stathis.data.mapper.BaseMapper
 import com.stathis.model.episodes.Episode
 import com.stathis.network.model.episodes.EpisodeDto
 
-object EpisodesMapper : BaseMapper<EpisodeDto?, Episode> {
+internal object EpisodesMapper : BaseMapper<EpisodeDto?, Episode> {
 
     override fun toDomainModel(dto: EpisodeDto?): Episode = Episode(
         id = dto?.id.toNotNull(),

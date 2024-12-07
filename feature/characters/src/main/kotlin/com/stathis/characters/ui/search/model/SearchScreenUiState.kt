@@ -4,7 +4,7 @@ import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.episodes.Episode
 import com.stathis.model.location.Location
 
-sealed class SearchScreenUiState {
+internal sealed class SearchScreenUiState {
 
     data object None : SearchScreenUiState()
 

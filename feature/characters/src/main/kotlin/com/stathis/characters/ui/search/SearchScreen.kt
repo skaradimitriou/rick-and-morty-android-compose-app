@@ -51,7 +51,7 @@ internal fun SearchScreen(
 }
 
 @Composable
-internal fun SearchContent(
+private fun SearchContent(
     suggestions: List<String>,
     results: SearchScreenUiState,
     onBackNavIconClick: Callback,
@@ -115,7 +115,7 @@ internal fun SearchContent(
 }
 
 @Composable
-fun SearchScreenContent(
+private fun SearchScreenContent(
     modifier: Modifier = Modifier,
     results: SearchScreenUiState.Content,
     onCharacterClick: (Int) -> Unit,

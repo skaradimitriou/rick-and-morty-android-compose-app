@@ -46,7 +46,7 @@ internal fun DetailsScreen(
 }
 
 @Composable
-internal fun DetailsContent(
+private fun DetailsContent(
     uiState: DetailsScreenUiState,
     onBackNavIconClick: Callback,
     onEpisodeClick: (Int) -> Unit,
@@ -86,7 +86,7 @@ internal fun DetailsContent(
 }
 
 @Composable
-internal fun Content(
+private fun Content(
     paddingValues: PaddingValues,
     data: DetailsScreenUiState.Content,
     onEpisodeClick: (Int) -> Unit
@@ -111,7 +111,7 @@ internal fun Content(
 
 @Preview(showBackground = true)
 @Composable
-internal fun DetailsContentPreview() {
+private fun DetailsContentPreview() {
     val uiState = DetailsScreenUiState.Content(
         character = CharactersFakes.provideDummyCharacter(),
         episodes = EpisodeFakes.provideDummyEpisodeList()

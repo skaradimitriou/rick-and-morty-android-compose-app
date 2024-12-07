@@ -9,7 +9,7 @@ import com.stathis.model.search.Query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class QueriesRepositoryImpl(
+internal class QueriesRepositoryImpl(
     private val localDataSource: QueriesLocalDatabase
 ) : QueriesRepository {
 

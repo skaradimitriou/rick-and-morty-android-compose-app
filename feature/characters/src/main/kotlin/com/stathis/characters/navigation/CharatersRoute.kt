@@ -35,7 +35,7 @@ fun NavGraphBuilder.characterRoute(
     )
 }
 
-internal fun NavGraphBuilder.homeRoute(
+private fun NavGraphBuilder.homeRoute(
     onCharacterClick: (Int) -> Unit,
     onSearchIconClick: Callback
 ) {
@@ -47,7 +47,7 @@ internal fun NavGraphBuilder.homeRoute(
     }
 }
 
-internal fun NavGraphBuilder.detailsScreenRoute(
+private fun NavGraphBuilder.detailsScreenRoute(
     onBackNavIconClick: Callback,
     onEpisodeClick: (Int) -> Unit
 ) {
@@ -61,7 +61,7 @@ internal fun NavGraphBuilder.detailsScreenRoute(
     }
 }
 
-internal fun NavGraphBuilder.searchRoute(
+private fun NavGraphBuilder.searchRoute(
     onBackNavIconClick: Callback,
     onCharacterClick: (Int) -> Unit,
     onEpisodeClick: (Int) -> Unit,

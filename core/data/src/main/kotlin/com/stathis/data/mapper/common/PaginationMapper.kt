@@ -5,7 +5,7 @@ import com.stathis.data.mapper.BaseMapper
 import com.stathis.model.common.PaginationInfo
 import com.stathis.network.model.common.PaginationInfoDto
 
-object PaginationMapper : BaseMapper<PaginationInfoDto?, PaginationInfo> {
+internal object PaginationMapper : BaseMapper<PaginationInfoDto?, PaginationInfo> {
 
     override fun toDomainModel(dto: PaginationInfoDto?) = PaginationInfo(
         count = dto?.count.toNotNull(),

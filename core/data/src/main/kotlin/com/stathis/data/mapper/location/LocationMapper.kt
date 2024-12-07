@@ -6,7 +6,7 @@ import com.stathis.data.mapper.BaseMapper
 import com.stathis.model.location.Location
 import com.stathis.network.model.location.LocationDto
 
-object LocationMapper : BaseMapper<LocationDto?, Location> {
+internal object LocationMapper : BaseMapper<LocationDto?, Location> {
 
     override fun toDomainModel(dto: LocationDto?): Location = Location(
         id = dto?.id.toNotNull(),

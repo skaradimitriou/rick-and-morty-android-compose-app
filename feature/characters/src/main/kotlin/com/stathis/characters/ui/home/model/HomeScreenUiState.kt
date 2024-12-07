@@ -2,7 +2,7 @@ package com.stathis.characters.ui.home.model
 
 import com.stathis.model.characters.CharacterResponse
 
-sealed class HomeScreenUiState {
+internal sealed class HomeScreenUiState {
 
     data object Loading : HomeScreenUiState()
 
