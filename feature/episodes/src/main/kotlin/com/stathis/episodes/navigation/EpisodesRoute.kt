@@ -20,7 +20,7 @@ fun NavGraphBuilder.episodesRoute(
     )
 }
 
-internal fun NavGraphBuilder.episodeDetailsRoute(
+private fun NavGraphBuilder.episodeDetailsRoute(
     onBackNavIconClick: Callback,
     onCharacterClick: (Int) -> Unit
 ) {

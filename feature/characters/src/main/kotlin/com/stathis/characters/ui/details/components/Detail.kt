@@ -3,7 +3,6 @@ package com.stathis.characters.ui.details.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,7 +47,7 @@ internal fun Detail(
 
 @Preview(showBackground = true)
 @Composable
-internal fun BasicDetailPreview() {
+private fun BasicDetailPreview() {
     Detail(
         title = "Title",
         description = "Description"

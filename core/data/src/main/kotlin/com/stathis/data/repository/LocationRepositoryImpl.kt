@@ -11,7 +11,7 @@ import com.stathis.network.service.RickAndMortyApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class LocationRepositoryImpl(
+internal class LocationRepositoryImpl(
     private val remoteDataSource: RickAndMortyApi
 ) : LocationRepository {
 

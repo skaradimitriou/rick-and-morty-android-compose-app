@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SearchScreenViewModel(
+internal class SearchScreenViewModel(
     private val dispatcher: CoroutineDispatcher,
     private val fetchAllUserQueriesUseCase: FetchAllUserQueriesUseCase,
     private val saveUserQueryUseCase: SaveQueryToLocalDbUseCase,

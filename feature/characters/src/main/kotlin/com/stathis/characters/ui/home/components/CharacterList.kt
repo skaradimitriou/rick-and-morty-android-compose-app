@@ -43,7 +43,7 @@ internal fun CharacterList(
 
 @Preview
 @Composable
-fun CharacterListPreview() {
+private fun CharacterListPreview() {
     val dummyList = CharactersFakes.provideDummyCharacterList()
     RickAndMortyAppTheme {
         CharacterList(

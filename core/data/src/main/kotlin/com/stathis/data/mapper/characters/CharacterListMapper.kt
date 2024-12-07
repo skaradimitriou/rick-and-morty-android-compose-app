@@ -5,7 +5,7 @@ import com.stathis.data.mapper.BaseMapper
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.network.model.characters.CharacterResponseDto
 
-object CharacterListMapper : BaseMapper<List<CharacterResponseDto>?, List<CharacterResponse>> {
+internal object CharacterListMapper : BaseMapper<List<CharacterResponseDto>?, List<CharacterResponse>> {
 
     override fun toDomainModel(dto: List<CharacterResponseDto>?) = dto.toListOf {
         CharacterResponseMapper.toDomainModel(it)
