@@ -3,6 +3,7 @@
 
     <!-- Home Screen -->
     <string name="home">Home</string>
+    <string name="character_label">#%1s %2s"</string>
 
     <!-- Character Details -->
     <string name="character_details">Character Details</string>

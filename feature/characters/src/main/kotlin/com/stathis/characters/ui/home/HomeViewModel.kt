@@ -20,7 +20,11 @@ internal class HomeViewModel(
     private val _uiState: MutableStateFlow<HomeScreenUiState> = MutableStateFlow(HomeScreenUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
-    fun fetchAllCharacters() {
+    init {
+        fetchAllCharacters()
+    }
+
+    private fun fetchAllCharacters() {
         viewModelScope.launch(dispatcher) {
             useCase.invoke().collect { result ->
                 _uiState.update { result.toUiState() }
