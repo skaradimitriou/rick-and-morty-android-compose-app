@@ -8,8 +8,10 @@ import com.stathis.model.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 internal class DetailsScreenViewModel(
     private val dispatcher: CoroutineDispatcher,
@@ -19,13 +21,11 @@ internal class DetailsScreenViewModel(
     private val _uiState: MutableStateFlow<DetailsScreenUiState> = MutableStateFlow(DetailsScreenUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
-    fun fetchCharacterDetails(id: Int) {
-        viewModelScope.launch(dispatcher) {
-            useCase.invoke(id)
-                .collect { result ->
-                    _uiState.update { result.toUiState() }
-                }
-        }
+    suspend fun fetchCharacterDetails(id: Int) {
+        useCase.invoke(id)
+            .onEach { result -> _uiState.update { result.toUiState() } }
+            .flowOn(dispatcher)
+            .launchIn(viewModelScope)
     }
 
     private fun Result<FetchCharacterDetailsUseCase.CharacterDetails>.toUiState() = when (this) {
