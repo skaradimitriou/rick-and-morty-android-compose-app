@@ -1,5 +1,6 @@
 package com.stathis.data.repository
 
+import com.stathis.common.errors.NetworkError
 import com.stathis.model.Result
 import com.stathis.model.location.Location
 import com.stathis.network.model.location.LocationDto
@@ -25,6 +26,7 @@ class LocationRepositoryTest {
 
     companion object {
 
+        private const val ERROR_CODE = 400
         private const val DUMMY_LOCATION_ID = 1
         private val DUMMY_MULTIPLE_LOCATION_IDS = listOf<String>("1", "2", "3")
         private const val DUMMY_LOCATION_NAME = "Earth"
@@ -73,15 +75,21 @@ class LocationRepositoryTest {
     @Test
     fun `given valid location id, when calling getLocationById method, then return failure mapped domain result`() =
         runTest(dispatcher) {
-            val response: Response<LocationDto?> = Response.error<LocationDto>(400, "Something went wrong".toResponseBody())
+            val response: Response<LocationDto?> = Response.error<LocationDto>(
+                ERROR_CODE,
+                "Something went wrong".toResponseBody()
+            )
+
             coEvery { api.getLocationById(DUMMY_LOCATION_ID) } returns response
 
             repository.getLocationById(DUMMY_LOCATION_ID).collect { result ->
                 coEvery { api.getLocationById(DUMMY_LOCATION_ID) }
 
-                assertTrue(result is Result.Error)
-                assertEquals(result.errorCode, 400)
-                assertTrue(result.message.isNotEmpty())
+                assertTrue(result is Result.Error && result.exception is NetworkError.Generic)
+                with(result.exception) {
+                    assertEquals(ERROR_CODE, (this as NetworkError.Generic).errorCode)
+                    assertTrue(message.toString().isNotEmpty())
+                }
             }
         }
 
@@ -173,7 +181,8 @@ class LocationRepositoryTest {
     fun `given multiple valid location ids, when calling getMultipleLocationsById method, then return failure mapped domain result`() =
         runTest(dispatcher) {
             val response: Response<List<LocationDto?>> = Response.error<List<LocationDto?>>(
-                400, "Something went wrong".toResponseBody()
+                ERROR_CODE,
+                "Something went wrong".toResponseBody()
             )
 
             coEvery { api.getMultipleLocationsById(DUMMY_MULTIPLE_LOCATION_IDS) } returns response
@@ -181,9 +190,11 @@ class LocationRepositoryTest {
             repository.getMultipleLocationsById(DUMMY_MULTIPLE_LOCATION_IDS).collect { result ->
                 coEvery { api.getMultipleLocationsById(DUMMY_MULTIPLE_LOCATION_IDS) }
 
-                assertTrue(result is Result.Error)
-                assertEquals(result.errorCode, 400)
-                assertTrue(result.message.isNotEmpty())
+                assertTrue(result is Result.Error && result.exception is NetworkError.Generic)
+                with(result.exception) {
+                    assertEquals(ERROR_CODE, (this as NetworkError.Generic).errorCode)
+                    assertTrue(message.toString().isNotEmpty())
+                }
             }
         }
 
@@ -230,7 +241,8 @@ class LocationRepositoryTest {
     fun `given valid location name, when calling getLocationByName method, then return failure mapped domain result`() =
         runTest(dispatcher) {
             val response: Response<LocationWrapperDto?> = Response.error<LocationWrapperDto>(
-                400, "Something went wrong".toResponseBody()
+                ERROR_CODE,
+                "Something went wrong".toResponseBody()
             )
 
             coEvery { api.getLocationByName(DUMMY_LOCATION_NAME) } returns response
@@ -238,9 +250,11 @@ class LocationRepositoryTest {
             repository.getLocationByName(DUMMY_LOCATION_NAME).collect { result ->
                 coEvery { api.getLocationByName(DUMMY_LOCATION_NAME) }
 
-                assertTrue(result is Result.Error)
-                assertEquals(result.errorCode, 400)
-                assertTrue(result.message.isNotEmpty())
+                assertTrue(result is Result.Error && result.exception is NetworkError.Generic)
+                with(result.exception) {
+                    assertEquals(ERROR_CODE, (this as NetworkError.Generic).errorCode)
+                    assertTrue(message.toString().isNotEmpty())
+                }
             }
         }
 }

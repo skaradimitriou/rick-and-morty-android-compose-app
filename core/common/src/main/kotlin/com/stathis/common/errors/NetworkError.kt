@@ -1,7 +1,7 @@
-package com.stathis.common.exceptions
+package com.stathis.common.errors
 
 /**
- * Represents a network error inside the application.
+ * Represents a Network error inside the application.
  */
 
 sealed class NetworkError : Exception() {

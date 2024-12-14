@@ -37,7 +37,7 @@ internal class HomeViewModel(
         is Result.Success -> HomeScreenUiState.Content(data)
         is Result.Error -> HomeScreenUiState.Error(
             title = "Something went wrong",
-            description = message
+            description = exception.message.toString()
         )
     }
 }

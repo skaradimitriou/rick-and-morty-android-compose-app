@@ -38,12 +38,12 @@ class FetchCharacterDetailsUseCase(
                                 emit(Result.Success(dataModel))
                             }
 
-                            is Result.Error -> emit(Result.Error(episodeResult.errorCode, episodeResult.message))
+                            is Result.Error -> emit(Result.Error(episodeResult.exception))
                         }
                     }
                 }
 
-                is Result.Error -> emit(Result.Error(characterResult.errorCode, characterResult.message))
+                is Result.Error -> emit(Result.Error(characterResult.exception))
             }
         }
     }

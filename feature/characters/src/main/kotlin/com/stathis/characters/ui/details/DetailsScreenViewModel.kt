@@ -37,7 +37,7 @@ internal class DetailsScreenViewModel(
 
         is Result.Error -> DetailsScreenUiState.Error(
             title = "Something went wrong",
-            description = message
+            description = exception.message.toString()
         )
     }
 }
