@@ -38,13 +38,13 @@ class FetchEpisodeDetailsUseCase(
                                 }
 
                                 is Result.Error -> {
-                                    emit(Result.Error(charactersResult.errorCode, charactersResult.message))
+                                    emit(Result.Error(charactersResult.exception))
                                 }
                             }
                         }
                 }
 
-                is Result.Error -> emit(Result.Error(episodeResult.errorCode, episodeResult.message))
+                is Result.Error -> emit(Result.Error(episodeResult.exception))
             }
         }
     }

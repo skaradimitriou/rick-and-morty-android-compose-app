@@ -32,7 +32,7 @@ internal class EpisodeDetailsViewModel(
         is Result.Success -> EpisodeDetailsUiState.Content(data)
         is Result.Error -> EpisodeDetailsUiState.Error(
             errorTitle = "Something went wrong",
-            errorDescription = message
+            errorDescription = exception.message.toString()
         )
     }
 }

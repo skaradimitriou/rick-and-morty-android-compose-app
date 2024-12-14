@@ -1,5 +1,6 @@
 package com.stathis.data.repository
 
+import com.stathis.common.errors.DatabaseError
 import com.stathis.common.util.toNotNull
 import com.stathis.data.mapper.characters.CharacterListMapper
 import com.stathis.data.mapper.characters.CharacterMapper
@@ -45,17 +46,22 @@ internal class CharactersRepositoryImpl(
     }
 
     override suspend fun getCharacterById(id: Int): Flow<Result<CharacterResponse>> = flow {
-        localDataSource.dao().getCharacterById(id).catch {
-            emit(Result.Error(errorCode = 404, message = it.localizedMessage.toNotNull()))
-        }.collect { characterFromLocalDataSource ->
-            characterFromLocalDataSource?.let {
-                emit(Result.Success(it.toCharacter()))
-            } ?: run {
-                getCharacterByIdFromRemoteDataSource(id).collect { characterFromRemote ->
-                    emit(characterFromRemote)
+        localDataSource.dao().getCharacterById(id)
+            .catch {
+                emit(
+                    Result.Error(
+                        DatabaseError.NotFound(message = it.localizedMessage.toNotNull())
+                    )
+                )
+            }.collect { characterFromLocalDataSource ->
+                characterFromLocalDataSource?.let {
+                    emit(Result.Success(it.toCharacter()))
+                } ?: run {
+                    getCharacterByIdFromRemoteDataSource(id).collect { characterFromRemote ->
+                        emit(characterFromRemote)
+                    }
                 }
             }
-        }
     }
 
     override suspend fun getCharacterByName(name: String): Flow<Result<List<CharacterResponse>>> = flow {
