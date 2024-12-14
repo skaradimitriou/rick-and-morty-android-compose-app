@@ -1,5 +1,6 @@
 package com.stathis.data.repository
 
+import com.stathis.common.errors.NetworkError
 import com.stathis.domain.repository.EpisodesRepository
 import com.stathis.model.Result
 import com.stathis.network.model.episodes.EpisodeDto
@@ -74,9 +75,11 @@ class EpisodesRepositoryTest {
             coEvery { api.getEpisodeById(DUMMY_EPISODE_ID) } returns response
 
             repository.fetchEpisodeInfo(DUMMY_EPISODE_ID).collect { result ->
-                assertTrue(result is Result.Error)
-                assertEquals(ERROR_CODE, result.errorCode)
-                assertTrue(result.message.isNotEmpty())
+                assertTrue(result is Result.Error && result.exception is NetworkError.Generic)
+                with(result.exception) {
+                    assertEquals(ERROR_CODE, (this as NetworkError.Generic).errorCode)
+                    assertTrue(message.toString().isNotEmpty())
+                }
             }
         }
 
@@ -109,9 +112,11 @@ class EpisodesRepositoryTest {
             coEvery { api.getEpisodesByName(DUMMY_EPISODE_NAME) } returns response
 
             repository.fetchEpisodesByName(DUMMY_EPISODE_NAME).collect { result ->
-                assertTrue(result is Result.Error)
-                assertEquals(ERROR_CODE, result.errorCode)
-                assertTrue(result.message.isNotEmpty())
+                assertTrue(result is Result.Error && result.exception is NetworkError.Generic)
+                with(result.exception) {
+                    assertEquals(ERROR_CODE, (this as NetworkError.Generic).errorCode)
+                    assertTrue(message.toString().isNotEmpty())
+                }
             }
         }
 
@@ -143,9 +148,11 @@ class EpisodesRepositoryTest {
             coEvery { api.getMultipleEpisodesById(listOf(DUMMY_EPISODE_ID.toString())) } returns response
 
             repository.fetchMultipleEpisodeInfo(listOf(DUMMY_EPISODE_ID.toString())).collect { result ->
-                assertTrue(result is Result.Error)
-                assertEquals(ERROR_CODE, result.errorCode)
-                assertTrue(result.message.isNotEmpty())
+                assertTrue(result is Result.Error && result.exception is NetworkError.Generic)
+                with(result.exception) {
+                    assertEquals(ERROR_CODE, (this as NetworkError.Generic).errorCode)
+                    assertTrue(message.toString().isNotEmpty())
+                }
             }
         }
 }
