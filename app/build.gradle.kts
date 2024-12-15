@@ -69,12 +69,13 @@ dependencies {
     implementation(projects.core.domain)
     implementation(projects.core.designSystem)
     implementation(projects.core.common)
+    implementation(projects.core.navigation)
 
     implementation(projects.feature.characters)
     implementation(projects.feature.episodes)
 
-    implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlin.serialization.json)
+    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
