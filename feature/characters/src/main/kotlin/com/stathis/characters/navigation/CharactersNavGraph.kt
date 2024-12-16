@@ -7,24 +7,24 @@ import androidx.navigation.toRoute
 import com.stathis.characters.ui.details.DetailsScreen
 import com.stathis.characters.ui.home.HomeScreen
 import com.stathis.characters.ui.search.SearchScreen
-import com.stathis.common.navigation.CharactersRoute
 import com.stathis.common.util.Callback
+import com.stathis.navigation.screens.CharacterScreen
 
-fun NavGraphBuilder.characterRoute(
+fun NavGraphBuilder.characterNavGraph(
     navController: NavController,
     onEpisodeClick: (Int) -> Unit
 ) {
     homeRoute(
         onCharacterClick = { characterId ->
-            navController.navigate(CharactersRoute.Details(characterId))
+            navController.navigate(CharacterScreen.Details(characterId))
         },
-        onSearchIconClick = { navController.navigate(CharactersRoute.Search) }
+        onSearchIconClick = { navController.navigate(CharacterScreen.Search) }
     )
 
     searchRoute(
         onBackNavIconClick = { navController.navigateUp() },
         onCharacterClick = { characterId ->
-            navController.navigate(CharactersRoute.Details(characterId))
+            navController.navigate(CharacterScreen.Details(characterId))
         },
         onEpisodeClick = onEpisodeClick
     )
@@ -39,7 +39,7 @@ private fun NavGraphBuilder.homeRoute(
     onCharacterClick: (Int) -> Unit,
     onSearchIconClick: Callback
 ) {
-    composable<CharactersRoute.Home> {
+    composable<CharacterScreen.Home> {
         HomeScreen(
             onCharacterClick = onCharacterClick,
             onSearchIconClick = onSearchIconClick
@@ -51,8 +51,8 @@ private fun NavGraphBuilder.detailsScreenRoute(
     onBackNavIconClick: Callback,
     onEpisodeClick: (Int) -> Unit
 ) {
-    composable<CharactersRoute.Details> {
-        val args = it.toRoute<CharactersRoute.Details>()
+    composable<CharacterScreen.Details> {
+        val args = it.toRoute<CharacterScreen.Details>()
         DetailsScreen(
             characterId = args.characterId,
             onBackNavIconClick = onBackNavIconClick,
@@ -66,7 +66,7 @@ private fun NavGraphBuilder.searchRoute(
     onCharacterClick: (Int) -> Unit,
     onEpisodeClick: (Int) -> Unit,
 ) {
-    composable<CharactersRoute.Search> {
+    composable<CharacterScreen.Search> {
         SearchScreen(
             onBackNavIconClick = onBackNavIconClick,
             onCharacterClick = onCharacterClick,

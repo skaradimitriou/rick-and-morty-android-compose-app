@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.stathis.designsystem.theme.RickAndMortyAppTheme
-import com.stathis.rickandmortyapp.navigation.AppNavGraph
+import com.stathis.rickandmortyapp.navigation.MainAppNavGraph
 
 class MainActivity : ComponentActivity() {
 
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             RickAndMortyAppTheme {
-                AppNavGraph()
+                MainAppNavGraph()
             }
         }
     }

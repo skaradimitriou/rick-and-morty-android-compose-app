@@ -1,4 +1,4 @@
-package com.stathis.common.navigation
+package com.stathis.navigation.screens
 
 /**
  * Represents each screen inside the application
