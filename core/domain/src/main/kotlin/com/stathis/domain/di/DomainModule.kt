@@ -9,7 +9,7 @@ import com.stathis.domain.usecases.search.FetchQueryResultsUseCase
 import com.stathis.domain.usecases.search.SaveQueryToLocalDbUseCase
 import org.koin.dsl.module
 
-val charactersDomainModule = module {
+private val charactersDomainModule = module {
     single<FetchAllCharactersUseCase> {
         FetchAllCharactersUseCase(repository = get())
     }
@@ -22,7 +22,7 @@ val charactersDomainModule = module {
     }
 }
 
-val episodesDomainModule = module {
+private val episodesDomainModule = module {
     single<FetchEpisodeDetailsUseCase> {
         FetchEpisodeDetailsUseCase(
             charactersRepository = get(),
@@ -37,7 +37,7 @@ val episodesDomainModule = module {
     }
 }
 
-val searchDomainModule = module {
+private val searchDomainModule = module {
     single<FetchAllUserQueriesUseCase> {
         FetchAllUserQueriesUseCase(
             repo = get()
@@ -58,3 +58,6 @@ val searchDomainModule = module {
         )
     }
 }
+
+val domainModule = charactersDomainModule + episodesDomainModule + searchDomainModule
+

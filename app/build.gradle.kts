@@ -63,8 +63,6 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    implementation(projects.core.network)
-    implementation(projects.core.database)
     implementation(projects.core.data)
     implementation(projects.core.domain)
     implementation(projects.core.designSystem)
