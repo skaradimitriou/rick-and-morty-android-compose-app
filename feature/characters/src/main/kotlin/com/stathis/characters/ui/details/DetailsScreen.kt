@@ -1,7 +1,9 @@
 package com.stathis.characters.ui.details
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
@@ -9,15 +11,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stathis.characters.components.displayEpisodeList
-import com.stathis.characters.ui.details.components.BasicCharacterInfo
-import com.stathis.characters.ui.details.components.CharacterDetails
+import com.stathis.characters.ui.details.components.CharacterDetailsRow
+import com.stathis.characters.ui.details.components.CharacterPosterCard
 import com.stathis.characters.ui.details.model.DetailsScreenUiState
 import com.stathis.common.util.Callback
+import com.stathis.common.util.DimenRes
 import com.stathis.common.util.StringRes
+import com.stathis.common.util.toNotNull
 import com.stathis.testing.CharactersFakes
 import com.stathis.testing.EpisodeFakes
 import com.stathis.ui.error.ErrorScreen
@@ -95,11 +100,22 @@ private fun Content(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues)
+            .padding(all = dimensionResource(DimenRes.dimen_10))
     ) {
-        data.character?.let {
+        data.character?.let { character ->
             item {
-                BasicCharacterInfo(character = it)
-                CharacterDetails(character = it)
+                CharacterPosterCard(
+                    modifier = Modifier.height(dimensionResource(DimenRes.dimen_350)),
+                    character = character,
+                )
+
+                Spacer(modifier = Modifier.height(dimensionResource(DimenRes.dimen_8)))
+
+                CharacterDetailsRow(
+                    species = character.species.toNotNull(),
+                    gender = character.gender.toNotNull(),
+                    origin = character.origin.toNotNull()
+                )
             }
         }
 

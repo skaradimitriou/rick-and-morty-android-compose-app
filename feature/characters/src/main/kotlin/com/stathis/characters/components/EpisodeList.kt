@@ -20,10 +20,7 @@ internal fun LazyListScope.displayEpisodeList(
 ) {
     item {
         Text(
-            modifier = Modifier.padding(
-                top = dimensionResource(DimenRes.dimen_16),
-                start = dimensionResource(DimenRes.dimen_16)
-            ),
+            modifier = Modifier.padding(top = dimensionResource(DimenRes.dimen_16)),
             text = stringResource(StringRes.episodes),
             style = TextStyle(
                 fontSize = MaterialTheme.typography.titleLarge.fontSize
@@ -35,7 +32,6 @@ internal fun LazyListScope.displayEpisodeList(
             Text(
                 modifier = Modifier.padding(
                     top = dimensionResource(DimenRes.dimen_8),
-                    start = dimensionResource(DimenRes.dimen_16),
                     bottom = dimensionResource(DimenRes.dimen_16)
                 ),
                 text = stringResource(StringRes.empty_results),
@@ -45,11 +41,7 @@ internal fun LazyListScope.displayEpisodeList(
     } else {
         items(items = episodes) {
             BasicCardWithText(
-                modifier = Modifier.padding(
-                    top = dimensionResource(DimenRes.dimen_8),
-                    start = dimensionResource(DimenRes.dimen_16),
-                    end = dimensionResource(DimenRes.dimen_16),
-                ),
+                modifier = Modifier.padding(top = dimensionResource(DimenRes.dimen_8)),
                 title = it.name + " | " + it.episode,
                 description = it.airDate,
                 onItemClick = { onEpisodeClick(it.id) }
