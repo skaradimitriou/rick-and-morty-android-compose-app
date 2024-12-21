@@ -11,6 +11,7 @@
     <dimen name="dimen_80">80dp</dimen>
     <dimen name="dimen_120">120dp</dimen>
     <dimen name="dimen_200">200dp</dimen>
+    <dimen name="dimen_350">350dp</dimen>
 
     <dimen name="text_16">16sp</dimen>
     <dimen name="text_18">18sp</dimen>

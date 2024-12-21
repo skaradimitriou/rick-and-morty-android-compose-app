@@ -13,8 +13,14 @@ data class CharacterResponse(
     val episode: List<String>,
     val url: String,
     val created: String
-)
+) {
+
+    /**
+     * Used to display the character id along with character name
+     */
+    val characterDisplayLabel: String = "#$id $name"
+}
 
 enum class CharacterStatus {
-    UNKNOWN, ALIVE, DEAD
+    ALIVE, DEAD, UNKNOWN
 }
