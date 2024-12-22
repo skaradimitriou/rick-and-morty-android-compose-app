@@ -47,8 +47,8 @@ private fun HomeContent(
         topBar = {
             CustomTopAppBar(
                 title = stringResource(StringRes.home),
-                endIcon = Icons.Default.Search,
-                endIconCallback = onSearchIconClick
+                //endIcon = Icons.Default.Search,
+                //endIconCallback = onSearchIconClick
             )
         },
         content = { paddingValues ->
