@@ -8,10 +8,13 @@ import com.stathis.model.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 internal class EpisodeDetailsViewModel(
+    episodeId: Int,
     private val dispatcher: CoroutineDispatcher,
     private val useCase: FetchEpisodeDetailsUseCase
 ) : ViewModel() {
@@ -19,11 +22,15 @@ internal class EpisodeDetailsViewModel(
     private val _episodes = MutableStateFlow<EpisodeDetailsUiState>(EpisodeDetailsUiState.Loading)
     val episodes = _episodes.asStateFlow()
 
-    fun fetchEpisodeDetails(episodeId: Int) {
+    init {
+        fetchEpisodeDetails(episodeId)
+    }
+
+    private fun fetchEpisodeDetails(episodeId: Int) {
         viewModelScope.launch(dispatcher) {
-            useCase.invoke(episodeId).collect { result ->
+            useCase.invoke(episodeId).onEach { result ->
                 _episodes.update { result.toUiState() }
-            }
+            }.launchIn(viewModelScope)
         }
     }
 

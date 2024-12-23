@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -29,19 +28,16 @@ import com.stathis.ui.error.ErrorScreen
 import com.stathis.ui.loading.LoadingScreen
 import com.stathis.ui.topbars.TopBarWithBackNavIcon
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 internal fun DetailsScreen(
     characterId: Int,
-    viewModel: DetailsScreenViewModel = koinViewModel(),
+    viewModel: DetailsScreenViewModel = koinViewModel(parameters = { parametersOf(characterId) }),
     onBackNavIconClick: Callback,
     onEpisodeClick: (Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-    LaunchedEffect(key1 = true) {
-        viewModel.fetchCharacterDetails(characterId)
-    }
 
     DetailsContent(
         uiState = uiState,

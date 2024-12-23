@@ -16,8 +16,9 @@ val charactersModule = module {
         )
     }
 
-    viewModel {
+    viewModel { (characterId: Int) ->
         DetailsScreenViewModel(
+            characterId = characterId,
             dispatcher = get(named("IoDispatcher")),
             useCase = get()
         )

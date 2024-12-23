@@ -7,8 +7,9 @@ import org.koin.dsl.module
 
 val episodesModule = module {
 
-    viewModel {
+    viewModel { (episodeId: Int) ->
         EpisodeDetailsViewModel(
+            episodeId = episodeId,
             dispatcher = get(named("IoDispatcher")),
             useCase = get()
         )
