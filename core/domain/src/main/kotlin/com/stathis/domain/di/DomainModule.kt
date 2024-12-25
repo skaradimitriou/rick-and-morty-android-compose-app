@@ -4,6 +4,7 @@ import com.stathis.domain.usecases.characters.FetchAllCharactersUseCase
 import com.stathis.domain.usecases.characters.FetchCharacterDetailsUseCase
 import com.stathis.domain.usecases.episodes.FetchEpisodeDetailsUseCase
 import com.stathis.domain.usecases.episodes.FetchEpisodesByIdUseCase
+import com.stathis.domain.usecases.locations.FetchLocationInfoByIdUseCase
 import com.stathis.domain.usecases.search.FetchAllUserQueriesUseCase
 import com.stathis.domain.usecases.search.FetchQueryResultsUseCase
 import com.stathis.domain.usecases.search.SaveQueryToLocalDbUseCase
@@ -37,6 +38,15 @@ private val episodesDomainModule = module {
     }
 }
 
+private val locationsDomainModule = module {
+    single<FetchLocationInfoByIdUseCase> {
+        FetchLocationInfoByIdUseCase(
+            locationRepository = get(),
+            charactersRepository = get()
+        )
+    }
+}
+
 private val searchDomainModule = module {
     single<FetchAllUserQueriesUseCase> {
         FetchAllUserQueriesUseCase(
@@ -59,5 +69,10 @@ private val searchDomainModule = module {
     }
 }
 
-val domainModule = charactersDomainModule + episodesDomainModule + searchDomainModule
+val domainModule = listOf(
+    charactersDomainModule,
+    episodesDomainModule,
+    locationsDomainModule,
+    searchDomainModule
+)
 

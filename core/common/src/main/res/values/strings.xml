@@ -22,4 +22,9 @@
     <!-- Locations -->
     <string name="locations">Locations</string>
 
+    <!-- Location Details -->
+    <string name="location_details">Location Details</string>
+    <string name="type">Type:</string>
+    <string name="dimension">Dimension:</string>
+    <string name="residents">Residents</string>
 </resources>

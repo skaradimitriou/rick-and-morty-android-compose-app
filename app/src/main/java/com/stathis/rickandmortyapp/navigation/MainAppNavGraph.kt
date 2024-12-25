@@ -3,6 +3,7 @@ package com.stathis.rickandmortyapp.navigation
 import androidx.compose.runtime.Composable
 import com.stathis.characters.navigation.characterNavGraph
 import com.stathis.episodes.navigation.episodesNavGraph
+import com.stathis.locations.navigation.locationsNavGraph
 import com.stathis.navigation.screens.CharacterScreen
 import com.stathis.navigation.screens.EpisodeScreen
 
@@ -22,6 +23,13 @@ fun MainAppNavGraph() {
         )
 
         episodesNavGraph(
+            navController = navController,
+            onCharacterClick = { characterId ->
+                navController.navigate(CharacterScreen.Details(characterId))
+            }
+        )
+
+        locationsNavGraph(
             navController = navController,
             onCharacterClick = { characterId ->
                 navController.navigate(CharacterScreen.Details(characterId))
