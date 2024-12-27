@@ -6,6 +6,7 @@ import com.stathis.common.di.dispatchersModule
 import com.stathis.data.di.dataModule
 import com.stathis.domain.di.domainModule
 import com.stathis.episodes.di.episodesModule
+import com.stathis.locations.di.locationsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.core.module.Module
@@ -22,7 +23,8 @@ class RickAndMortyApp : Application() {
 
         val featureModules: List<Module> = listOf(
             charactersModule,
-            episodesModule
+            episodesModule,
+            locationsModule
         )
 
         val modules = featureModules + coreModules + dispatchersModule

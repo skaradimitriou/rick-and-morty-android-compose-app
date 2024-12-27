@@ -71,6 +71,7 @@ dependencies {
 
     implementation(projects.feature.characters)
     implementation(projects.feature.episodes)
+    implementation(projects.feature.locations)
 
     implementation(libs.kotlin.serialization.json)
     implementation(libs.androidx.navigation.compose)
