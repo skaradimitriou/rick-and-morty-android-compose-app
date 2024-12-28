@@ -90,6 +90,7 @@ private fun Content(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues)
+            .padding(all = dimensionResource(DimenRes.dimen_10))
     ) {
         displayBasicLocationInfo(data.location)
         displayCharacters(

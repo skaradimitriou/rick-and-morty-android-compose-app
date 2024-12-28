@@ -16,12 +16,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stathis.characters.components.displayEpisodeList
 import com.stathis.characters.ui.details.components.CharacterDetailsRow
-import com.stathis.characters.ui.details.components.CharacterPosterCard
+import com.stathis.characters.ui.details.components.CharacterLabel
 import com.stathis.characters.ui.details.model.DetailsScreenUiState
 import com.stathis.common.util.Callback
 import com.stathis.common.util.DimenRes
 import com.stathis.common.util.StringRes
 import com.stathis.common.util.toNotNull
+import com.stathis.designsystem.components.cards.PosterCardWithLabel
 import com.stathis.testing.CharactersFakes
 import com.stathis.testing.EpisodeFakes
 import com.stathis.ui.error.ErrorScreen
@@ -100,9 +101,15 @@ private fun Content(
     ) {
         data.character?.let { character ->
             item {
-                CharacterPosterCard(
+                PosterCardWithLabel(
                     modifier = Modifier.height(dimensionResource(DimenRes.dimen_350)),
-                    character = character,
+                    imageToLoad = character.image,
+                    label = {
+                        CharacterLabel(
+                            characterDisplayName = character.characterDisplayLabel,
+                            characterStatus = character.status
+                        )
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(dimensionResource(DimenRes.dimen_8)))

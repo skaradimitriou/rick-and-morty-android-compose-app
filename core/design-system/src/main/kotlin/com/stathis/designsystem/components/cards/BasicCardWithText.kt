@@ -14,6 +14,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.stathis.common.util.Callback
 import com.stathis.common.util.DimenRes
+import com.stathis.designsystem.consts.DESCRIPTION
+import com.stathis.designsystem.consts.TITLE
 
 @Composable
 fun BasicCardWithText(
@@ -51,9 +53,9 @@ fun BasicCardWithText(
 
 @Preview
 @Composable
-fun BasicCardWithTextPreview(modifier: Modifier = Modifier) {
+private fun BasicCardWithTextPreview() {
     BasicCardWithText(
-        title = "This is a title",
-        description = "This is a description"
+        title = TITLE,
+        description = DESCRIPTION
     )
 }

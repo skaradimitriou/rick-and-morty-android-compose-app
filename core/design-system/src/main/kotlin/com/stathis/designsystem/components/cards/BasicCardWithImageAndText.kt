@@ -3,10 +3,9 @@ package com.stathis.designsystem.components.cards
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -14,10 +13,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import com.stathis.common.util.Callback
 import com.stathis.common.util.DimenRes
 import com.stathis.designsystem.components.images.CoilImage
+import com.stathis.designsystem.consts.DESCRIPTION
+import com.stathis.designsystem.consts.IMAGE_URL
+import com.stathis.designsystem.consts.TITLE
 
 @Composable
 fun BasicCardWithImageAndText(
@@ -38,8 +41,7 @@ fun BasicCardWithImageAndText(
         Row {
             CoilImage(
                 modifier = Modifier
-                    .width(dimensionResource(DimenRes.dimen_120))
-                    .fillMaxHeight(),
+                    .size(dimensionResource(DimenRes.dimen_130)),
                 imageUrlToLoad = imageUrl,
                 contentDescription = contentDescription
             )
@@ -57,6 +59,8 @@ fun BasicCardWithImageAndText(
                 Text(
                     modifier = Modifier.padding(top = dimensionResource(DimenRes.dimen_8)),
                     text = description,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
                     style = TextStyle(
                         fontSize = MaterialTheme.typography.bodyLarge.fontSize
                     )
@@ -68,11 +72,11 @@ fun BasicCardWithImageAndText(
 
 @Preview
 @Composable
-fun BasicCardWithImageAndTextPreview(modifier: Modifier = Modifier) {
+private fun BasicCardWithImageAndTextPreview() {
     BasicCardWithImageAndText(
-        imageUrl = "myImageUrl",
-        title = "This is a title",
-        description = "This is a description",
+        imageUrl = IMAGE_URL,
+        title = TITLE,
+        description = DESCRIPTION,
         onClick = {}
     )
 }

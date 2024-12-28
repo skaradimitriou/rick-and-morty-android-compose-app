@@ -11,14 +11,17 @@ import coil.request.ImageRequest
 @Composable
 fun CoilImage(
     modifier: Modifier = Modifier,
-    imageUrlToLoad: String,
-    contentDescription: String? = null
+    imageUrlToLoad: String? = null,
+    contentDescription: String? = null,
+    placeHolder: Int = com.stathis.common.R.drawable.image_placeholder
 ) {
     AsyncImage(
         modifier = modifier,
         model = ImageRequest.Builder(LocalContext.current)
             .data(imageUrlToLoad)
             .crossfade(true)
+            .placeholder(placeHolder)
+            .error(placeHolder)
             .build(),
         contentDescription = contentDescription,
         contentScale = ContentScale.Crop
