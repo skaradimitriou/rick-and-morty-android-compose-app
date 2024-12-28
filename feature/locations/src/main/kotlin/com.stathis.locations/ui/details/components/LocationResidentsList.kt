@@ -20,10 +20,7 @@ internal fun LazyListScope.displayCharacters(
 ) {
     item {
         Text(
-            modifier = Modifier.padding(
-                horizontal = dimensionResource(DimenRes.dimen_16),
-                vertical = dimensionResource(DimenRes.dimen_16)
-            ),
+            modifier = Modifier.padding(vertical = dimensionResource(DimenRes.dimen_16)),
             text = stringResource(StringRes.residents),
             style = TextStyle(
                 fontSize = MaterialTheme.typography.titleLarge.fontSize
@@ -33,11 +30,7 @@ internal fun LazyListScope.displayCharacters(
 
     items(characters) { character ->
         CharacterDisplayCard(
-            modifier = Modifier.padding(
-                top = dimensionResource(DimenRes.dimen_8),
-                start = dimensionResource(DimenRes.dimen_16),
-                end = dimensionResource(DimenRes.dimen_16),
-            ),
+            modifier = Modifier.padding(top = dimensionResource(DimenRes.dimen_8)),
             character = character,
             onCharacterClick = onCharacterClick
         )
