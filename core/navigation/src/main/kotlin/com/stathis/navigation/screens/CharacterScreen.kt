@@ -1,6 +1,7 @@
 package com.stathis.navigation.screens
 
 import android.annotation.SuppressLint
+import kotlinx.serialization.Serializable
 
 /**
  * Represents the [Screen] that are a part of the Characters flow
@@ -11,7 +12,7 @@ sealed class CharacterScreen : Screen {
     /**
      * Represents the home screen of the characters flow.
      */
-    @kotlinx.serialization.Serializable
+    @Serializable
     object Home : CharacterScreen()
 
     /**
@@ -19,12 +20,12 @@ sealed class CharacterScreen : Screen {
      * @param characterId: the character's unique id.
      */
     @SuppressLint("UnsafeOptInUsageError")
-    @kotlinx.serialization.Serializable
+    @Serializable
     data class Details(val characterId: Int) : CharacterScreen()
 
     /**
      * Represents the search screen of the characters flow.
      */
-    @kotlinx.serialization.Serializable
+    @Serializable
     object Search : CharacterScreen()
 }

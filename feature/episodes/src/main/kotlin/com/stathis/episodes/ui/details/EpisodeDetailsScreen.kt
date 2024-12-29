@@ -11,9 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.stathis.common.util.Callback
-import com.stathis.common.util.DimenRes
-import com.stathis.common.util.StringRes
 import com.stathis.designsystem.theme.RickAndMortyAppTheme
 import com.stathis.domain.usecases.episodes.FetchEpisodeDetailsUseCase
 import com.stathis.episodes.ui.details.components.displayCharacters
@@ -24,6 +21,9 @@ import com.stathis.testing.EpisodeFakes
 import com.stathis.ui.error.ErrorScreen
 import com.stathis.ui.loading.LoadingScreen
 import com.stathis.ui.topbars.TopBarWithBackNavIcon
+import com.stathis.util.util.Callback
+import com.stathis.util.util.DimenRes
+import com.stathis.util.util.StringRes
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 

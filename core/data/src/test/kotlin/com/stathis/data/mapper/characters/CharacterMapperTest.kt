@@ -1,11 +1,11 @@
 package com.stathis.data.mapper.characters
 
-import com.stathis.common.util.toListOf
 import com.stathis.model.characters.CharacterWrapper
 import com.stathis.model.common.PaginationInfo
 import com.stathis.network.model.characters.CharacterResponseDto
 import com.stathis.network.model.characters.CharacterWrapperDto
 import com.stathis.network.model.common.PaginationInfoDto
+import com.stathis.util.util.toListOf
 import org.junit.Test
 import kotlin.test.assertEquals
 

@@ -1,4 +1,4 @@
-package com.stathis.common.di
+package com.stathis.util.di
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

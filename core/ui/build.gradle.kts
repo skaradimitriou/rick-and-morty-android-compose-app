@@ -10,7 +10,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.common)
+    implementation(projects.core.util)
     implementation(projects.core.model)
     implementation(projects.core.designSystem)
 }

@@ -11,15 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.stathis.common.util.Callback
-import com.stathis.common.util.DimenRes
-import com.stathis.common.util.StringRes
 import com.stathis.locations.provider.PREVIEW_LOCATION
 import com.stathis.locations.provider.PREVIEW_RESIDENTS
 import com.stathis.locations.ui.details.components.displayBasicLocationInfo
 import com.stathis.locations.ui.details.components.displayCharacters
 import com.stathis.ui.loading.LoadingScreen
 import com.stathis.ui.topbars.TopBarWithBackNavIcon
+import com.stathis.util.util.Callback
+import com.stathis.util.util.DimenRes
+import com.stathis.util.util.StringRes
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 

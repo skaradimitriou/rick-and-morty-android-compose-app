@@ -1,7 +1,5 @@
 package com.stathis.data.repository
 
-import com.stathis.common.errors.DatabaseError
-import com.stathis.common.util.toNotNull
 import com.stathis.data.mapper.characters.CharacterListMapper
 import com.stathis.data.mapper.characters.CharacterMapper
 import com.stathis.data.mapper.characters.CharacterResponseMapper
@@ -13,6 +11,8 @@ import com.stathis.domain.repository.CharactersRepository
 import com.stathis.model.Result
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.network.service.RickAndMortyApi
+import com.stathis.util.errors.DatabaseError
+import com.stathis.util.util.toNotNull
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow

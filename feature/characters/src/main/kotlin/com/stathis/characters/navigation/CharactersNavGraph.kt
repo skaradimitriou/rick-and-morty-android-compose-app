@@ -7,8 +7,8 @@ import androidx.navigation.toRoute
 import com.stathis.characters.ui.details.DetailsScreen
 import com.stathis.characters.ui.home.HomeScreen
 import com.stathis.characters.ui.search.SearchScreen
-import com.stathis.common.util.Callback
 import com.stathis.navigation.screens.CharacterScreen
+import com.stathis.util.util.Callback
 
 fun NavGraphBuilder.characterNavGraph(
     navController: NavController,

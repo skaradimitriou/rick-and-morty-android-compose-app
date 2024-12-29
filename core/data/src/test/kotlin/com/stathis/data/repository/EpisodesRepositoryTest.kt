@@ -1,11 +1,11 @@
 package com.stathis.data.repository
 
-import com.stathis.common.errors.NetworkError
 import com.stathis.domain.repository.EpisodesRepository
 import com.stathis.model.Result
 import com.stathis.network.model.episodes.EpisodeDto
 import com.stathis.network.model.episodes.EpisodeWrapperDto
 import com.stathis.network.service.RickAndMortyApi
+import com.stathis.util.errors.NetworkError
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineDispatcher

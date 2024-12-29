@@ -13,7 +13,7 @@ fun CoilImage(
     modifier: Modifier = Modifier,
     imageUrlToLoad: String? = null,
     contentDescription: String? = null,
-    placeHolder: Int = com.stathis.common.R.drawable.image_placeholder
+    placeHolder: Int = com.stathis.util.R.drawable.image_placeholder
 ) {
     AsyncImage(
         modifier = modifier,

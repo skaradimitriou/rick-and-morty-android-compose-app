@@ -1,10 +1,10 @@
 package com.stathis.data.mapper.episodes
 
-import com.stathis.common.util.toListOf
-import com.stathis.common.util.toNotNull
 import com.stathis.data.mapper.BaseMapper
 import com.stathis.model.episodes.Episode
 import com.stathis.network.model.episodes.EpisodeDto
+import com.stathis.util.util.toListOf
+import com.stathis.util.util.toNotNull
 
 internal object EpisodesMapper : BaseMapper<EpisodeDto?, Episode> {
 

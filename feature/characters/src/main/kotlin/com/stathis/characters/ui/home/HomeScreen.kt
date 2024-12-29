@@ -1,8 +1,6 @@
 package com.stathis.characters.ui.home
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -12,13 +10,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stathis.characters.ui.home.components.CharacterList
 import com.stathis.characters.ui.home.model.HomeScreenUiState
-import com.stathis.common.util.Callback
-import com.stathis.common.util.StringRes
 import com.stathis.designsystem.components.topbar.CustomTopAppBar
 import com.stathis.designsystem.theme.RickAndMortyAppTheme
 import com.stathis.testing.CharactersFakes
 import com.stathis.ui.error.ErrorScreen
 import com.stathis.ui.loading.LoadingScreen
+import com.stathis.util.util.Callback
+import com.stathis.util.util.StringRes
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

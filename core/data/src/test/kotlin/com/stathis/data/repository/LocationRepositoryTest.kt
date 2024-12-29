@@ -1,6 +1,6 @@
 package com.stathis.data.repository
 
-import com.stathis.common.errors.NetworkError
+import com.stathis.util.errors.NetworkError
 import com.stathis.model.Result
 import com.stathis.model.location.Location
 import com.stathis.network.model.location.LocationDto

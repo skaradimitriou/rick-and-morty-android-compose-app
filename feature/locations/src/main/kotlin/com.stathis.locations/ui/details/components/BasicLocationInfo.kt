@@ -20,12 +20,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.stathis.common.util.DimenRes
-import com.stathis.common.util.StringRes
-import com.stathis.common.util.toNotNull
 import com.stathis.designsystem.components.cards.PosterCardWithLabel
 import com.stathis.locations.provider.PREVIEW_LOCATION
 import com.stathis.model.location.Location
+import com.stathis.util.util.DimenRes
+import com.stathis.util.util.StringRes
+import com.stathis.util.util.toNotNull
 
 internal fun LazyListScope.displayBasicLocationInfo(
     location: Location

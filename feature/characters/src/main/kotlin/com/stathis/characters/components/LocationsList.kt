@@ -9,10 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import com.stathis.common.util.DimenRes
-import com.stathis.common.util.StringRes
 import com.stathis.designsystem.components.cards.BasicCardWithText
 import com.stathis.model.location.Location
+import com.stathis.util.util.DimenRes
+import com.stathis.util.util.StringRes
 
 internal fun LazyListScope.displayLocationsList(
     locations: List<Location>

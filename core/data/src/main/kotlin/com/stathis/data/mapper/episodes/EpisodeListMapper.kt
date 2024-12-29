@@ -1,9 +1,9 @@
 package com.stathis.data.mapper.episodes
 
-import com.stathis.common.util.toListOf
 import com.stathis.data.mapper.BaseMapper
 import com.stathis.model.episodes.Episode
 import com.stathis.network.model.episodes.EpisodeDto
+import com.stathis.util.util.toListOf
 
 internal object EpisodeListMapper : BaseMapper<List<EpisodeDto?>?, List<Episode>> {
 

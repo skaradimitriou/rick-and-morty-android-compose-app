@@ -17,12 +17,12 @@ import com.stathis.characters.components.displayCharacterList
 import com.stathis.characters.components.displayEpisodeList
 import com.stathis.characters.components.displayLocationsList
 import com.stathis.characters.ui.search.model.SearchScreenUiState
-import com.stathis.common.util.Callback
-import com.stathis.common.util.DimenRes
 import com.stathis.designsystem.components.search.CustomSearchBar
 import com.stathis.ui.error.ErrorScreen
 import com.stathis.ui.loading.LoadingScreen
 import com.stathis.ui.topbars.TopBarWithBackNavIcon
+import com.stathis.util.util.Callback
+import com.stathis.util.util.DimenRes
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

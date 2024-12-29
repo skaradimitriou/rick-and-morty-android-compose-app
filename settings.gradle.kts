@@ -23,7 +23,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "RickAndMortyApp"
 include(":app")
-include(":core:common")
+include(":core:util")
 include(":core:data")
 include(":core:database")
 include(":core:design-system")

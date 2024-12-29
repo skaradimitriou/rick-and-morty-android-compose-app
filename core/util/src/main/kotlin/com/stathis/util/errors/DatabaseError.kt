@@ -1,4 +1,4 @@
-package com.stathis.common.errors
+package com.stathis.util.errors
 
 /**
  * Represents a Database error inside the application.

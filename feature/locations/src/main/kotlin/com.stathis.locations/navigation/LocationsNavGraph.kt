@@ -4,9 +4,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.stathis.common.util.Callback
 import com.stathis.locations.ui.details.LocationDetailsScreen
 import com.stathis.navigation.screens.LocationScreen
+import com.stathis.util.util.Callback
 
 /**
  * Represents the Locations Navigation Graph.
