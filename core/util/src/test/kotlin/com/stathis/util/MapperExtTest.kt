@@ -1,5 +1,7 @@
-package com.stathis.common.util
+package com.stathis.util
 
+import com.stathis.util.util.toListOf
+import com.stathis.util.util.toNotNull
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

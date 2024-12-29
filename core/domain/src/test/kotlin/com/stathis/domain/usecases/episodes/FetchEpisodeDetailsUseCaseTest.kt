@@ -1,11 +1,11 @@
 package com.stathis.domain.usecases.episodes
 
-import com.stathis.common.util.toNotNull
 import com.stathis.domain.repository.CharactersRepository
 import com.stathis.domain.repository.EpisodesRepository
 import com.stathis.model.Result
 import com.stathis.testing.CharactersFakes
 import com.stathis.testing.EpisodeFakes
+import com.stathis.util.util.toNotNull
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf

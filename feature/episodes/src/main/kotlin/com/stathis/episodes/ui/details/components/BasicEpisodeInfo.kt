@@ -17,11 +17,11 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import com.stathis.common.util.DimenRes
-import com.stathis.common.util.StringRes
 import com.stathis.designsystem.components.cards.PosterCardWithLabel
 import com.stathis.episodes.providers.EPISODE
 import com.stathis.model.episodes.Episode
+import com.stathis.util.util.DimenRes
+import com.stathis.util.util.StringRes
 
 internal fun LazyListScope.displayEpisodeInfo(episode: Episode) {
     item {

@@ -1,7 +1,7 @@
 package com.stathis.data.util
 
-import com.stathis.common.errors.NetworkError
 import com.stathis.model.Result
+import com.stathis.util.errors.NetworkError
 import retrofit2.Response
 import java.util.concurrent.TimeoutException
 

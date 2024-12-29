@@ -13,7 +13,7 @@ android {
 
 dependencies {
     implementation(projects.core.designSystem)
-    implementation(projects.core.common)
+    implementation(projects.core.util)
     implementation(projects.core.domain)
     implementation(projects.core.model)
     implementation(projects.core.ui)

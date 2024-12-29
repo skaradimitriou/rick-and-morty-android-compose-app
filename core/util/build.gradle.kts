@@ -5,5 +5,5 @@ plugins {
 }
 
 android {
-    namespace = "com.stathis.common"
+    namespace = "com.stathis.util"
 }

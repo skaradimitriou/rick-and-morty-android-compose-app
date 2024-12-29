@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.stathis.common.util.Callback
+import com.stathis.util.util.Callback
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

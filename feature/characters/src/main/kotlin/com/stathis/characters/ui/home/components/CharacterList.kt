@@ -12,10 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.stathis.common.util.DimenRes
 import com.stathis.designsystem.theme.RickAndMortyAppTheme
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.testing.CharactersFakes
+import com.stathis.util.util.DimenRes
 
 private const val COLUMNS = 2
 

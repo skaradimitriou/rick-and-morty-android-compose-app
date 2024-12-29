@@ -8,8 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.stathis.common.util.DimenRes
-import com.stathis.common.util.StringRes
+import com.stathis.util.util.DimenRes
+import com.stathis.util.util.StringRes
 
 @Composable
 fun CharacterDetailsRow(

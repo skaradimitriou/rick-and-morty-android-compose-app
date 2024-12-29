@@ -1,10 +1,10 @@
 package com.stathis.data.util
 
-import com.stathis.common.errors.NetworkError
 import com.stathis.data.mapper.characters.CharacterResponseMapper
 import com.stathis.model.Result
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.network.model.characters.CharacterResponseDto
+import com.stathis.util.errors.NetworkError
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.StandardTestDispatcher

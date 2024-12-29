@@ -23,11 +23,11 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.stathis.common.util.DimenRes
-import com.stathis.common.util.StringRes
 import com.stathis.designsystem.components.images.CoilImage
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.testing.CharactersFakes
+import com.stathis.util.util.DimenRes
+import com.stathis.util.util.StringRes
 
 private const val SIXTY_PERCENT = 0.6f
 

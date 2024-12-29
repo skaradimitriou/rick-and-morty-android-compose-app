@@ -2,11 +2,11 @@ package com.stathis.rickandmortyapp.util
 
 import android.app.Application
 import com.stathis.characters.di.charactersModule
-import com.stathis.common.di.dispatchersModule
 import com.stathis.data.di.dataModule
 import com.stathis.domain.di.domainModule
 import com.stathis.episodes.di.episodesModule
 import com.stathis.locations.di.locationsModule
+import com.stathis.util.di.dispatchersModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.core.module.Module

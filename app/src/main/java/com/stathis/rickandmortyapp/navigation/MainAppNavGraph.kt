@@ -1,6 +1,8 @@
 package com.stathis.rickandmortyapp.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.stathis.characters.navigation.characterNavGraph
 import com.stathis.episodes.navigation.episodesNavGraph
 import com.stathis.locations.navigation.locationsNavGraph
@@ -8,10 +10,10 @@ import com.stathis.navigation.screens.CharacterScreen
 import com.stathis.navigation.screens.EpisodeScreen
 
 @Composable
-fun MainAppNavGraph() {
-    val navController = androidx.navigation.compose.rememberNavController()
+internal fun MainAppNavGraph() {
+    val navController = rememberNavController()
 
-    androidx.navigation.compose.NavHost(
+    NavHost(
         navController = navController,
         startDestination = CharacterScreen.Home
     ) {

@@ -4,9 +4,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.stathis.common.util.Callback
 import com.stathis.episodes.ui.details.EpisodeDetailsScreen
 import com.stathis.navigation.screens.EpisodeScreen
+import com.stathis.util.util.Callback
 
 fun NavGraphBuilder.episodesNavGraph(
     navController: NavController,

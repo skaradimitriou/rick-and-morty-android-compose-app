@@ -66,7 +66,7 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.domain)
     implementation(projects.core.designSystem)
-    implementation(projects.core.common)
+    implementation(projects.core.util)
     implementation(projects.core.navigation)
 
     implementation(projects.feature.characters)

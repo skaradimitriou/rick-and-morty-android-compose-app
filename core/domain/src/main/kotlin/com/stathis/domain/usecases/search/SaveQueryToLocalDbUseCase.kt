@@ -1,7 +1,7 @@
 package com.stathis.domain.usecases.search
 
-import com.stathis.common.util.toNotNull
 import com.stathis.domain.repository.QueriesRepository
+import com.stathis.util.util.toNotNull
 
 class SaveQueryToLocalDbUseCase(
     private val repo: QueriesRepository

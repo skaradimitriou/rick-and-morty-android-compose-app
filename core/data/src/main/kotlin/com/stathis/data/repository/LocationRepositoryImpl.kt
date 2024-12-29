@@ -1,6 +1,5 @@
 package com.stathis.data.repository
 
-import com.stathis.common.util.toListOf
 import com.stathis.data.mapper.location.LocationMapper
 import com.stathis.data.mapper.location.LocationWrapperMapper
 import com.stathis.data.util.mapToDomainResult
@@ -8,6 +7,7 @@ import com.stathis.domain.repository.LocationRepository
 import com.stathis.model.Result
 import com.stathis.model.location.Location
 import com.stathis.network.service.RickAndMortyApi
+import com.stathis.util.util.toListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

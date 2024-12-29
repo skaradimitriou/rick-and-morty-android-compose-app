@@ -1,11 +1,11 @@
 package com.stathis.data.repository
 
-import com.stathis.common.util.toListOf
 import com.stathis.database.db.queries.QueriesLocalDatabase
 import com.stathis.database.db.queries.QueryEntity
 import com.stathis.database.util.toQuery
 import com.stathis.domain.repository.QueriesRepository
 import com.stathis.model.search.Query
+import com.stathis.util.util.toListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

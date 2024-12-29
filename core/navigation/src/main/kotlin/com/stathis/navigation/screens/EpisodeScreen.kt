@@ -1,6 +1,6 @@
 package com.stathis.navigation.screens
 
-import android.annotation.SuppressLint
+import kotlinx.serialization.Serializable
 
 /**
  * Represents the [Screen] that are a part of the Episodes flow
@@ -8,7 +8,6 @@ import android.annotation.SuppressLint
 
 sealed class EpisodeScreen : Screen {
 
-    @SuppressLint("UnsafeOptInUsageError")
-    @kotlinx.serialization.Serializable
+    @Serializable
     data class Details(val episodeInt: Int) : EpisodeScreen()
 }

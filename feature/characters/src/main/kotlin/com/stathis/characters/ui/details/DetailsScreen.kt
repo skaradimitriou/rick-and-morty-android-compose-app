@@ -18,16 +18,16 @@ import com.stathis.characters.components.displayEpisodeList
 import com.stathis.characters.ui.details.components.CharacterDetailsRow
 import com.stathis.characters.ui.details.components.CharacterLabel
 import com.stathis.characters.ui.details.model.DetailsScreenUiState
-import com.stathis.common.util.Callback
-import com.stathis.common.util.DimenRes
-import com.stathis.common.util.StringRes
-import com.stathis.common.util.toNotNull
 import com.stathis.designsystem.components.cards.PosterCardWithLabel
 import com.stathis.testing.CharactersFakes
 import com.stathis.testing.EpisodeFakes
 import com.stathis.ui.error.ErrorScreen
 import com.stathis.ui.loading.LoadingScreen
 import com.stathis.ui.topbars.TopBarWithBackNavIcon
+import com.stathis.util.util.Callback
+import com.stathis.util.util.DimenRes
+import com.stathis.util.util.StringRes
+import com.stathis.util.util.toNotNull
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 

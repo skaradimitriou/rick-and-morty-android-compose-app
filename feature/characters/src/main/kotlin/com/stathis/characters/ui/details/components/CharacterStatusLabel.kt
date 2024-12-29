@@ -23,8 +23,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.stathis.characters.ui.details.providers.CharacterStatusPreviewParameterProvider
-import com.stathis.common.util.DimenRes
 import com.stathis.model.characters.CharacterStatus
+import com.stathis.util.util.DimenRes
 
 /**
  * Composable used to display a character status label
