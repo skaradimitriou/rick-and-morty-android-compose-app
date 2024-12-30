@@ -7,8 +7,8 @@ data class CharacterResponse(
     val species: String,
     val type: String,
     val gender: String,
-    val origin: String,
-    val location: String,
+    val origin: CharacterLocationInfo,
+    val location: CharacterLocationInfo,
     val image: String,
     val episode: List<String>,
     val url: String,
@@ -20,6 +20,11 @@ data class CharacterResponse(
      */
     val characterDisplayLabel: String = "#$id $name"
 }
+
+data class CharacterLocationInfo(
+    val name: String,
+    val id: Int
+)
 
 enum class CharacterStatus {
     ALIVE, DEAD, UNKNOWN

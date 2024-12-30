@@ -1,23 +1,31 @@
 package com.stathis.characters.ui.details
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.stathis.characters.components.displayEpisodeList
 import com.stathis.characters.ui.details.components.CharacterDetailsRow
 import com.stathis.characters.ui.details.components.CharacterLabel
-import com.stathis.characters.ui.details.model.DetailsScreenUiState
+import com.stathis.characters.ui.details.model.DetailsScreenViewState
 import com.stathis.designsystem.components.cards.PosterCardWithLabel
 import com.stathis.testing.CharactersFakes
 import com.stathis.testing.EpisodeFakes
@@ -49,7 +57,7 @@ internal fun DetailsScreen(
 
 @Composable
 private fun DetailsContent(
-    uiState: DetailsScreenUiState,
+    uiState: DetailsScreenViewState,
     onBackNavIconClick: Callback,
     onEpisodeClick: (Int) -> Unit,
 ) {
@@ -63,11 +71,11 @@ private fun DetailsContent(
         },
         content = { paddingValues ->
             when (uiState) {
-                is DetailsScreenUiState.Loading -> {
+                is DetailsScreenViewState.Loading -> {
                     LoadingScreen(paddingValues = paddingValues)
                 }
 
-                is DetailsScreenUiState.Content -> {
+                is DetailsScreenViewState.Content -> {
                     Content(
                         paddingValues = paddingValues,
                         data = uiState,
@@ -75,7 +83,7 @@ private fun DetailsContent(
                     )
                 }
 
-                is DetailsScreenUiState.Error -> {
+                is DetailsScreenViewState.Error -> {
                     ErrorScreen(
                         paddingValues = paddingValues,
                         title = uiState.title,
@@ -90,7 +98,7 @@ private fun DetailsContent(
 @Composable
 private fun Content(
     paddingValues: PaddingValues,
-    data: DetailsScreenUiState.Content,
+    data: DetailsScreenViewState.Content,
     onEpisodeClick: (Int) -> Unit
 ) {
     LazyColumn(
@@ -99,27 +107,44 @@ private fun Content(
             .padding(paddingValues)
             .padding(all = dimensionResource(DimenRes.dimen_10))
     ) {
-        data.character?.let { character ->
-            item {
+        item {
+            Card {
                 PosterCardWithLabel(
                     modifier = Modifier.height(dimensionResource(DimenRes.dimen_350)),
-                    imageToLoad = character.image,
+                    imageToLoad = data.character.image,
                     label = {
                         CharacterLabel(
-                            characterDisplayName = character.characterDisplayLabel,
-                            characterStatus = character.status
+                            characterDisplayName = data.character.characterDisplayLabel,
+                            characterStatus = data.character.status
                         )
                     }
                 )
 
-                Spacer(modifier = Modifier.height(dimensionResource(DimenRes.dimen_8)))
+                Column(
+                    modifier = Modifier.padding(all = dimensionResource(DimenRes.dimen_10))
+                ) {
+                    Spacer(Modifier.height(8.dp))
+                    Text(
+                        text = "Information",
+                        style = TextStyle(
+                            fontSize = MaterialTheme.typography.titleMedium.fontSize,
+                            fontWeight = FontWeight.W700
+                        )
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    Row {
 
-                CharacterDetailsRow(
-                    species = character.species.toNotNull(),
-                    gender = character.gender.toNotNull(),
-                    origin = character.origin.toNotNull()
-                )
+                    }
+                }
             }
+
+            Spacer(modifier = Modifier.height(dimensionResource(DimenRes.dimen_8)))
+
+            CharacterDetailsRow(
+                species = data.character.species.toNotNull(),
+                gender = data.character.gender.toNotNull(),
+                origin = data.character.origin.name.toNotNull()
+            )
         }
 
         data.episodes?.let { episodes ->
@@ -131,7 +156,7 @@ private fun Content(
 @Preview(showBackground = true)
 @Composable
 private fun DetailsContentPreview() {
-    val uiState = DetailsScreenUiState.Content(
+    val uiState = DetailsScreenViewState.Content(
         character = CharactersFakes.provideDummyCharacter(),
         episodes = EpisodeFakes.provideDummyEpisodeList()
     )
