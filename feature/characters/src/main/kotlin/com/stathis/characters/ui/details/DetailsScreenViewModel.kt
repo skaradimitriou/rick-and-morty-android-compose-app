@@ -8,6 +8,7 @@ import com.stathis.model.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -30,6 +31,7 @@ internal class DetailsScreenViewModel(
         viewModelScope.launch(dispatcher) {
             useCase.invoke(id)
                 .onEach { result -> _uiState.update { result.toUiState() } }
+                .flowOn(dispatcher)
                 .launchIn(viewModelScope)
         }
     }

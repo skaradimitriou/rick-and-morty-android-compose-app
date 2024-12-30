@@ -18,6 +18,7 @@ private val charactersDomainModule = module {
     single<FetchCharacterDetailsUseCase> {
         FetchCharacterDetailsUseCase(
             charactersRepository = get(),
+            locationRepository = get(),
             episodesRepository = get()
         )
     }

@@ -1,24 +1,10 @@
 package com.stathis.testing
 
+import com.stathis.model.characters.CharacterLocationInfo
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.characters.CharacterStatus
 
 object CharactersFakes {
-
-    fun provideEmptyCharacter(): CharacterResponse = CharacterResponse(
-        id = 0,
-        name = "",
-        status = CharacterStatus.UNKNOWN,
-        species = "",
-        type = "",
-        gender = "",
-        origin = "",
-        location = "",
-        image = "",
-        episode = listOf(),
-        url = "",
-        created = ""
-    )
 
     fun provideDummyCharacter(): CharacterResponse = CharacterResponse(
         id = 123,
@@ -27,8 +13,8 @@ object CharactersFakes {
         species = "Human",
         type = "Type",
         gender = "Male",
-        origin = "Somewhere",
-        location = "Earth",
+        origin = CharacterLocationInfo(id = 1, name = "Somewhere"),
+        location = CharacterLocationInfo(id = 1, name = "Earth"),
         image = "",
         episode = listOf("8"),
         url = "",

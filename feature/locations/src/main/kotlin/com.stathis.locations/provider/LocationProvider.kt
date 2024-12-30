@@ -1,5 +1,6 @@
 package com.stathis.locations.provider
 
+import com.stathis.model.characters.CharacterLocationInfo
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.characters.CharacterStatus
 import com.stathis.model.location.Location
@@ -30,8 +31,8 @@ internal val PREVIEW_RESIDENTS = listOf(
         species = "Human",
         type = "XX",
         gender = "Male",
-        origin = "Earth (C-137)",
-        location = "Earth (Replacement Dimension)",
+        origin = CharacterLocationInfo(id = 1, name = "Earth (C-137)"),
+        location = CharacterLocationInfo(id = 1, name = "Earth (Replacement Dimension)"),
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
         episode = listOf("1", "2"),
         url = "https://rickandmortyapi.com/api/character/1",

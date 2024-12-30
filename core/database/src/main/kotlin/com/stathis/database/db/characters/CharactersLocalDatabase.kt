@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
     entities = [CharacterEntity::class],
     version = 1
 )
-@TypeConverters(CharacterEpisodesConvertor::class)
+@TypeConverters(CharacterEpisodesConvertor::class, LocationConverter::class)
 abstract class CharactersLocalDatabase : RoomDatabase() {
 
     abstract fun dao(): CharactersDao

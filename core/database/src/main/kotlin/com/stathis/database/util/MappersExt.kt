@@ -1,6 +1,7 @@
 package com.stathis.database.util
 
 import com.stathis.database.db.characters.CharacterEntity
+import com.stathis.database.db.characters.LocationConverter
 import com.stathis.database.db.queries.QueryEntity
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.search.Query
@@ -16,8 +17,8 @@ fun CharacterEntity.toCharacter(): CharacterResponse = CharacterResponse(
     species = this.species,
     type = this.type,
     gender = this.gender,
-    origin = this.origin,
-    location = this.location,
+    origin = LocationConverter.fromJsonToModel(this.origin),
+    location = LocationConverter.fromJsonToModel(this.location),
     image = this.image,
     episode = this.episode,
     url = this.url,
@@ -35,8 +36,8 @@ fun CharacterResponse.toEntity(): CharacterEntity = CharacterEntity(
     species = this.species,
     type = this.type,
     gender = this.gender,
-    origin = this.origin,
-    location = this.location,
+    origin = LocationConverter.fromModelToJson(this.origin),
+    location = LocationConverter.fromModelToJson(this.location),
     image = this.image,
     episode = this.episode,
     url = this.url,
