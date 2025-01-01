@@ -40,6 +40,8 @@ internal class DetailsScreenViewModel(
         is Result.Loading -> DetailsScreenUiState.Loading
         is Result.Success -> DetailsScreenUiState.Content(
             character = data.character,
+            originInfo = data.originInfo,
+            locationInfo = data.locationInfo,
             episodes = data.episodes
         )
 
