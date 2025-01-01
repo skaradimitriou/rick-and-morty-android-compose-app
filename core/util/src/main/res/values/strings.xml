@@ -10,7 +10,11 @@
     <string name="species">"Species"</string>
     <string name="gender">"Gender"</string>
     <string name="origin">"Origin"</string>
+    <string name="location">"Location"</string>
     <string name="episodes">Episodes</string>
+    <string name="location_name">Name: %s</string>
+    <string name="location_type">Type: %s</string>
+    <string name="location_dimension">Dimension: %s</string>
 
     <!-- Episode Details -->
     <string name="episode_details">Episode Details</string>

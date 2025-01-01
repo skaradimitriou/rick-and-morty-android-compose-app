@@ -20,11 +20,11 @@ import com.stathis.util.util.DimenRes
 internal fun Detail(
     modifier: Modifier = Modifier,
     title: String,
-    description: String
+    description: String,
 ) {
     Card(modifier = modifier.fillMaxWidth()) {
         Column(
-            modifier = Modifier.padding(dimensionResource(DimenRes.dimen_16))
+            modifier = Modifier.padding(all = dimensionResource(DimenRes.dimen_16))
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
@@ -38,10 +38,10 @@ internal fun Detail(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = dimensionResource(DimenRes.dimen_8)),
+                    .padding(top = dimensionResource(DimenRes.dimen_10)),
                 textAlign = TextAlign.Start,
                 text = description,
-                maxLines = 1,
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 style = TextStyle(
                     fontSize = MaterialTheme.typography.bodyLarge.fontSize
