@@ -1,5 +1,6 @@
 package com.stathis.characters.ui.details.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import com.stathis.util.util.Callback
 import com.stathis.util.util.DimenRes
 import com.stathis.util.util.StringRes
 
@@ -23,13 +25,15 @@ internal fun CharacterLocation(
     title: String,
     locationName: String,
     locationType: String,
-    dimension: String
+    dimension: String,
+    onClick: Callback
 ) {
     Card {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(all = dimensionResource(DimenRes.dimen_16))
+                .clickable { onClick() }
         ) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
@@ -87,6 +91,7 @@ private fun CharacterLocationPreview() {
         title = "Title",
         locationName = "Name",
         locationType = "Type",
-        dimension = "Dimension"
+        dimension = "Dimension",
+        onClick = {}
     )
 }

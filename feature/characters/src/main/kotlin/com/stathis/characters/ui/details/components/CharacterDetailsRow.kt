@@ -23,7 +23,8 @@ internal fun CharacterDetailsRow(
     species: String,
     gender: String,
     origin: Location,
-    currentLocation: Location
+    currentLocation: Location,
+    onLocationClick: (Int) -> Unit
 ) {
     Column(modifier = modifier) {
         Row(
@@ -47,14 +48,16 @@ internal fun CharacterDetailsRow(
             title = stringResource(StringRes.origin),
             locationName = origin.name,
             locationType = origin.type,
-            dimension = origin.dimension
+            dimension = origin.dimension,
+            onClick = { onLocationClick(origin.id) }
         )
         Spacer(modifier = Modifier.height(dimensionResource(DimenRes.dimen_10)))
         CharacterLocation(
             title = stringResource(StringRes.location),
             locationName = currentLocation.name,
             locationType = currentLocation.type,
-            dimension = currentLocation.dimension
+            dimension = currentLocation.dimension,
+            onClick = { onLocationClick(currentLocation.id) }
         )
     }
 }
@@ -66,6 +69,7 @@ private fun CharacterDetailsRowPreview() {
         species = "Human",
         gender = "Male",
         origin = DUMMY_LOCATION,
-        currentLocation = DUMMY_LOCATION
+        currentLocation = DUMMY_LOCATION,
+        onLocationClick = {}
     )
 }
