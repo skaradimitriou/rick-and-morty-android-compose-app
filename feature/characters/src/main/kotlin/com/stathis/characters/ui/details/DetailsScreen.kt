@@ -36,6 +36,7 @@ internal fun DetailsScreen(
     characterId: Int,
     viewModel: DetailsScreenViewModel = koinViewModel(parameters = { parametersOf(characterId) }),
     onBackNavIconClick: Callback,
+    onLocationClick: (Int) -> Unit,
     onEpisodeClick: (Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -43,6 +44,7 @@ internal fun DetailsScreen(
     DetailsContent(
         uiState = uiState,
         onBackNavIconClick = onBackNavIconClick,
+        onLocationClick = onLocationClick,
         onEpisodeClick = onEpisodeClick
     )
 }
@@ -51,6 +53,7 @@ internal fun DetailsScreen(
 private fun DetailsContent(
     uiState: DetailsScreenUiState,
     onBackNavIconClick: Callback,
+    onLocationClick: (Int) -> Unit,
     onEpisodeClick: (Int) -> Unit,
 ) {
     Scaffold(
@@ -71,7 +74,8 @@ private fun DetailsContent(
                     Content(
                         paddingValues = paddingValues,
                         data = uiState,
-                        onEpisodeClick = onEpisodeClick
+                        onLocationClick = onLocationClick,
+                        onEpisodeClick = onEpisodeClick,
                     )
                 }
 
@@ -91,7 +95,8 @@ private fun DetailsContent(
 private fun Content(
     paddingValues: PaddingValues,
     data: DetailsScreenUiState.Content,
-    onEpisodeClick: (Int) -> Unit
+    onLocationClick: (Int) -> Unit,
+    onEpisodeClick: (Int) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -118,6 +123,7 @@ private fun Content(
                 gender = data.character.gender,
                 origin = data.originInfo,
                 currentLocation = data.locationInfo,
+                onLocationClick = onLocationClick
             )
         }
 
@@ -137,6 +143,7 @@ private fun DetailsContentPreview() {
     DetailsContent(
         uiState = uiState,
         onBackNavIconClick = {},
+        onLocationClick = {},
         onEpisodeClick = {}
     )
 }

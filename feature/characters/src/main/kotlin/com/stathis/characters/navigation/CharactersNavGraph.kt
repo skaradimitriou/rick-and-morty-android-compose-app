@@ -8,6 +8,7 @@ import com.stathis.characters.ui.details.DetailsScreen
 import com.stathis.characters.ui.home.HomeScreen
 import com.stathis.characters.ui.search.SearchScreen
 import com.stathis.navigation.screens.CharacterScreen
+import com.stathis.navigation.screens.LocationScreen
 import com.stathis.util.util.Callback
 
 fun NavGraphBuilder.characterNavGraph(
@@ -31,6 +32,9 @@ fun NavGraphBuilder.characterNavGraph(
 
     detailsScreenRoute(
         onBackNavIconClick = { navController.navigateUp() },
+        onLocationClick = { locationId ->
+            navController.navigate(LocationScreen.Details(locationId))
+        },
         onEpisodeClick = onEpisodeClick
     )
 }
@@ -49,6 +53,7 @@ private fun NavGraphBuilder.homeRoute(
 
 private fun NavGraphBuilder.detailsScreenRoute(
     onBackNavIconClick: Callback,
+    onLocationClick: (Int) -> Unit,
     onEpisodeClick: (Int) -> Unit
 ) {
     composable<CharacterScreen.Details> {
@@ -56,6 +61,7 @@ private fun NavGraphBuilder.detailsScreenRoute(
         DetailsScreen(
             characterId = args.characterId,
             onBackNavIconClick = onBackNavIconClick,
+            onLocationClick = onLocationClick,
             onEpisodeClick = onEpisodeClick
         )
     }
