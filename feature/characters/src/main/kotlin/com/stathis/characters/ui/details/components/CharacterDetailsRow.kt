@@ -49,7 +49,7 @@ internal fun CharacterDetailsRow(
             locationName = origin.name,
             locationType = origin.type,
             dimension = origin.dimension,
-            onClick = { onLocationClick(origin.id) }
+            onClick = { origin.id.onSafeLocationClick(onLocationClick) }
         )
         Spacer(modifier = Modifier.height(dimensionResource(DimenRes.dimen_10)))
         CharacterLocation(
@@ -57,10 +57,17 @@ internal fun CharacterDetailsRow(
             locationName = currentLocation.name,
             locationType = currentLocation.type,
             dimension = currentLocation.dimension,
-            onClick = { onLocationClick(currentLocation.id) }
+            onClick = { currentLocation.id.onSafeLocationClick(onLocationClick) }
         )
     }
 }
+
+/**
+ * Helper fun to wrap the onLocationClick callback since when a location
+ * is unavailable (doesn't exist) it has an id of zero (0).
+ */
+
+private fun Int.onSafeLocationClick(callback: (Int) -> Unit) = takeIf { it > 0 }?.let { callback.invoke(it) }
 
 @Preview
 @Composable
