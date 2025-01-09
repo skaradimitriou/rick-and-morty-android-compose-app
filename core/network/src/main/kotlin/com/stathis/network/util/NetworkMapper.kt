@@ -3,16 +3,15 @@ package com.stathis.network.util
 import com.stathis.network.model.NetworkResult
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.request.get
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.isSuccess
 
 /**
  * Helper method to simplify making a network call and returning a [NetworkResult] with Ktor HttpClient.
+ * @param call: The http response
  */
-internal suspend inline fun <reified T> HttpClient.mapApiCallToNetworkResult(url: String): NetworkResult<T?> {
+internal suspend inline fun <reified T> HttpClient.mapApiCallToNetworkResult(call: HttpResponse): NetworkResult<T?> {
     val result = try {
-        val call = get(url).call.response
-
         if (call.status.isSuccess()) {
             NetworkResult.Success<T?>(body = call.body())
         } else {
