@@ -5,13 +5,13 @@ import com.stathis.network.model.NetworkResult
 import com.stathis.network.model.characters.CharacterResponseDto
 import com.stathis.network.model.characters.CharacterWrapperDto
 import com.stathis.network.util.CHARACTER_ENDPOINT
+import com.stathis.network.util.NAME_PARAMETER
+import com.stathis.network.util.PATH
 import com.stathis.network.util.mapApiCallToNetworkResult
+import com.stathis.network.util.toFullApiCallUrl
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
-import io.ktor.http.URLProtocol
-import io.ktor.http.buildUrl
-import java.net.URI
 
 internal class CharactersRemoteDataSourceImpl(
     private val client: HttpClient
@@ -19,15 +19,7 @@ internal class CharactersRemoteDataSourceImpl(
 
     companion object {
 
-        private val API_URL_URI = URI(BuildConfig.API_URL.plus(CHARACTER_ENDPOINT))
-
-        private val URL = buildUrl {
-            protocol = URLProtocol.HTTPS
-            host = API_URL_URI.host.plus(API_URL_URI.path)
-        }.toString()
-
-        private const val PATH: String = "/"
-        private const val NAME_PARAMETER: String = "name"
+        private val URL = BuildConfig.API_URL.toFullApiCallUrl(endpoint = CHARACTER_ENDPOINT)
     }
 
     override suspend fun fetchAllCharacters(): NetworkResult<CharacterWrapperDto?> {
