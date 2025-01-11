@@ -4,6 +4,8 @@ import android.util.Log
 import com.stathis.network.BuildConfig
 import com.stathis.network.datasource.CharactersRemoteDataSource
 import com.stathis.network.datasource.CharactersRemoteDataSourceImpl
+import com.stathis.network.datasource.EpisodeRemoteDataSourceImpl
+import com.stathis.network.datasource.EpisodesRemoteDataSource
 import com.stathis.network.service.RickAndMortyApi
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -34,6 +36,8 @@ private val dataSourcesModule = module {
      * Remote DataSources exposed to the :core:data layer
      */
     single<CharactersRemoteDataSource> { CharactersRemoteDataSourceImpl(client = get()) }
+    single<EpisodesRemoteDataSource> { EpisodeRemoteDataSourceImpl(client = get()) }
+
 }
 
 //FIXME: Remove Retrofit
