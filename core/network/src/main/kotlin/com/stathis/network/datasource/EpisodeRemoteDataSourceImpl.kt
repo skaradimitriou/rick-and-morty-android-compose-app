@@ -13,7 +13,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 
-class EpisodeRemoteDataSourceImpl(
+internal class EpisodeRemoteDataSourceImpl(
     private val client: HttpClient
 ) : EpisodesRemoteDataSource {
 
