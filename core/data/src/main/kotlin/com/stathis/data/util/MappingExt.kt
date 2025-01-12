@@ -1,8 +1,8 @@
 package com.stathis.data.util
 
 import com.stathis.model.Result
+import com.stathis.network.model.NetworkResult
 import com.stathis.util.errors.NetworkError
-import retrofit2.Response
 import java.util.concurrent.TimeoutException
 
 /**
@@ -11,21 +11,25 @@ import java.util.concurrent.TimeoutException
  */
 
 internal suspend fun <DtoModel, DomainModel> mapToDomainResult(
-    networkCall: suspend () -> Response<DtoModel>,
+    networkCall: suspend () -> NetworkResult<DtoModel>,
     mapping: suspend (DtoModel?) -> DomainModel
 ): Result<DomainModel> = try {
     val result = networkCall.invoke()
 
-    if (result.isSuccessful && result.body() != null) {
-        val mappedResult = mapping.invoke(result.body())
-        Result.Success(data = mappedResult)
-    } else {
-        Result.Error(
-            NetworkError.Generic(
-                errorCode = result.code(),
-                message = result.errorBody()?.string().toString()
+    when (result) {
+        is NetworkResult.Success -> {
+            val mappedResult = mapping.invoke(result.body)
+            Result.Success(data = mappedResult)
+        }
+
+        is NetworkResult.Error -> {
+            Result.Error(
+                NetworkError.Generic(
+                    errorCode = result.responseCode,
+                    message = result.errorBody
+                )
             )
-        )
+        }
     }
 } catch (e: Exception) {
     Result.Error(e.toNetworkError())

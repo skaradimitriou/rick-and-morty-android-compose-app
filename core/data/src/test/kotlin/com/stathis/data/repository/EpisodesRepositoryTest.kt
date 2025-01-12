@@ -2,25 +2,24 @@ package com.stathis.data.repository
 
 import com.stathis.domain.repository.EpisodesRepository
 import com.stathis.model.Result
+import com.stathis.network.datasource.EpisodesRemoteDataSource
+import com.stathis.network.model.NetworkResult
 import com.stathis.network.model.episodes.EpisodeDto
 import com.stathis.network.model.episodes.EpisodeWrapperDto
-import com.stathis.network.service.RickAndMortyApi
 import com.stathis.util.errors.NetworkError
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
-import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
-import retrofit2.Response
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class EpisodesRepositoryTest {
 
-    private val api: RickAndMortyApi = mockk()
+    private val api: EpisodesRemoteDataSource = mockk()
     private lateinit var repository: EpisodesRepository
 
     private val dispatcher: CoroutineDispatcher = StandardTestDispatcher()
@@ -52,8 +51,8 @@ class EpisodesRepositoryTest {
     @Test
     fun `given valid episode id, when calling fetchEpisodeInfo, then return successful mapped domain result`() =
         runTest(dispatcher) {
-            val response: Response<EpisodeDto?> = Response.success(DUMMY_EPISODE_DTO_MODEL)
-            coEvery { api.getEpisodeById(DUMMY_EPISODE_ID) } returns response
+            val response: NetworkResult<EpisodeDto?> = NetworkResult.Success(DUMMY_EPISODE_DTO_MODEL)
+            coEvery { api.fetchEpisodeById(DUMMY_EPISODE_ID) } returns response
 
             repository.fetchEpisodeInfo(DUMMY_EPISODE_ID).collect { result ->
                 assertTrue(result is Result.Success)
@@ -71,8 +70,8 @@ class EpisodesRepositoryTest {
     @Test
     fun `given valid episode id, when calling fetchEpisodeInfo, then return failure mapped domain result`() =
         runTest(dispatcher) {
-            val response: Response<EpisodeDto?> = Response.error<EpisodeDto?>(ERROR_CODE, ERROR_MSG.toResponseBody())
-            coEvery { api.getEpisodeById(DUMMY_EPISODE_ID) } returns response
+            val response: NetworkResult<EpisodeDto?> = NetworkResult.Error<EpisodeDto?>(ERROR_CODE, ERROR_MSG)
+            coEvery { api.fetchEpisodeById(DUMMY_EPISODE_ID) } returns response
 
             repository.fetchEpisodeInfo(DUMMY_EPISODE_ID).collect { result ->
                 assertTrue(result is Result.Error && result.exception is NetworkError.Generic)
@@ -86,8 +85,11 @@ class EpisodesRepositoryTest {
     @Test
     fun `given valid episode name, when calling fetchEpisodesByName, then return successful mapped domain result`() =
         runTest(dispatcher) {
-            val response = Response.success(EpisodeWrapperDto(results = listOf(DUMMY_EPISODE_DTO_MODEL)))
-            coEvery { api.getEpisodesByName(DUMMY_EPISODE_NAME) } returns response
+            val response: NetworkResult<EpisodeWrapperDto?> = NetworkResult.Success(
+                body = EpisodeWrapperDto(results = listOf(DUMMY_EPISODE_DTO_MODEL))
+            )
+
+            coEvery { api.fetchEpisodeByName(DUMMY_EPISODE_NAME) } returns response
 
             repository.fetchEpisodesByName(DUMMY_EPISODE_NAME).collect { result ->
                 assertTrue(result is Result.Success)
@@ -108,8 +110,8 @@ class EpisodesRepositoryTest {
     @Test
     fun `given valid episode name, when calling fetchEpisodesByName, then return failure mapped domain result`() =
         runTest(dispatcher) {
-            val response = Response.error<EpisodeWrapperDto?>(ERROR_CODE, ERROR_MSG.toResponseBody())
-            coEvery { api.getEpisodesByName(DUMMY_EPISODE_NAME) } returns response
+            val response = NetworkResult.Error<EpisodeWrapperDto?>(ERROR_CODE, ERROR_MSG)
+            coEvery { api.fetchEpisodeByName(DUMMY_EPISODE_NAME) } returns response
 
             repository.fetchEpisodesByName(DUMMY_EPISODE_NAME).collect { result ->
                 assertTrue(result is Result.Error && result.exception is NetworkError.Generic)
@@ -123,8 +125,8 @@ class EpisodesRepositoryTest {
     @Test
     fun `given valid episode ids, when calling fetchMultipleEpisodeInfoById, then return successful mapped domain result`() =
         runTest(dispatcher) {
-            val response: Response<List<EpisodeDto?>> = Response.success(listOf(DUMMY_EPISODE_DTO_MODEL))
-            coEvery { api.getMultipleEpisodesById(listOf(DUMMY_EPISODE_ID.toString())) } returns response
+            val response: NetworkResult.Success<List<EpisodeDto>?> = NetworkResult.Success(listOf(DUMMY_EPISODE_DTO_MODEL))
+            coEvery { api.fetchMultipleEpisodesById(listOf(DUMMY_EPISODE_ID.toString())) } returns response
 
             repository.fetchMultipleEpisodeInfo(listOf(DUMMY_EPISODE_ID.toString())).collect { result ->
                 assertTrue(result is Result.Success)
@@ -144,8 +146,8 @@ class EpisodesRepositoryTest {
     @Test
     fun `given valid episode ids, when calling fetchMultipleEpisodeInfoById, then return failure mapped domain result`() =
         runTest(dispatcher) {
-            val response = Response.error<List<EpisodeDto?>>(ERROR_CODE, ERROR_MSG.toResponseBody())
-            coEvery { api.getMultipleEpisodesById(listOf(DUMMY_EPISODE_ID.toString())) } returns response
+            val response = NetworkResult.Error<List<EpisodeDto>?>(ERROR_CODE, ERROR_MSG)
+            coEvery { api.fetchMultipleEpisodesById(listOf(DUMMY_EPISODE_ID.toString())) } returns response
 
             repository.fetchMultipleEpisodeInfo(listOf(DUMMY_EPISODE_ID.toString())).collect { result ->
                 assertTrue(result is Result.Error && result.exception is NetworkError.Generic)

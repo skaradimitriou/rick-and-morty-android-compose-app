@@ -3,15 +3,14 @@ package com.stathis.data.util
 import com.stathis.data.mapper.characters.CharacterResponseMapper
 import com.stathis.model.Result
 import com.stathis.model.characters.CharacterResponse
+import com.stathis.network.model.NetworkResult
 import com.stathis.network.model.characters.CharacterResponseDto
 import com.stathis.util.errors.NetworkError
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
-import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Test
-import retrofit2.Response
 import java.util.concurrent.TimeoutException
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -35,7 +34,7 @@ class MappingExtTest {
                 name = "Character Name"
             )
 
-            val response = Response.success(dto)
+            val response = NetworkResult.Success(dto)
 
             val result = mapToDomainResult(
                 networkCall = { response },
@@ -50,9 +49,9 @@ class MappingExtTest {
     @Test
     fun `given failure response, when calling mapToDomainResult return failure domain result with error info`() =
         runTest(testDispatcher) {
-            val response: Response<CharacterResponseDto> = Response.error<CharacterResponseDto>(
+            val response: NetworkResult.Error<CharacterResponseDto> = NetworkResult.Error<CharacterResponseDto>(
                 GENERIC_ERROR_CODE,
-                GENERIC_ERROR_MESSAGE.toResponseBody()
+                GENERIC_ERROR_MESSAGE
             )
 
             val result: Result<CharacterResponse> = mapToDomainResult(
@@ -67,14 +66,13 @@ class MappingExtTest {
                 )
             )
 
-            assertTrue(response.errorBody() != null)
             assertEquals(result, expected)
         }
 
     @Test
     fun `given timeout exception, when calling mapToDomainResult return failure domain result with error info`() =
         runTest(testDispatcher) {
-            val response: suspend () -> Response<CharacterResponseDto> = mockk()
+            val response: suspend () -> NetworkResult<CharacterResponseDto> = mockk()
             val exception = TimeoutException(GENERIC_ERROR_MESSAGE)
             coEvery { response.invoke() } throws exception
 
@@ -90,7 +88,7 @@ class MappingExtTest {
     @Test
     fun `given any other exception, when calling mapToDomainResult return failure domain result with error info`() =
         runTest(testDispatcher) {
-            val response: suspend () -> Response<CharacterResponseDto> = mockk()
+            val response: suspend () -> NetworkResult<CharacterResponseDto> = mockk()
             val exception = Exception(GENERIC_ERROR_MESSAGE, Throwable(GENERIC_THROWABLE_MESSAGE))
             coEvery { response.invoke() } throws exception
 

@@ -10,7 +10,7 @@ import com.stathis.database.util.toEntity
 import com.stathis.domain.repository.CharactersRepository
 import com.stathis.model.Result
 import com.stathis.model.characters.CharacterResponse
-import com.stathis.network.service.RickAndMortyApi
+import com.stathis.network.datasource.CharactersRemoteDataSource
 import com.stathis.util.errors.DatabaseError
 import com.stathis.util.util.toNotNull
 import kotlinx.coroutines.flow.Flow
@@ -19,13 +19,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 internal class CharactersRepositoryImpl(
-    private val remoteDataSource: RickAndMortyApi,
+    private val remoteDataSource: CharactersRemoteDataSource,
     private val localDataSource: CharactersLocalDatabase
 ) : CharactersRepository {
 
     override suspend fun getAllCharacters(): Flow<Result<List<CharacterResponse>>> = flow {
         val result = mapToDomainResult(
-            networkCall = { remoteDataSource.getAllCharacters() },
+            networkCall = { remoteDataSource.fetchAllCharacters() },
             mapping = { CharacterMapper.toDomainModel(it) }
         )
 
@@ -66,7 +66,7 @@ internal class CharactersRepositoryImpl(
 
     override suspend fun getCharacterByName(name: String): Flow<Result<List<CharacterResponse>>> = flow {
         val result = mapToDomainResult(
-            networkCall = { remoteDataSource.getCharacterByName(name) },
+            networkCall = { remoteDataSource.fetchCharacterByName(name) },
             mapping = { CharacterMapper.toDomainModel(it).results }
         )
 
@@ -75,7 +75,7 @@ internal class CharactersRepositoryImpl(
 
     private fun getCharacterByIdFromRemoteDataSource(id: Int): Flow<Result<CharacterResponse>> = flow {
         val result = mapToDomainResult(
-            networkCall = { remoteDataSource.getCharacterById(id) },
+            networkCall = { remoteDataSource.fetchCharacterById(id) },
             mapping = { CharacterResponseMapper.toDomainModel(it) }
         )
 
@@ -84,7 +84,7 @@ internal class CharactersRepositoryImpl(
 
     override suspend fun getMultipleCharacterById(ids: List<String>): Flow<Result<List<CharacterResponse>>> = flow {
         val result = mapToDomainResult(
-            networkCall = { remoteDataSource.getMultipleCharactersById(ids) },
+            networkCall = { remoteDataSource.fetchMultipleCharactersById(ids) },
             mapping = { CharacterListMapper.toDomainModel(it) }
         )
 
