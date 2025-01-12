@@ -6,18 +6,18 @@ import com.stathis.data.util.mapToDomainResult
 import com.stathis.domain.repository.LocationRepository
 import com.stathis.model.Result
 import com.stathis.model.location.Location
-import com.stathis.network.service.RickAndMortyApi
+import com.stathis.network.datasource.LocationsRemoteDataSource
 import com.stathis.util.util.toListOf
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 internal class LocationRepositoryImpl(
-    private val remoteDataSource: RickAndMortyApi
+    private val remoteDataSource: LocationsRemoteDataSource
 ) : LocationRepository {
 
     override suspend fun getLocationById(id: Int): Flow<Result<Location>> = flow {
         val result = mapToDomainResult(
-            networkCall = { remoteDataSource.getLocationById(id) },
+            networkCall = { remoteDataSource.fetchLocationById(id) },
             mapping = { LocationMapper.toDomainModel(it) }
         )
 
@@ -26,7 +26,7 @@ internal class LocationRepositoryImpl(
 
     override suspend fun getMultipleLocationsById(ids: List<String>): Flow<Result<List<Location>>> = flow {
         val result = mapToDomainResult(
-            networkCall = { remoteDataSource.getMultipleLocationsById(ids) },
+            networkCall = { remoteDataSource.fetchMultipleLocationsById(ids) },
             mapping = { it.toListOf { LocationMapper.toDomainModel(it) } }
         )
 
@@ -35,7 +35,7 @@ internal class LocationRepositoryImpl(
 
     override suspend fun getLocationByName(name: String): Flow<Result<List<Location>>> = flow {
         val result = mapToDomainResult(
-            networkCall = { remoteDataSource.getLocationByName(name) },
+            networkCall = { remoteDataSource.fetchLocationByName(name) },
             mapping = { LocationWrapperMapper.toDomainModel(it) }
         )
 

@@ -31,7 +31,7 @@ internal class CharactersRemoteDataSourceImpl(
         return client.mapApiCallToNetworkResult<CharacterResponseDto?>(call = call)
     }
 
-    override suspend fun fetchMultipleCharactersById(vararg ids: String): NetworkResult<List<CharacterResponseDto>?> {
+    override suspend fun fetchMultipleCharactersById(ids: List<String>): NetworkResult<List<CharacterResponseDto>?> {
         val call = client.get(URL.plus(PATH).plus(ids.joinToString()))
         return client.mapApiCallToNetworkResult<List<CharacterResponseDto>?>(call = call)
     }

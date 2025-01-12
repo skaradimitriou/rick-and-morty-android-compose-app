@@ -1,25 +1,24 @@
 package com.stathis.data.repository
 
-import com.stathis.util.errors.NetworkError
 import com.stathis.model.Result
 import com.stathis.model.location.Location
+import com.stathis.network.datasource.LocationsRemoteDataSource
+import com.stathis.network.model.NetworkResult
 import com.stathis.network.model.location.LocationDto
 import com.stathis.network.model.location.LocationWrapperDto
-import com.stathis.network.service.RickAndMortyApi
+import com.stathis.util.errors.NetworkError
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
-import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
-import retrofit2.Response
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class LocationRepositoryTest {
 
-    private val api: RickAndMortyApi = mockk()
+    private val api: LocationsRemoteDataSource = mockk()
     private val dispatcher = StandardTestDispatcher()
 
     private lateinit var repository: LocationRepositoryImpl
@@ -40,7 +39,7 @@ class LocationRepositoryTest {
     @Test
     fun `given valid location id, when calling getLocationById method, then return successful mapped domain result`() =
         runTest(dispatcher) {
-            val response: Response<LocationDto?> = Response.success(
+            val response: NetworkResult.Success<LocationDto?> = NetworkResult.Success(
                 LocationDto(
                     id = 1,
                     name = "Earth",
@@ -52,7 +51,7 @@ class LocationRepositoryTest {
                 )
             )
 
-            coEvery { api.getLocationById(DUMMY_LOCATION_ID) } returns response
+            coEvery { api.fetchLocationById(DUMMY_LOCATION_ID) } returns response
 
             val expected: Location = Location(
                 id = 1,
@@ -65,7 +64,7 @@ class LocationRepositoryTest {
             )
 
             repository.getLocationById(DUMMY_LOCATION_ID).collect { result ->
-                coEvery { api.getLocationById(DUMMY_LOCATION_ID) }
+                coEvery { api.fetchLocationById(DUMMY_LOCATION_ID) }
 
                 assertTrue(result is Result.Success)
                 assertEquals(result.data, expected)
@@ -75,15 +74,15 @@ class LocationRepositoryTest {
     @Test
     fun `given valid location id, when calling getLocationById method, then return failure mapped domain result`() =
         runTest(dispatcher) {
-            val response: Response<LocationDto?> = Response.error<LocationDto>(
+            val response: NetworkResult.Error<LocationDto?> = NetworkResult.Error<LocationDto?>(
                 ERROR_CODE,
-                "Something went wrong".toResponseBody()
+                "Something went wrong"
             )
 
-            coEvery { api.getLocationById(DUMMY_LOCATION_ID) } returns response
+            coEvery { api.fetchLocationById(DUMMY_LOCATION_ID) } returns response
 
             repository.getLocationById(DUMMY_LOCATION_ID).collect { result ->
-                coEvery { api.getLocationById(DUMMY_LOCATION_ID) }
+                coEvery { api.fetchLocationById(DUMMY_LOCATION_ID) }
 
                 assertTrue(result is Result.Error && result.exception is NetworkError.Generic)
                 with(result.exception) {
@@ -96,7 +95,7 @@ class LocationRepositoryTest {
     @Test
     fun `given multiple valid location ids, when calling getMultipleLocationsById method, then return successful mapped domain result`() =
         runTest(dispatcher) {
-            val response: Response<List<LocationDto?>> = Response.success(
+            val response: NetworkResult.Success<List<LocationDto>?> = NetworkResult.Success(
                 listOf(
                     LocationDto(
                         id = 1,
@@ -128,7 +127,7 @@ class LocationRepositoryTest {
                 )
             )
 
-            coEvery { api.getMultipleLocationsById(DUMMY_MULTIPLE_LOCATION_IDS) } returns response
+            coEvery { api.fetchMultipleLocationsById(DUMMY_MULTIPLE_LOCATION_IDS) } returns response
 
             val expected: List<Location> = listOf(
                 Location(
@@ -161,7 +160,7 @@ class LocationRepositoryTest {
             )
 
             repository.getMultipleLocationsById(DUMMY_MULTIPLE_LOCATION_IDS).collect { result ->
-                coEvery { api.getMultipleLocationsById(DUMMY_MULTIPLE_LOCATION_IDS) }
+                coEvery { api.fetchMultipleLocationsById(DUMMY_MULTIPLE_LOCATION_IDS) }
 
                 assertTrue(result is Result.Success)
 
@@ -180,15 +179,15 @@ class LocationRepositoryTest {
     @Test
     fun `given multiple valid location ids, when calling getMultipleLocationsById method, then return failure mapped domain result`() =
         runTest(dispatcher) {
-            val response: Response<List<LocationDto?>> = Response.error<List<LocationDto?>>(
+            val response: NetworkResult.Error<List<LocationDto>?> = NetworkResult.Error<List<LocationDto>?>(
                 ERROR_CODE,
-                "Something went wrong".toResponseBody()
+                "Something went wrong"
             )
 
-            coEvery { api.getMultipleLocationsById(DUMMY_MULTIPLE_LOCATION_IDS) } returns response
+            coEvery { api.fetchMultipleLocationsById(DUMMY_MULTIPLE_LOCATION_IDS) } returns response
 
             repository.getMultipleLocationsById(DUMMY_MULTIPLE_LOCATION_IDS).collect { result ->
-                coEvery { api.getMultipleLocationsById(DUMMY_MULTIPLE_LOCATION_IDS) }
+                coEvery { api.fetchMultipleLocationsById(DUMMY_MULTIPLE_LOCATION_IDS) }
 
                 assertTrue(result is Result.Error && result.exception is NetworkError.Generic)
                 with(result.exception) {
@@ -201,7 +200,7 @@ class LocationRepositoryTest {
     @Test
     fun `given valid location name, when calling getLocationByName method, then return successful mapped domain result`() =
         runTest(dispatcher) {
-            val response: Response<LocationWrapperDto?> = Response.success(
+            val response: NetworkResult.Success<LocationWrapperDto?> = NetworkResult.Success(
                 LocationWrapperDto(
                     results = listOf(
                         LocationDto(
@@ -217,7 +216,7 @@ class LocationRepositoryTest {
                 )
             )
 
-            coEvery { api.getLocationByName(DUMMY_LOCATION_NAME) } returns response
+            coEvery { api.fetchLocationByName(DUMMY_LOCATION_NAME) } returns response
 
             val expected: Location = Location(
                 id = 1,
@@ -230,7 +229,7 @@ class LocationRepositoryTest {
             )
 
             repository.getLocationByName(DUMMY_LOCATION_NAME).collect { result ->
-                coEvery { api.getLocationByName(DUMMY_LOCATION_NAME) }
+                coEvery { api.fetchLocationByName(DUMMY_LOCATION_NAME) }
 
                 assertTrue(result is Result.Success)
                 assertEquals(result.data.first(), expected)
@@ -240,15 +239,15 @@ class LocationRepositoryTest {
     @Test
     fun `given valid location name, when calling getLocationByName method, then return failure mapped domain result`() =
         runTest(dispatcher) {
-            val response: Response<LocationWrapperDto?> = Response.error<LocationWrapperDto>(
+            val response: NetworkResult.Error<LocationWrapperDto?> = NetworkResult.Error<LocationWrapperDto?>(
                 ERROR_CODE,
-                "Something went wrong".toResponseBody()
+                "Something went wrong"
             )
 
-            coEvery { api.getLocationByName(DUMMY_LOCATION_NAME) } returns response
+            coEvery { api.fetchLocationByName(DUMMY_LOCATION_NAME) } returns response
 
             repository.getLocationByName(DUMMY_LOCATION_NAME).collect { result ->
-                coEvery { api.getLocationByName(DUMMY_LOCATION_NAME) }
+                coEvery { api.fetchLocationByName(DUMMY_LOCATION_NAME) }
 
                 assertTrue(result is Result.Error && result.exception is NetworkError.Generic)
                 with(result.exception) {

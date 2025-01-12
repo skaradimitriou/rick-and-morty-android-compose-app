@@ -21,7 +21,7 @@ interface CharactersRemoteDataSource {
      * Fetches multiple characters by its id.
      * @param ids: a list of character ids to be fetched from remote source.
      */
-    suspend fun fetchMultipleCharactersById(vararg ids: String): NetworkResult<List<CharacterResponseDto>?>
+    suspend fun fetchMultipleCharactersById(ids: List<String>): NetworkResult<List<CharacterResponseDto>?>
 
     /**
      * Fetches single character by its name.
