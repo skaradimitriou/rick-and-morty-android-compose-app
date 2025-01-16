@@ -33,7 +33,7 @@ internal class EpisodeRemoteDataSourceImpl(
     }
 
     override suspend fun fetchMultipleEpisodesById(ids: List<String>): NetworkResult<List<EpisodeDto>?> {
-        val call = client.get(URL.plus(PATH).plus(ids.joinToString()))
+        val call = client.get(URL.plus(PATH).plus(ids))
         return client.mapApiCallToNetworkResult<List<EpisodeDto>>(call = call)
     }
 }
