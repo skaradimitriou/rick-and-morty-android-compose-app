@@ -14,7 +14,7 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class FetchEpisodeDetailsUseCaseTest {
+class FetchEpisodeDetailsUseCaseTest {
 
     private val episodesRepository = mockk<EpisodesRepository>()
     private val charactersRepository = mockk<CharactersRepository>()
@@ -30,15 +30,16 @@ internal class FetchEpisodeDetailsUseCaseTest {
         private val dummyCharacters = CharactersFakes.provideDummyCharacterList()
         private val episodeId = dummyEpisode.id
 
-        private val GENERIC_ERROR = Result.Error<Any>(errorCode = 404, message = "Resource not found")
+        private val GENERIC_ERROR = Result.Error<Any>(Exception("Something went wrong"))
     }
 
     @Test
-    fun `test invoke with valid episode id returns successful result`() = runTest {
+    fun `GIVEN valid episode id, WHEN calling invoke(), THEN return successful result`() = runTest {
         val expected = FetchEpisodeDetailsUseCase.EpisodeDetails(
             episode = dummyEpisode,
             characters = dummyCharacters
         )
+
         coEvery {
             episodesRepository.fetchEpisodeInfo(episodeId)
         } returns flowOf(Result.Success(data = dummyEpisode))
@@ -49,15 +50,16 @@ internal class FetchEpisodeDetailsUseCaseTest {
 
         testedClass.invoke(episodeId).collect { result ->
             assertTrue(result is Result.Success)
-            assertEquals(result.data, expected)
+            assertEquals(expected, result.data)
         }
     }
 
     @Test
-    fun `test invoke with null episode id returns successful result`() = runTest {
+    fun `GIVEN null episode id, WHEN calling invoke(), THEN return successful result`() = runTest {
         //FIXME: If the episodeId is null, then the usecase should return error result
 
         val episodeId: Int? = null
+
         coEvery {
             episodesRepository.fetchEpisodeInfo(episodeId.toNotNull())
         } returns flowOf(Result.Success(data = dummyEpisode))
@@ -72,33 +74,35 @@ internal class FetchEpisodeDetailsUseCaseTest {
     }
 
     @Test
-    fun `test invoke with valid episode id returns successful episode & failed characters result`() = runTest {
-        //FIXME: That case should return successful result with empty character list
-        coEvery {
-            episodesRepository.fetchEpisodeInfo(episodeId)
-        } returns flowOf(Result.Success(data = dummyEpisode))
+    fun `GIVEN valid episode id, WHEN calling invoke() and getMultipleCharacterById fails, THEN return error result result`() =
+        runTest {
+            //FIXME: That case should return successful result with empty character list
+            coEvery {
+                episodesRepository.fetchEpisodeInfo(episodeId)
+            } returns flowOf(Result.Success(data = dummyEpisode))
 
-        coEvery {
-            charactersRepository.getMultipleCharacterById(dummyEpisode.characters)
-        } returns flowOf(
-            Result.Error(
-                errorCode = GENERIC_ERROR.errorCode,
-                message = GENERIC_ERROR.message
+            coEvery {
+                charactersRepository.getMultipleCharacterById(dummyEpisode.characters)
+            } returns flowOf(
+                Result.Error(GENERIC_ERROR.exception)
             )
-        )
 
-        testedClass.invoke(episodeId).collect { result ->
-            assertTrue(result is Result.Error)
+            testedClass.invoke(episodeId).collect { result ->
+                assertTrue(result is Result.Error)
+                assertEquals(GENERIC_ERROR.exception.message, result.exception.message)
+            }
         }
-    }
 
     @Test
-    fun `test invoke with valid episode id returns error result`() = runTest {
-        coEvery { episodesRepository.fetchEpisodeInfo(episodeId) } returns flowOf(
-            Result.Error(
-                errorCode = GENERIC_ERROR.errorCode,
-                message = GENERIC_ERROR.message
+    fun `GIVEN valid episode id, WHEN calling invoke() and fetchEpisodeInfo fails, THEN return error result result`() =
+        runTest {
+            coEvery { episodesRepository.fetchEpisodeInfo(episodeId) } returns flowOf(
+                Result.Error(GENERIC_ERROR.exception)
             )
-        )
-    }
+
+            testedClass.invoke(episodeId).collect { result ->
+                assertTrue(result is Result.Error)
+                assertEquals(GENERIC_ERROR.exception.message, result.exception.message)
+            }
+        }
 }

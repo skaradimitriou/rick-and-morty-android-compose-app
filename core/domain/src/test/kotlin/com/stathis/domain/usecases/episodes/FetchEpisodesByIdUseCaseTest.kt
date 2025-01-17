@@ -11,7 +11,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class FetchEpisodesByIdUseCaseTest {
+class FetchEpisodesByIdUseCaseTest {
 
     private val episodesRepository = mockk<EpisodesRepository>()
     private val testedClass = FetchEpisodesByIdUseCase(episodesRepository)
@@ -21,56 +21,56 @@ internal class FetchEpisodesByIdUseCaseTest {
         private val EPISODE_ID = listOf("123")
 
         private val dummyEpisodes = EpisodeFakes.provideDummyEpisodeList()
-        private val GENERIC_ERROR = Result.Error<Any>(errorCode = 404, message = "Resource not found")
+        private val GENERIC_ERROR = Result.Error<Any>(Exception("Something went wrong"))
     }
 
     @Test
-    fun `test invoke with valid id returns successful result with data`() = runTest {
+    fun `GIVEN valid episode ids, WHEN calling invoke(), THEN return successful result`() = runTest {
         coEvery {
             episodesRepository.fetchMultipleEpisodeInfo(EPISODE_ID)
         } returns flowOf(Result.Success(dummyEpisodes))
 
         testedClass.invoke(EPISODE_ID).collect { result ->
             assertTrue(result is Result.Success)
-            assertEquals(result.data, dummyEpisodes)
+            assertEquals(dummyEpisodes, result.data)
         }
     }
 
     @Test
-    fun `test invoke with valid id returns successful result with empty list`() = runTest {
+    fun `GIVEN null episode id, WHEN calling invoke(), THEN return successful result`() = runTest {
+        //FIXME: Add check that if the query is empty or null it should return error result.
         coEvery {
-            episodesRepository.fetchMultipleEpisodeInfo(EPISODE_ID)
+            episodesRepository.fetchMultipleEpisodeInfo(listOf())
         } returns flowOf(Result.Success(listOf()))
 
-        testedClass.invoke(EPISODE_ID).collect { result ->
+        testedClass.invoke(null).collect { result ->
             assertTrue(result is Result.Success)
-            assertEquals(result.data, listOf())
+            assertEquals(listOf(), result.data)
         }
     }
 
     @Test
-    fun `test invoke with null id returns successful result`() = runTest {
-        //FIXME: Add check that if the query is empty it should return error result.
+    fun `GIVEN empty episode id, WHEN calling invoke(), THEN return successful result`() = runTest {
+        //FIXME: Add check that if the query is empty or null it should return error result.
         coEvery {
             episodesRepository.fetchMultipleEpisodeInfo(listOf())
         } returns flowOf(Result.Success(listOf()))
 
         testedClass.invoke("").collect { result ->
             assertTrue(result is Result.Success)
-            assertEquals(result.data, listOf())
+            assertEquals(listOf(), result.data)
         }
     }
 
     @Test
-    fun `test invoke with valid id returns error result`() = runTest {
+    fun `GIVEN valid episode id, WHEN calling invoke() and call fails, THEN return successful result`() = runTest {
         coEvery {
             episodesRepository.fetchMultipleEpisodeInfo(EPISODE_ID)
-        } returns flowOf(Result.Error(errorCode = GENERIC_ERROR.errorCode, message = GENERIC_ERROR.message))
+        } returns flowOf(Result.Error(exception = GENERIC_ERROR.exception))
 
         testedClass.invoke(EPISODE_ID).collect { result ->
             assertTrue(result is Result.Error)
-            assertEquals(result.errorCode, GENERIC_ERROR.errorCode)
-            assertEquals(result.message, GENERIC_ERROR.message)
+            assertEquals(GENERIC_ERROR.exception.message, result.exception.message)
         }
     }
 }
