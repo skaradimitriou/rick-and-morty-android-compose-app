@@ -7,45 +7,48 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class FetchAllCharactersUseCaseTest {
+class FetchAllCharactersUseCaseTest {
 
     private val charactersRepository = mockk<CharactersRepository>()
 
-    private val testedClass = FetchAllCharactersUseCase(charactersRepository)
+    private lateinit var testedClass: FetchAllCharactersUseCase
 
     companion object {
 
         private val dummyCharacters = CharactersFakes.provideDummyCharacterList()
-        private val GENERIC_ERROR = Result.Error<Any>(errorCode = 404, message = "Resource not found")
+        private val GENERIC_ERROR = Result.Error<Any>(Exception("Something went wrong"))
+    }
+
+    @Before
+    fun setup() {
+        testedClass = FetchAllCharactersUseCase(charactersRepository)
     }
 
     @Test
-    fun `test invoke returns successful result with a list of characters`() = runTest {
-        coEvery { charactersRepository.getAllCharacters() } returns flowOf(Result.Success(dummyCharacters))
+    fun `GIVEN happy scenario, WHEN calling invoke() fun, THEN return successful result with a list of characters`() =
+        runTest {
+            coEvery { charactersRepository.getAllCharacters() } returns flowOf(Result.Success(dummyCharacters))
 
-        testedClass.invoke().collect { result ->
-            assertTrue(result is Result.Success)
-            assertEquals(result.data, dummyCharacters)
+            testedClass.invoke().collect { result ->
+                assertTrue(result is Result.Success)
+                assertEquals(dummyCharacters, result.data)
+            }
         }
-    }
 
     @Test
-    fun `test invoke returns error generic result`() = runTest {
+    fun `GIVEN rainy scenario, WHEN calling invoke() fun, THEN return error result with an exception`() = runTest {
         coEvery { charactersRepository.getAllCharacters() } returns flowOf(
-            Result.Error(
-                errorCode = GENERIC_ERROR.errorCode,
-                message = GENERIC_ERROR.message
-            )
+            Result.Error(exception = GENERIC_ERROR.exception)
         )
 
         testedClass.invoke().collect { result ->
             assertTrue(result is Result.Error)
-            assertEquals(result.errorCode, GENERIC_ERROR.errorCode)
-            assertEquals(result.message, GENERIC_ERROR.message)
+            assertEquals(GENERIC_ERROR.exception, result.exception)
         }
     }
 }

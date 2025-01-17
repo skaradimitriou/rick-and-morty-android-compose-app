@@ -45,7 +45,7 @@ class FetchCharacterDetailsUseCase(
                             }
 
                             results.any { it is Result.Error } -> {
-                                Result.Error<CharacterDetails>(Exception())
+                                Result.Error<CharacterDetails>(Exception("Something went wrong"))
                             }
 
                             else -> Result.Loading()

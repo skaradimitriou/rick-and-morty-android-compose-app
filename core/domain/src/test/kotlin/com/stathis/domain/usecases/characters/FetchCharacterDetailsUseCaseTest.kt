@@ -2,9 +2,11 @@ package com.stathis.domain.usecases.characters
 
 import com.stathis.domain.repository.CharactersRepository
 import com.stathis.domain.repository.EpisodesRepository
+import com.stathis.domain.repository.LocationRepository
 import com.stathis.model.Result
-import com.stathis.testing.CharactersFakes
-import com.stathis.testing.EpisodeFakes
+import com.stathis.testing.DUMMY_CHARACTER
+import com.stathis.testing.DUMMY_EPISODE
+import com.stathis.testing.DUMMY_LOCATION
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
@@ -13,80 +15,146 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-internal class FetchCharacterDetailsUseCaseTest {
+class FetchCharacterDetailsUseCaseTest {
 
     private val charactersRepository = mockk<CharactersRepository>()
+    private val locationsRepository = mockk<LocationRepository>()
     private val episodesRepository = mockk<EpisodesRepository>()
 
     private val testedClass = FetchCharacterDetailsUseCase(
         charactersRepository = charactersRepository,
+        locationRepository = locationsRepository,
         episodesRepository = episodesRepository
     )
 
     companion object {
 
-        private val dummyCharacter = CharactersFakes.provideDummyCharacter()
-        private val dummyEpisodes = EpisodeFakes.provideDummyEpisodeList()
-        private val characterId = dummyCharacter.id
+        private val characterId = DUMMY_CHARACTER.id
 
-        private val GENERIC_ERROR = Result.Error<Any>(errorCode = 404, message = "Resource not found")
+        private val GENERIC_ERROR = Result.Error<Any>(Exception("Something went wrong"))
     }
 
     @Test
-    fun `test invoke with valid characterId returns both successful result`() = runTest {
+    fun `GIVEN happy scenario, WHEN calling invoke(), THEN return successful result with data`() = runTest {
         coEvery {
             charactersRepository.getCharacterById(characterId)
-        } returns flowOf(Result.Success(dummyCharacter))
+        } returns flowOf(Result.Success(DUMMY_CHARACTER))
 
         coEvery {
-            episodesRepository.fetchMultipleEpisodeInfo(dummyCharacter.episode)
-        } returns flowOf(Result.Success(dummyEpisodes))
+            episodesRepository.fetchMultipleEpisodeInfo(DUMMY_CHARACTER.episode)
+        } returns flowOf(Result.Success(listOf(DUMMY_EPISODE)))
+
+        coEvery {
+            locationsRepository.getLocationById(DUMMY_CHARACTER.origin.id)
+        } returns flowOf(Result.Success(DUMMY_LOCATION))
+
+        coEvery {
+            locationsRepository.getLocationById(DUMMY_CHARACTER.location.id)
+        } returns flowOf(Result.Success(DUMMY_LOCATION))
 
         testedClass.invoke(characterId).collect { result ->
             assertTrue(result is Result.Success)
-            assertEquals(result.data.character, dummyCharacter)
-            assertEquals(result.data.episodes, dummyEpisodes)
+            assertEquals(DUMMY_CHARACTER, result.data.character)
+            assertEquals(DUMMY_LOCATION, result.data.originInfo)
+            assertEquals(DUMMY_LOCATION, result.data.locationInfo)
+            assertEquals(listOf(DUMMY_EPISODE), result.data.episodes)
         }
     }
 
     @Test
-    fun `test invoke with valid characterId returns failed result due to result not found`() = runTest {
+    fun `GIVEN episodes location rainy scenario, WHEN calling invoke(), THEN return error result with exception`() =
+        runTest {
+            coEvery {
+                charactersRepository.getCharacterById(characterId)
+            } returns flowOf(Result.Success(DUMMY_CHARACTER))
+
+            coEvery {
+                episodesRepository.fetchMultipleEpisodeInfo(DUMMY_CHARACTER.episode)
+            } returns flowOf(Result.Error(GENERIC_ERROR.exception))
+
+            coEvery {
+                locationsRepository.getLocationById(DUMMY_CHARACTER.origin.id)
+            } returns flowOf(Result.Success(DUMMY_LOCATION))
+
+            coEvery {
+                locationsRepository.getLocationById(DUMMY_CHARACTER.location.id)
+            } returns flowOf(Result.Success(DUMMY_LOCATION))
+
+            testedClass.invoke(characterId).collect { result ->
+                assertTrue(result is Result.Error)
+                assertEquals(GENERIC_ERROR.exception.message, result.exception.message)
+            }
+        }
+
+    @Test
+    fun `GIVEN origin location rainy scenario, WHEN calling invoke(), THEN return error result with exception`() = runTest {
         coEvery {
             charactersRepository.getCharacterById(characterId)
-        } returns flowOf(
-            Result.Error(
-                errorCode = GENERIC_ERROR.errorCode,
-                message = GENERIC_ERROR.message
-            )
-        )
+        } returns flowOf(Result.Success(DUMMY_CHARACTER))
+
+        coEvery {
+            episodesRepository.fetchMultipleEpisodeInfo(DUMMY_CHARACTER.episode)
+        } returns flowOf(Result.Success(listOf(DUMMY_EPISODE)))
+
+        coEvery {
+            locationsRepository.getLocationById(DUMMY_CHARACTER.origin.id)
+        } returns flowOf(Result.Error(GENERIC_ERROR.exception))
+
+        coEvery {
+            locationsRepository.getLocationById(DUMMY_CHARACTER.location.id)
+        } returns flowOf(Result.Success(DUMMY_LOCATION))
 
         testedClass.invoke(characterId).collect { result ->
             assertTrue(result is Result.Error)
-            assertEquals(result.errorCode, GENERIC_ERROR.errorCode)
-            assertEquals(result.message, GENERIC_ERROR.message)
+            assertEquals(GENERIC_ERROR.exception.message, result.exception.message)
         }
     }
 
     @Test
-    fun `test invoke with valid characterId returns successful details and failed episodes result`() = runTest {
+    fun `GIVEN current location rainy scenario, WHEN calling invoke(), THEN return error result with exception`() = runTest {
         coEvery {
             charactersRepository.getCharacterById(characterId)
-        } returns flowOf(Result.Success(dummyCharacter))
+        } returns flowOf(Result.Success(DUMMY_CHARACTER))
 
         coEvery {
-            episodesRepository.fetchMultipleEpisodeInfo(dummyCharacter.episode)
-        } returns flowOf(
-            Result.Error(
-                errorCode = GENERIC_ERROR.errorCode,
-                message = GENERIC_ERROR.message
-            )
-        )
+            episodesRepository.fetchMultipleEpisodeInfo(DUMMY_CHARACTER.episode)
+        } returns flowOf(Result.Success(listOf(DUMMY_EPISODE)))
+
+        coEvery {
+            locationsRepository.getLocationById(DUMMY_CHARACTER.origin.id)
+        } returns flowOf(Result.Success(DUMMY_LOCATION))
+
+        coEvery {
+            locationsRepository.getLocationById(DUMMY_CHARACTER.location.id)
+        } returns flowOf(Result.Error(GENERIC_ERROR.exception))
 
         testedClass.invoke(characterId).collect { result ->
-            //FIXME: Use case in that case should return successful result and show only the characterDetails
             assertTrue(result is Result.Error)
-            assertEquals(result.errorCode, GENERIC_ERROR.errorCode)
-            assertEquals(result.message, GENERIC_ERROR.message)
+            assertEquals(GENERIC_ERROR.exception.message, result.exception.message)
+        }
+    }
+
+    @Test
+    fun `GIVEN character call rainy scenario, WHEN calling invoke(), THEN return error result with exception`() = runTest {
+        coEvery {
+            charactersRepository.getCharacterById(characterId)
+        } returns flowOf(Result.Error(GENERIC_ERROR.exception))
+
+        coEvery {
+            episodesRepository.fetchMultipleEpisodeInfo(DUMMY_CHARACTER.episode)
+        } returns flowOf(Result.Success(listOf(DUMMY_EPISODE)))
+
+        coEvery {
+            locationsRepository.getLocationById(DUMMY_CHARACTER.origin.id)
+        } returns flowOf(Result.Success(DUMMY_LOCATION))
+
+        coEvery {
+            locationsRepository.getLocationById(DUMMY_CHARACTER.location.id)
+        } returns flowOf(Result.Success(DUMMY_LOCATION))
+
+        testedClass.invoke(characterId).collect { result ->
+            assertTrue(result is Result.Error)
+            assertEquals(GENERIC_ERROR.exception.message, result.exception.message)
         }
     }
 }
