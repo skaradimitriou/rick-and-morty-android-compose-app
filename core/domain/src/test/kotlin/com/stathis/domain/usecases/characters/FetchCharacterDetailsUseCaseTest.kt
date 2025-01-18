@@ -9,6 +9,8 @@ import com.stathis.testing.DUMMY_EPISODE
 import com.stathis.testing.DUMMY_LOCATION
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
@@ -35,7 +37,7 @@ class FetchCharacterDetailsUseCaseTest {
     }
 
     @Test
-    fun `GIVEN happy scenario, WHEN calling invoke(), THEN return successful result with data`() = runTest {
+    fun `GIVEN valid character id, WHEN calling invoke(), THEN return successful result with data`() = runTest {
         coEvery {
             charactersRepository.getCharacterById(characterId)
         } returns flowOf(Result.Success(DUMMY_CHARACTER))
@@ -59,6 +61,29 @@ class FetchCharacterDetailsUseCaseTest {
             assertEquals(DUMMY_LOCATION, result.data.locationInfo)
             assertEquals(listOf(DUMMY_EPISODE), result.data.episodes)
         }
+    }
+
+    @Test
+    fun `GIVEN zero character id, WHEN calling invoke(), THEN throw exception with message`() = runTest {
+        coEvery {
+            charactersRepository.getCharacterById(characterId)
+        } returns flowOf(Result.Success(DUMMY_CHARACTER))
+
+        coEvery {
+            episodesRepository.fetchMultipleEpisodeInfo(DUMMY_CHARACTER.episode)
+        } returns flowOf(Result.Success(listOf(DUMMY_EPISODE)))
+
+        coEvery {
+            locationsRepository.getLocationById(DUMMY_CHARACTER.origin.id)
+        } returns flowOf(Result.Success(DUMMY_LOCATION))
+
+        coEvery {
+            locationsRepository.getLocationById(DUMMY_CHARACTER.location.id)
+        } returns flowOf(Result.Success(DUMMY_LOCATION))
+
+        testedClass.invoke(0).catch { exception ->
+            assertEquals("Character id with zero value provided", exception.message)
+        }.firstOrNull()
     }
 
     @Test

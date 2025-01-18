@@ -7,6 +7,8 @@ import com.stathis.testing.DUMMY_CHARACTER
 import com.stathis.testing.DUMMY_LOCATION
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
@@ -24,31 +26,7 @@ class FetchLocationInfoByIdUseCaseTest {
     )
 
     @Test
-    fun `GIVEN valid location id, WHEN calling invoke(), THEN return successful result with full data`() = runTest {
-        coEvery {
-            locationsRepository.getLocationById(DUMMY_LOCATION.id)
-        } returns flowOf(Result.Success(data = DUMMY_LOCATION))
-
-        coEvery {
-            charactersRepository.getMultipleCharacterById(DUMMY_LOCATION.residents)
-        } returns flowOf(Result.Success(data = listOf(DUMMY_CHARACTER)))
-
-        val expected = Result.Success(
-            FetchLocationInfoByIdUseCase.LocationInformationResult(
-                locationInfo = DUMMY_LOCATION,
-                residents = listOf(DUMMY_CHARACTER)
-            )
-        )
-
-        testedClass.invoke(DUMMY_LOCATION.id).collect { result ->
-            assertTrue(result is Result.Success<FetchLocationInfoByIdUseCase.LocationInformationResult>)
-            assertEquals(expected, result)
-        }
-    }
-
-    @Test
-    fun `GIVEN zero location id, WHEN calling invoke(), THEN return failure result with exception`() = runTest {
-        //FIXME: When calling invoke with 0 as a location Id, then return failure result.
+    fun `GIVEN valid location id, WHEN calling invoke(), THEN return successful result with data`() = runTest {
         coEvery {
             locationsRepository.getLocationById(0)
         } returns flowOf(Result.Success(data = DUMMY_LOCATION))
@@ -68,6 +46,16 @@ class FetchLocationInfoByIdUseCaseTest {
             assertTrue(result is Result.Success<FetchLocationInfoByIdUseCase.LocationInformationResult>)
             assertEquals(expected, result)
         }
+    }
+
+    @Test
+    fun `GIVEN zero location id, WHEN calling invoke(), THEN throw exception with message`() = runTest {
+        coEvery { locationsRepository.getLocationById(0) } returns flowOf()
+        coEvery { charactersRepository.getMultipleCharacterById(listOf()) } returns flowOf()
+
+        testedClass.invoke(0).catch { exception ->
+            assertEquals("Location id with zero value provided", exception.message)
+        }.firstOrNull()
     }
 
     @Test

@@ -8,10 +8,10 @@ import com.stathis.model.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 
 internal class EpisodeDetailsViewModel(
     episodeId: Int,
@@ -27,11 +27,11 @@ internal class EpisodeDetailsViewModel(
     }
 
     private fun fetchEpisodeDetails(episodeId: Int) {
-        viewModelScope.launch(dispatcher) {
-            useCase.invoke(episodeId).onEach { result ->
+        useCase.invoke(episodeId)
+            .flowOn(dispatcher)
+            .onEach { result ->
                 _episodes.update { result.toUiState() }
             }.launchIn(viewModelScope)
-        }
     }
 
     private fun Result<FetchEpisodeDetailsUseCase.EpisodeDetails>.toUiState() = when (this) {

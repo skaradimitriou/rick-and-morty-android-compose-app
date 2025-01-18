@@ -1,26 +1,28 @@
 package com.stathis.domain.usecases.episodes
 
+import com.stathis.domain.consts.UNSUPPORTED_ID
 import com.stathis.domain.repository.CharactersRepository
 import com.stathis.domain.repository.EpisodesRepository
-import com.stathis.domain.usecases.BaseUseCase
 import com.stathis.domain.usecases.episodes.FetchEpisodeDetailsUseCase.EpisodeDetails
 import com.stathis.model.Result
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.episodes.Episode
-import com.stathis.util.util.toNotNull
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class FetchEpisodeDetailsUseCase(
     private val episodesRepository: EpisodesRepository,
     private val charactersRepository: CharactersRepository
-) : BaseUseCase<Result<EpisodeDetails>> {
+) {
 
-    override suspend fun invoke(vararg args: Any?): Flow<Result<EpisodeDetails>> = flow {
-        val id = (args.getOrNull(0) as? Int?).toNotNull()
+    operator fun invoke(episodeId: Int): Flow<Result<EpisodeDetails>> = flow {
+        if (episodeId == UNSUPPORTED_ID) {
+            error("Episode id with zero value provided")
+        }
+
         val model = EpisodeDetails()
 
-        episodesRepository.fetchEpisodeInfo(id).collect { episodeResult ->
+        episodesRepository.fetchEpisodeInfo(episodeId).collect { episodeResult ->
             when (episodeResult) {
                 is Result.Loading -> Unit
 

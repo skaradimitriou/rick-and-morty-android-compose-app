@@ -1,9 +1,9 @@
 package com.stathis.domain.usecases.characters
 
+import com.stathis.domain.consts.UNSUPPORTED_ID
 import com.stathis.domain.repository.CharactersRepository
 import com.stathis.domain.repository.EpisodesRepository
 import com.stathis.domain.repository.LocationRepository
-import com.stathis.domain.usecases.BaseUseCase
 import com.stathis.domain.usecases.characters.FetchCharacterDetailsUseCase.CharacterDetails
 import com.stathis.model.Result
 import com.stathis.model.characters.CharacterResponse
@@ -18,10 +18,13 @@ class FetchCharacterDetailsUseCase(
     private val charactersRepository: CharactersRepository,
     private val locationRepository: LocationRepository,
     private val episodesRepository: EpisodesRepository
-) : BaseUseCase<Result<CharacterDetails>> {
+) {
 
-    override suspend fun invoke(vararg args: Any?): Flow<Result<CharacterDetails>> = flow {
-        val characterId = (args.getOrNull(0) as? Int?).toNotNull()
+    operator fun invoke(characterId: Int): Flow<Result<CharacterDetails>> = flow {
+        if (characterId == UNSUPPORTED_ID) {
+            error("Character id with zero value provided")
+        }
+
         charactersRepository.getCharacterById(characterId).collect { characterResult ->
             when (characterResult) {
                 is Result.Loading -> Unit
@@ -30,7 +33,7 @@ class FetchCharacterDetailsUseCase(
                     combine(
                         locationRepository.getLocationById(id = characterResult.data.origin.id),
                         locationRepository.getLocationById(id = characterResult.data.location.id),
-                        episodesRepository.fetchMultipleEpisodeInfo(characterResult.data.episode.toNotNull())
+                        episodesRepository.fetchMultipleEpisodeInfo(ids = characterResult.data.episode.toNotNull())
                     ) { originLocationResult, locationResult, episodeResult ->
                         val results = listOf(originLocationResult, locationResult, episodeResult)
                         when {
