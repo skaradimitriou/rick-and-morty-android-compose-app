@@ -1,5 +1,6 @@
 package com.stathis.domain.usecases.locations
 
+import com.stathis.domain.consts.UNSUPPORTED_ID
 import com.stathis.domain.repository.CharactersRepository
 import com.stathis.domain.repository.LocationRepository
 import com.stathis.model.Result
@@ -13,7 +14,11 @@ class FetchLocationInfoByIdUseCase(
     private val charactersRepository: CharactersRepository
 ) {
 
-    fun invoke(locationId: Int): Flow<Result<LocationInformationResult>> = flow {
+    operator fun invoke(locationId: Int): Flow<Result<LocationInformationResult>> = flow {
+        if (locationId == UNSUPPORTED_ID) {
+            error("Location id with zero value provided")
+        }
+
         locationRepository.getLocationById(locationId).collect { result ->
             when (result) {
                 is Result.Loading -> Unit

@@ -9,5 +9,5 @@ class FetchAllCharactersUseCase(
     private val repository: CharactersRepository
 ) : BaseUseCase<Result<List<CharacterResponse>>> {
 
-    override suspend fun invoke(vararg args: Any?) = repository.getAllCharacters()
+    override suspend operator fun invoke(vararg args: Any?) = repository.getAllCharacters()
 }

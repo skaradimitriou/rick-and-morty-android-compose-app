@@ -7,6 +7,7 @@ import com.stathis.model.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -27,6 +28,9 @@ internal class LocationDetailsViewModel(
 
     private fun getData() {
         locationDetailsUseCase.invoke(locationId)
+            .catch {
+                _state.update { LocationDetailsViewState.Error }
+            }
             .onEach { result ->
                 _state.update { result.toState() }
             }

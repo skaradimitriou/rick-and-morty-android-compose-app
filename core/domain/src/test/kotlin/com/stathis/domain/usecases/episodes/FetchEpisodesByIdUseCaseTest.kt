@@ -5,6 +5,8 @@ import com.stathis.model.Result
 import com.stathis.testing.EpisodeFakes
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
@@ -37,29 +39,14 @@ class FetchEpisodesByIdUseCaseTest {
     }
 
     @Test
-    fun `GIVEN null episode id, WHEN calling invoke(), THEN return successful result`() = runTest {
-        //FIXME: Add check that if the query is empty or null it should return error result.
+    fun `GIVEN empty episode ids, WHEN calling invoke(), THEN throw Exception with message`() = runTest {
         coEvery {
             episodesRepository.fetchMultipleEpisodeInfo(listOf())
         } returns flowOf(Result.Success(listOf()))
 
-        testedClass.invoke(null).collect { result ->
-            assertTrue(result is Result.Success)
-            assertEquals(listOf(), result.data)
-        }
-    }
-
-    @Test
-    fun `GIVEN empty episode id, WHEN calling invoke(), THEN return successful result`() = runTest {
-        //FIXME: Add check that if the query is empty or null it should return error result.
-        coEvery {
-            episodesRepository.fetchMultipleEpisodeInfo(listOf())
-        } returns flowOf(Result.Success(listOf()))
-
-        testedClass.invoke("").collect { result ->
-            assertTrue(result is Result.Success)
-            assertEquals(listOf(), result.data)
-        }
+        testedClass.invoke(listOf()).catch { exception ->
+            assertEquals("Empty episode ids provided.", exception.message)
+        }.firstOrNull()
     }
 
     @Test

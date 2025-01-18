@@ -8,6 +8,7 @@ import com.stathis.model.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -30,6 +31,7 @@ internal class DetailsScreenViewModel(
     private fun fetchCharacterDetails(id: Int) {
         viewModelScope.launch(dispatcher) {
             useCase.invoke(id)
+                .catch { exception -> _uiState.update { renderViewStateError() } }
                 .onEach { result -> _uiState.update { result.toUiState() } }
                 .flowOn(dispatcher)
                 .launchIn(viewModelScope)
@@ -45,9 +47,11 @@ internal class DetailsScreenViewModel(
             episodes = data.episodes
         )
 
-        is Result.Error -> DetailsScreenUiState.Error(
-            title = "Something went wrong",
-            description = exception.message.toString()
-        )
+        is Result.Error -> renderViewStateError()
     }
+
+    private fun renderViewStateError(message: String? = null) = DetailsScreenUiState.Error(
+        title = "Something went wrong",
+        description = message.toString()
+    )
 }
