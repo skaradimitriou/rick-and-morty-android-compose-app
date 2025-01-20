@@ -2,7 +2,7 @@ package com.stathis.domain.usecases.characters
 
 import com.stathis.domain.repository.CharactersRepository
 import com.stathis.model.Result
-import com.stathis.testing.CharactersFakes
+import com.stathis.testing.DUMMY_CHARACTER
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
@@ -20,7 +20,7 @@ class FetchAllCharactersUseCaseTest {
 
     companion object {
 
-        private val dummyCharacters = CharactersFakes.provideDummyCharacterList()
+        private val dummyCharacters = listOf(DUMMY_CHARACTER)
         private val GENERIC_ERROR = Result.Error<Any>(Exception("Something went wrong"))
     }
 

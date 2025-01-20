@@ -19,9 +19,9 @@ import com.stathis.characters.ui.details.components.CharacterDetailsRow
 import com.stathis.characters.ui.details.components.CharacterLabel
 import com.stathis.characters.ui.details.model.DetailsScreenUiState
 import com.stathis.designsystem.components.cards.PosterCardWithLabel
-import com.stathis.testing.CharactersFakes
+import com.stathis.testing.DUMMY_CHARACTER
+import com.stathis.testing.DUMMY_EPISODE
 import com.stathis.testing.DUMMY_LOCATION
-import com.stathis.testing.EpisodeFakes
 import com.stathis.ui.error.ErrorScreen
 import com.stathis.ui.loading.LoadingScreen
 import com.stathis.ui.topbars.TopBarWithBackNavIcon
@@ -135,10 +135,10 @@ private fun Content(
 @Composable
 private fun DetailsContentPreview() {
     val uiState = DetailsScreenUiState.Content(
-        character = CharactersFakes.provideDummyCharacter(),
+        character = DUMMY_CHARACTER,
         originInfo = DUMMY_LOCATION,
         locationInfo = DUMMY_LOCATION,
-        episodes = EpisodeFakes.provideDummyEpisodeList()
+        episodes = listOf(DUMMY_EPISODE)
     )
     DetailsContent(
         uiState = uiState,

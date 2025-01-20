@@ -16,8 +16,8 @@ import com.stathis.domain.usecases.episodes.FetchEpisodeDetailsUseCase
 import com.stathis.episodes.ui.details.components.displayCharacters
 import com.stathis.episodes.ui.details.components.displayEpisodeInfo
 import com.stathis.episodes.ui.details.model.EpisodeDetailsUiState
-import com.stathis.testing.CharactersFakes
-import com.stathis.testing.EpisodeFakes
+import com.stathis.testing.DUMMY_CHARACTER
+import com.stathis.testing.DUMMY_EPISODE
 import com.stathis.ui.error.ErrorScreen
 import com.stathis.ui.loading.LoadingScreen
 import com.stathis.ui.topbars.TopBarWithBackNavIcon
@@ -125,8 +125,8 @@ private fun EpisodeDetailsContentPreview() {
         Content(
             paddingValues = PaddingValues(all = dimensionResource(DimenRes.dimen_8)),
             data = FetchEpisodeDetailsUseCase.EpisodeDetails(
-                episode = EpisodeFakes.provideDummyEpisode(),
-                characters = CharactersFakes.provideDummyCharacterList()
+                episode = DUMMY_EPISODE,
+                characters = listOf(DUMMY_CHARACTER)
             ),
             onCharacterClick = {},
         )

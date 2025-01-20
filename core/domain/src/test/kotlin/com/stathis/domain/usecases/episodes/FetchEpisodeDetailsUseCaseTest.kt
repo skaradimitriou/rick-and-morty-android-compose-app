@@ -3,8 +3,8 @@ package com.stathis.domain.usecases.episodes
 import com.stathis.domain.repository.CharactersRepository
 import com.stathis.domain.repository.EpisodesRepository
 import com.stathis.model.Result
-import com.stathis.testing.CharactersFakes
-import com.stathis.testing.EpisodeFakes
+import com.stathis.testing.DUMMY_CHARACTER
+import com.stathis.testing.DUMMY_EPISODE
 import com.stathis.util.util.toNotNull
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -28,9 +28,8 @@ class FetchEpisodeDetailsUseCaseTest {
 
     companion object {
 
-        private val dummyEpisode = EpisodeFakes.provideDummyEpisode()
-        private val dummyCharacters = CharactersFakes.provideDummyCharacterList()
-        private val episodeId = dummyEpisode.id
+        private val dummyCharacters = listOf(DUMMY_CHARACTER)
+        private val episodeId = DUMMY_EPISODE.id
 
         private val GENERIC_ERROR = Result.Error<Any>(Exception("Something went wrong"))
     }
@@ -38,16 +37,16 @@ class FetchEpisodeDetailsUseCaseTest {
     @Test
     fun `GIVEN valid episode id, WHEN calling invoke(), THEN return successful result`() = runTest {
         val expected = FetchEpisodeDetailsUseCase.EpisodeDetails(
-            episode = dummyEpisode,
+            episode = DUMMY_EPISODE,
             characters = dummyCharacters
         )
 
         coEvery {
             episodesRepository.fetchEpisodeInfo(episodeId)
-        } returns flowOf(Result.Success(data = dummyEpisode))
+        } returns flowOf(Result.Success(data = DUMMY_EPISODE))
 
         coEvery {
-            charactersRepository.getMultipleCharacterById(dummyEpisode.characters)
+            charactersRepository.getMultipleCharacterById(DUMMY_EPISODE.characters)
         } returns flowOf(Result.Success(data = dummyCharacters))
 
         testedClass.invoke(episodeId).collect { result ->
@@ -60,10 +59,10 @@ class FetchEpisodeDetailsUseCaseTest {
     fun `GIVEN zero episode id, WHEN calling invoke(), THEN throw exception with message`() = runTest {
         coEvery {
             episodesRepository.fetchEpisodeInfo(episodeId.toNotNull())
-        } returns flowOf(Result.Success(data = dummyEpisode))
+        } returns flowOf(Result.Success(data = DUMMY_EPISODE))
 
         coEvery {
-            charactersRepository.getMultipleCharacterById(dummyEpisode.characters)
+            charactersRepository.getMultipleCharacterById(DUMMY_EPISODE.characters)
         } returns flowOf(Result.Success(data = dummyCharacters))
 
         testedClass.invoke(0).catch { exception ->
@@ -77,10 +76,10 @@ class FetchEpisodeDetailsUseCaseTest {
             //FIXME: That case should return successful result with empty character list
             coEvery {
                 episodesRepository.fetchEpisodeInfo(episodeId)
-            } returns flowOf(Result.Success(data = dummyEpisode))
+            } returns flowOf(Result.Success(data = DUMMY_EPISODE))
 
             coEvery {
-                charactersRepository.getMultipleCharacterById(dummyEpisode.characters)
+                charactersRepository.getMultipleCharacterById(DUMMY_EPISODE.characters)
             } returns flowOf(
                 Result.Error(GENERIC_ERROR.exception)
             )

@@ -12,7 +12,7 @@ import com.stathis.characters.ui.home.components.CharacterList
 import com.stathis.characters.ui.home.model.HomeScreenUiState
 import com.stathis.designsystem.components.topbar.CustomTopAppBar
 import com.stathis.designsystem.theme.RickAndMortyAppTheme
-import com.stathis.testing.CharactersFakes
+import com.stathis.testing.DUMMY_CHARACTER
 import com.stathis.ui.error.ErrorScreen
 import com.stathis.ui.loading.LoadingScreen
 import com.stathis.util.util.Callback
@@ -91,9 +91,8 @@ private fun HomeScreenLoadingPreview() {
 @Composable
 private fun HomeScreenContentPreview() {
     RickAndMortyAppTheme {
-        val data = CharactersFakes.provideDummyCharacterList()
         HomeContent(
-            uiState = HomeScreenUiState.Content(data = data),
+            uiState = HomeScreenUiState.Content(data = listOf(DUMMY_CHARACTER)),
             onCharacterClick = {},
             onSearchIconClick = {}
         )
