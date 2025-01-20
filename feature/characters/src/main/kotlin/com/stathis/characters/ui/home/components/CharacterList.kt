@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.stathis.designsystem.theme.RickAndMortyAppTheme
 import com.stathis.model.characters.CharacterResponse
-import com.stathis.testing.CharactersFakes
+import com.stathis.testing.DUMMY_CHARACTER
 import com.stathis.util.util.DimenRes
 
 private const val COLUMNS = 2
@@ -47,11 +47,10 @@ internal fun CharacterList(
 @Preview
 @Composable
 private fun CharacterListPreview() {
-    val dummyList = CharactersFakes.provideDummyCharacterList()
     RickAndMortyAppTheme {
         CharacterList(
             paddingValues = PaddingValues(all = 10.dp),
-            characters = dummyList,
+            characters = listOf(DUMMY_CHARACTER),
             onCharacterClick = {}
         )
     }

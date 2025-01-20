@@ -25,7 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.stathis.designsystem.components.images.CoilImage
 import com.stathis.model.characters.CharacterResponse
-import com.stathis.testing.CharactersFakes
+import com.stathis.testing.DUMMY_CHARACTER
 import com.stathis.util.util.DimenRes
 import com.stathis.util.util.StringRes
 
@@ -79,7 +79,7 @@ private fun BoxScope.CharacterLabel(text: String) {
 @Composable
 fun CharacterCardPreview() {
     CharacterCard(
-        character = CharactersFakes.provideDummyCharacter(),
+        character = DUMMY_CHARACTER,
         onCharacterClick = {}
     )
 }

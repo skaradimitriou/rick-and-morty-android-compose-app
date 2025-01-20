@@ -2,7 +2,7 @@ package com.stathis.domain.usecases.episodes
 
 import com.stathis.domain.repository.EpisodesRepository
 import com.stathis.model.Result
-import com.stathis.testing.EpisodeFakes
+import com.stathis.testing.DUMMY_EPISODE
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.catch
@@ -22,7 +22,7 @@ class FetchEpisodesByIdUseCaseTest {
 
         private val EPISODE_ID = listOf("123")
 
-        private val dummyEpisodes = EpisodeFakes.provideDummyEpisodeList()
+        private val dummyEpisodes = listOf(DUMMY_EPISODE)
         private val GENERIC_ERROR = Result.Error<Any>(Exception("Something went wrong"))
     }
 
