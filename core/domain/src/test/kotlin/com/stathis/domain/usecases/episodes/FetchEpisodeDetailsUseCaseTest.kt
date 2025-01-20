@@ -71,9 +71,8 @@ class FetchEpisodeDetailsUseCaseTest {
     }
 
     @Test
-    fun `GIVEN valid episode id, WHEN calling invoke() and getMultipleCharacterById fails, THEN return error result result`() =
+    fun `GIVEN valid episode id, WHEN calling invoke() and getMultipleCharacterById fails, THEN return error result`() =
         runTest {
-            //FIXME: That case should return successful result with empty character list
             coEvery {
                 episodesRepository.fetchEpisodeInfo(episodeId)
             } returns flowOf(Result.Success(data = DUMMY_EPISODE))
@@ -84,9 +83,14 @@ class FetchEpisodeDetailsUseCaseTest {
                 Result.Error(GENERIC_ERROR.exception)
             )
 
+            val expected = FetchEpisodeDetailsUseCase.EpisodeDetails(
+                episode = DUMMY_EPISODE,
+                characters = null
+            )
+
             testedClass.invoke(episodeId).collect { result ->
-                assertTrue(result is Result.Error)
-                assertEquals(GENERIC_ERROR.exception.message, result.exception.message)
+                assertTrue(result is Result.Success)
+                assertEquals(expected, result.data)
             }
         }
 
