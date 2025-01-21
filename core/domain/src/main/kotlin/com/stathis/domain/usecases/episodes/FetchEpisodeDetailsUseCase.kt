@@ -8,6 +8,7 @@ import com.stathis.model.Result
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.episodes.Episode
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 
 class FetchEpisodeDetailsUseCase(
@@ -29,21 +30,15 @@ class FetchEpisodeDetailsUseCase(
                 is Result.Success -> {
                     model.episode = episodeResult.data
 
-                    charactersRepository.getMultipleCharacterById(episodeResult.data.characters)
-                        .collect { charactersResult ->
-                            when (charactersResult) {
-                                is Result.Loading -> Unit
+                    val charactersResult = charactersRepository.getMultipleCharacterById(
+                        ids = episodeResult.data.characters
+                    ).firstOrNull()
 
-                                is Result.Success -> {
-                                    model.characters = charactersResult.data
-                                    emit(Result.Success(data = model))
-                                }
+                    if (charactersResult is Result.Success) {
+                        model.characters = charactersResult.data
+                    }
 
-                                is Result.Error -> {
-                                    emit(Result.Error(charactersResult.exception))
-                                }
-                            }
-                        }
+                    emit(Result.Success(model))
                 }
 
                 is Result.Error -> emit(Result.Error(episodeResult.exception))
