@@ -6,7 +6,8 @@ import androidx.test.core.app.ApplicationProvider
 import com.stathis.database.db.characters.CharacterEntity
 import com.stathis.database.db.characters.CharactersDao
 import com.stathis.database.db.characters.CharactersLocalDatabase
-import com.stathis.model.characters.CharacterStatus
+import com.stathis.database.util.toEntity
+import com.stathis.testing.DUMMY_CHARACTER
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.CoroutineDispatcher
@@ -40,20 +41,7 @@ class CharacterDaoTest {
 
     companion object {
 
-        private val DUMMY_ENTITY: CharacterEntity = CharacterEntity(
-            id = 0,
-            name = "Character Name",
-            status = CharacterStatus.ALIVE,
-            species = "Human",
-            type = "Type",
-            gender = "Male",
-            origin = "Earth",
-            location = "Earth",
-            image = "www.image.com/path",
-            episode = listOf(),
-            url = "www.domain.com",
-            created = "XX-XX-2024"
-        )
+        private val DUMMY_ENTITY: CharacterEntity = DUMMY_CHARACTER.toEntity()
     }
 
     /**
@@ -124,20 +112,21 @@ class CharacterDaoTest {
      */
 
     @Test
-    fun given_list_of_CharacterEntity_when_inserting_to_db_then_verify_that_elements_has_been_added() = runTest(dispatcher) {
-        val characters: List<CharacterEntity> = listOf(
-            DUMMY_ENTITY.copy(id = 1, name = "Rick"),
-            DUMMY_ENTITY.copy(id = 2, name = "Morty")
-        )
+    fun given_list_of_CharacterEntity_when_inserting_to_db_then_verify_that_elements_has_been_added() =
+        runTest(dispatcher) {
+            val characters: List<CharacterEntity> = listOf(
+                DUMMY_ENTITY.copy(id = 1, name = "Rick"),
+                DUMMY_ENTITY.copy(id = 2, name = "Morty")
+            )
 
-        val insertedItemIds: LongArray = dao.insertAll(characters)
-        assertEquals(insertedItemIds.toList(), characters.map { it.id.toLong() })
+            val insertedItemIds: LongArray = dao.insertAll(characters)
+            assertEquals(insertedItemIds.toList(), characters.map { it.id.toLong() })
 
-        val entities = dao.getAllCharacters().firstOrNull()
+            val entities = dao.getAllCharacters().firstOrNull()
 
-        assertEquals(characters.size, entities?.size)
-        assertEquals(characters, entities)
-    }
+            assertEquals(characters.size, entities?.size)
+            assertEquals(characters, entities)
+        }
 
     /**
      * Tests that deleteAll() Character Dao method that works as expected.
@@ -146,22 +135,23 @@ class CharacterDaoTest {
      */
 
     @Test
-    fun given_list_of_CharacterEntity_when_calling_deleteAll_method_then_verify_that_db_is_empty() = runTest(dispatcher) {
-        val characters: List<CharacterEntity> = listOf(
-            DUMMY_ENTITY.copy(id = 1, name = "Rick"),
-            DUMMY_ENTITY.copy(id = 2, name = "Morty")
-        )
+    fun given_list_of_CharacterEntity_when_calling_deleteAll_method_then_verify_that_db_is_empty() =
+        runTest(dispatcher) {
+            val characters: List<CharacterEntity> = listOf(
+                DUMMY_ENTITY.copy(id = 1, name = "Rick"),
+                DUMMY_ENTITY.copy(id = 2, name = "Morty")
+            )
 
-        val insertedItemIds: LongArray = dao.insertAll(characters)
-        assertEquals(insertedItemIds.toList(), characters.map { it.id.toLong() })
+            val insertedItemIds: LongArray = dao.insertAll(characters)
+            assertEquals(insertedItemIds.toList(), characters.map { it.id.toLong() })
 
-        val dbIsNotEmpty: Boolean = dao.getAllCharacters().first().isNotEmpty()
-        assertTrue(dbIsNotEmpty)
+            val dbIsNotEmpty: Boolean = dao.getAllCharacters().first().isNotEmpty()
+            assertTrue(dbIsNotEmpty)
 
-        dao.deleteAll()
+            dao.deleteAll()
 
-        val dbIsEmpty: Boolean = dao.getAllCharacters().first().isEmpty()
-        assertTrue(dbIsEmpty)
-    }
+            val dbIsEmpty: Boolean = dao.getAllCharacters().first().isEmpty()
+            assertTrue(dbIsEmpty)
+        }
 
 }

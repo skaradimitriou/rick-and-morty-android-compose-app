@@ -5,6 +5,7 @@ import com.stathis.database.db.queries.QueryEntity
 import com.stathis.model.characters.CharacterResponse
 import com.stathis.model.characters.CharacterStatus
 import com.stathis.model.search.Query
+import com.stathis.testing.DUMMY_CHARACTER
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
@@ -12,68 +13,43 @@ class MapperExtTest {
 
     @Test
     fun `given CharacterResponse, when calling toEntity() method, then return CharacterEntity`() {
-        val character = CharacterResponse(
+        val resultAfterMapping: CharacterEntity = DUMMY_CHARACTER.toEntity()
+        val expected = CharacterEntity(
             id = 1,
-            name = "Rick",
+            name = "Rick Sanchez",
             status = CharacterStatus.ALIVE,
             species = "Human",
-            type = "Type",
+            type = "XX",
             gender = "Male",
-            origin = "Earth",
-            location = "Earth",
-            image = "imgPath",
-            episode = listOf(),
-            url = "",
-            created = ""
+            origin = "{\"name\":\"Earth (C-137)\",\"id\":1}",
+            location = "{\"name\":\"Earth (Replacement Dimension)\",\"id\":2}",
+            image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+            episode = listOf("1", "2"),
+            url = "https://rickandmortyapi.com/api/character/1",
+            created = "2017-11-04T18:48:46.250Z"
         )
-
-        val entity: CharacterEntity = character.toEntity()
-
-        assertEquals(character.id, entity.id)
-        assertEquals(character.name, entity.name)
-        assertEquals(character.status, entity.status)
-        assertEquals(character.species, entity.species)
-        assertEquals(character.type, entity.type)
-        assertEquals(character.gender, entity.gender)
-        assertEquals(character.origin, entity.origin)
-        assertEquals(character.location, entity.location)
-        assertEquals(character.image, entity.image)
-        assertEquals(character.episode, entity.episode)
-        assertEquals(character.url, entity.url)
-        assertEquals(character.created, entity.created)
+        assertEquals(expected, resultAfterMapping)
     }
 
     @Test
     fun `given CharacterEntity, when calling toEntity() method, then return CharacterResponse`() {
-        val entity = CharacterEntity(
+        val dummyEntity = CharacterEntity(
             id = 1,
-            name = "Rick",
+            name = "Rick Sanchez",
             status = CharacterStatus.ALIVE,
             species = "Human",
-            type = "Type",
+            type = "XX",
             gender = "Male",
-            origin = "Earth",
-            location = "Earth",
-            image = "imgPath",
-            episode = listOf(),
-            url = "",
-            created = ""
+            origin = "{\"name\":\"Earth (C-137)\",\"id\":1}",
+            location = "{\"name\":\"Earth (Replacement Dimension)\",\"id\":2}",
+            image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+            episode = listOf("1", "2"),
+            url = "https://rickandmortyapi.com/api/character/1",
+            created = "2017-11-04T18:48:46.250Z"
         )
 
-        val character: CharacterResponse = entity.toCharacter()
-
-        assertEquals(character.id, entity.id)
-        assertEquals(character.name, entity.name)
-        assertEquals(character.status, entity.status)
-        assertEquals(character.species, entity.species)
-        assertEquals(character.type, entity.type)
-        assertEquals(character.gender, entity.gender)
-        assertEquals(character.origin, entity.origin)
-        assertEquals(character.location, entity.location)
-        assertEquals(character.image, entity.image)
-        assertEquals(character.episode, entity.episode)
-        assertEquals(character.url, entity.url)
-        assertEquals(character.created, entity.created)
+        val resultAfterMapping: CharacterResponse = dummyEntity.toCharacter()
+        assertEquals(DUMMY_CHARACTER, resultAfterMapping)
     }
 
     @Test
