@@ -25,17 +25,20 @@ This app follows a clean architecture approach, promoting maintainability, testa
 
 ## Tech Stack ⚙️
 
-*   **Language:** [Kotlin](https://kotlinlang.org/)
-*   **UI:** [Jetpack Compose](https://developer.android.com/jetpack/compose)
-*   **Architecture:** [MVVM (Model-View-ViewModel)](https://developer.android.com/topic/libraries/architecture/viewmodel-savedstate)
-*   **Asynchronous Operations:** [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [Kotlin Flows](https://kotlinlang.org/docs/flow.html)
-*   **Networking:** [Ktor](https://ktor.io/)
-*   **Dependency Injection:** [Koin](https://insert-koin.io/)
-*   **Image Loading:** [Coil](https://coil-kt.github.io/coil/)
-*   **Local Persistence:** [Room](https://developer.android.com/training/data-storage/room)
-*   **Data Serialization:** [Gson](https://github.com/google/gson)
-*   **Build:** [Kotlin DSL](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
-*   **Testing:** [Mockk](https://mockk.io/)
+This project leverages the following technologies:
+
+*   **Languages:** [Kotlin](https://kotlinlang.org/)
+*   **UI:** [Jetpack Compose](https://developer.android.com/jetpack/compose) -  A modern toolkit for building native Android UI.
+*   **Architecture:** [MVVM (Model-View-ViewModel)](https://developer.android.com/topic/libraries/architecture/viewmodel-savedstate) -  A robust architecture pattern for separating concerns.
+*   **Asynchronous Operations:** [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) & [Kotlin Flows](https://kotlinlang.org/docs/flow.html) - For handling background tasks and reactive streams.
+*   **Networking:** [Ktor](https://ktor.io/) - A lightweight and multiplatform HTTP client.
+*   **Dependency Injection:** [Koin](https://insert-koin.io/) - A pragmatic dependency injection framework.
+*   **Image Loading:** [Coil](https://coil-kt.github.io/coil/) - An image loading library backed by Kotlin Coroutines.
+*   **Local Persistence:** [Room](https://developer.android.com/training/data-storage/room) - A persistence library providing an abstraction over SQLite.
+*   **Data Serialization:** [Gson](https://github.com/google/gson) - A Java library that can be used to convert Java Objects into their JSON representation and vice-versa.
+*   **Build:** [Kotlin DSL](https://docs.gradle.org/current/userguide/kotlin_dsl.html) -  Using Kotlin for Gradle build scripts.
+*   **Custom Gradle Plugins:**  Enhancing the build process with custom plugins. (See details below)
+*   **Testing:** [Mockk](https://mockk.io/) -  A mocking library for Kotlin.
 
 ## Contributing 
 
