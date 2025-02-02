@@ -1,0 +1,36 @@
+## Subflow to test the character details screen.
+
+appId: com.stathis.rickandmortyapp
+---
+
+# Assert that the screen has the correct title
+- assertVisible: "Character Details"
+
+# Assert that the character's name is visible
+- assertVisible: "#1 Rick Sanchez"
+
+# Assert that the character's species details card is visible
+- assertVisible: "Species"
+- assertVisible: "Human"
+
+# Assert that the character's gender card is visible
+- assertVisible: "Gender"
+- assertVisible: "Male"
+
+# Assert that the character's origin details card is visible
+- assertVisible: "Origin"
+- assertVisible: "Name: Earth (C-137)"
+
+# Assert the character's location details card is visible
+- assertVisible: "Location"
+- assertVisible: "Name: Citadel of Ricks"
+
+# Assert the episodes are visible
+- assertVisible: "Episodes"
+
+# Scroll down in the screen until the specific episode can be seen & click on it to trigger the episode subflow.
+- scrollUntilVisible:
+    element: "The Ricks must be crazy | S02E06"
+    direction: DOWN
+
+- tapOn: "The Ricks must be crazy | S02E06"

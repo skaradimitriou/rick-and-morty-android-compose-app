@@ -1,0 +1,18 @@
+## Maestro e2e test regarding the app's behavior
+appId: com.stathis.rickandmortyapp
+---
+
+# Launch the app with clear state
+- launchApp:
+    clearState: true
+
+# Assert that the user is at home screen
+- assertVisible: "Home"
+
+# Click on the first character from the backend results.
+- assertVisible: "#1 Rick Sanchez"
+- tapOn: "#1 Rick Sanchez"
+
+# Triggers the character details screen subflow.
+- runFlow: subflows/character_details_screen.yaml
+
