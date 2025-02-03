@@ -1,0 +1,24 @@
+## Subflow to test the location details screen.
+
+appId: com.stathis.rickandmortyapp
+---
+
+# Assert that the screen has the correct title
+- assertVisible: "Location Details"
+
+# Assert that the location name is visible to the screen
+- assertVisible: ${LOCATION_NAME}
+
+# Assert that the type & dimension are visible.
+- assertVisible: "Type: Planet"
+- assertVisible: "Dimension: Dimension C-137"
+
+# Assert that the residents are visible
+- assertVisible: "Residents"
+
+- assertVisible: "Beth Smith"
+- assertVisible: "Bill"
+- assertVisible: "Conroy"
+
+# Tap on Back btn
+- tapOn: "Back Navigation Arrow"

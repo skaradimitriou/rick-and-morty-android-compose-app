@@ -7,7 +7,7 @@ appId: com.stathis.rickandmortyapp
 - assertVisible: "Character Details"
 
 # Assert that the character's name is visible
-- assertVisible: "#1 Rick Sanchez"
+- assertVisible: ${CHARACTER_NAME}
 
 # Assert that the character's species details card is visible
 - assertVisible: "Species"
@@ -30,7 +30,26 @@ appId: com.stathis.rickandmortyapp
 
 # Scroll down in the screen until the specific episode can be seen & click on it to trigger the episode subflow.
 - scrollUntilVisible:
-    element: "The Ricks must be crazy | S02E06"
+    element: "The Ricks Must Be Crazy | S02E06"
     direction: DOWN
 
-- tapOn: "The Ricks must be crazy | S02E06"
+- tapOn: "The Ricks Must Be Crazy | S02E06"
+
+# Triggers the character details screen subflow.
+- runFlow: episode_details_screen.yaml
+
+# Scroll up to character details screen.
+- scrollUntilVisible:
+    element: "Origin"
+    direction: Up
+
+
+# Assert that the character's origin details card is visible & tap on it.
+- assertVisible: "Origin"
+- assertVisible: "Name: Earth (C-137)"
+- tapOn: "Name: Earth (C-137)"
+
+- runFlow: location_details_screen.yaml
+
+# Tap on Back btn
+- tapOn: "Back Navigation Arrow"

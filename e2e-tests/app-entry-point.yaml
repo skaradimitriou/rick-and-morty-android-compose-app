@@ -1,5 +1,10 @@
 ## Maestro e2e test regarding the app's behavior
 appId: com.stathis.rickandmortyapp
+
+env:
+  CHARACTER_NAME: "#1 Rick Sanchez"
+  EPISODE_NAME: "The Ricks Must Be Crazy"
+  LOCATION_NAME: "Earth (C-137)"
 ---
 
 # Launch the app with clear state
@@ -15,4 +20,3 @@ appId: com.stathis.rickandmortyapp
 
 # Triggers the character details screen subflow.
 - runFlow: subflows/character_details_screen.yaml
-

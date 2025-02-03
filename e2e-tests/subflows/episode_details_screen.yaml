@@ -1,0 +1,22 @@
+## Subflow to test the episode details screen.
+
+appId: com.stathis.rickandmortyapp
+---
+
+# Assert that the screen has the correct title
+- assertVisible: "Episode Details"
+
+# Assert that the episode name is visible to the screen
+- assertVisible: ${EPISODE_NAME}
+
+# Assert that the episode & airing date is visible
+- assertVisible: "S02E06|August 30, 2015"
+
+# Assert that the characters are visible
+- assertVisible: "Characters"
+
+- assertVisible: "Rick Sanchez"
+- assertVisible: "Morty Smith"
+
+# Tap on Back btn
+- tapOn: "Back Navigation Arrow"
