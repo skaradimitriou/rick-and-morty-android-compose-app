@@ -1,0 +1,48 @@
+name: Auto Label PRs
+
+# This workflow action will be triggered in every created PR.
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  label-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign Labels
+        uses: actions/labeler@v4
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+
+  apply-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign Bug Fix Label
+        if: >
+          startsWith(github.event.pull_request.head.ref, 'bug/') ||
+          startsWith(github.event.pull_request.head.ref, 'bugfix/')
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          labels: "Bug Fix"
+
+      - name: Assign Feature Label
+        if: >
+          startsWith(github.event.pull_request.head.ref, 'feature/') ||
+          startsWith(github.event.pull_request.head.ref, 'enhancement/')
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          labels: "Feature"
+
+      - name: Assign Dependency Updates Label
+        if: >
+          startsWith(github.event.pull_request.head.ref, 'renovate/') ||
+          startsWith(github.event.pull_request.head.ref, 'update/')
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          labels: "Bug Fix"
