@@ -1,48 +1,22 @@
-name: Auto Label PRs
+# This workflow will triage pull requests and apply a label based on the
+# paths that are modified in the pull request.
+#
+# To use this workflow, you will need to set up a .github/labeler.yml
+# file with configuration.  For more information, see:
+# https://github.com/actions/labeler
 
-# This workflow action will be triggered in every created PR.
-on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+name: Auto assign PR labels
+on: [pull_request_target]
 
 jobs:
-  label-pr:
+  label:
+
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
     steps:
-      - name: Assign Labels
-        uses: actions/labeler@v4
+      - uses: actions/labeler@v4
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
-
-  apply-labels:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Assign Bug Fix Label
-        if: >
-          startsWith(github.event.pull_request.head.ref, 'bug/') ||
-          startsWith(github.event.pull_request.head.ref, 'bugfix/')
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          github_token: "${{ secrets.GITHUB_TOKEN }}"
-          labels: "Bug Fix"
-
-      - name: Assign Feature Label
-        if: >
-          startsWith(github.event.pull_request.head.ref, 'feature/') ||
-          startsWith(github.event.pull_request.head.ref, 'enhancement/')
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          github_token: "${{ secrets.GITHUB_TOKEN }}"
-          labels: "Feature"
-
-      - name: Assign Dependency Updates Label
-        if: >
-          startsWith(github.event.pull_request.head.ref, 'renovate/') ||
-          startsWith(github.event.pull_request.head.ref, 'update/')
-        uses: actions-ecosystem/action-add-labels@v1
-        with:
-          github_token: "${{ secrets.GITHUB_TOKEN }}"
-          labels: "Bug Fix"

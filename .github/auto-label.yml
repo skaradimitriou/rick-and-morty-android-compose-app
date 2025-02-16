@@ -1,0 +1,11 @@
+# Adds `Feature` label to any branch that the head branch name starts with `bugfix` or `bug`.
+Feature:
+  - head-branch: [ '^feature', '^enhancement' ]
+
+# Adds `Bug fix` label to any branch that the head branch name starts with `bugfix` or `bug`.
+Bug fix:
+  - head-branch: [ '^bugfix', '^bug' ]
+
+# Adds `Feature` label to any branch that the head branch name starts with `bugfix` or `bug`.
+Dependency Updates:
+  - head-branch: [ '^renovate', '^update' ]
