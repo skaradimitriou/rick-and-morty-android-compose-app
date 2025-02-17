@@ -10,12 +10,16 @@ android {
     namespace = "com.stathis.rickandmortyapp"
     compileSdk = 35
 
+    val versionMajor = project.properties["VERSION_MAJOR"]?.toString()?.toInt() ?: 1
+    val versionMinor = project.properties["VERSION_MINOR"]?.toString()?.toInt() ?: 0
+    val versionPatch = project.properties["VERSION_PATCH"]?.toString()?.toInt() ?: 0
+
     defaultConfig {
         applicationId = "com.stathis.rickandmortyapp"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = (versionMajor * 10000) + (versionMinor * 100) + versionPatch
+        versionName = "$versionMajor.$versionMinor.$versionPatch"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
