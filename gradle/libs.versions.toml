@@ -19,7 +19,7 @@ room = "2.7.1"
 kotlinxCoroutines = "1.10.2"
 coil = "2.7.0"
 serialization = "1.8.1"
-mockk = "1.14.0"
+mockk = "1.14.2"
 junit-jupiter = "5.12.2"
 gson = "2.13.1"
 
